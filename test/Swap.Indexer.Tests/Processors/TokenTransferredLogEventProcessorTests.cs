@@ -1,5 +1,3 @@
-// using AElf.Contracts.MultiToken;
-
 using AElf.Contracts.MultiToken;
 using AElf.CSharp.Core.Extension;
 using AElf.Types;
@@ -180,7 +178,8 @@ public class TokenTransferredLogEventProcessorTests : SwapIndexerTests
         var resultList = await Query.GetUserTokensAsync(_repository, _objectMapper, new GetUserTokenDto
         {
             ChainId = "AELF",
-            Address = Address.FromPublicKey("AAA".HexToByteArray()).ToBase58()
+            Address = Address.FromPublicKey("AAA".HexToByteArray()).ToBase58(),
+            Symbol = "USDT"
         });
         resultList.Count.ShouldBe(1);
         resultList.First().Symbol.ShouldBe("USDT");
