@@ -100,9 +100,21 @@ public sealed class LiquidityRecordProcessorTests : SwapIndexerTests
         };
         
         //step3: handle event and write result to blockStateSet
-        var liquidityAddedEventProcessor = GetRequiredService<LiquidityAddedProcessor2>();
+        var liquidityAddedEventProcessor = GetRequiredService<LiquidityAddedProcessor>();
         await liquidityAddedEventProcessor.HandleEventAsync(logEventInfo, logEventContext);
-        liquidityAddedEventProcessor.GetContractAddress(chainId).ShouldBe("XXXXXX2");
+        liquidityAddedEventProcessor.GetContractAddress(chainId).ShouldBe("XXXXXX");
+        
+        var liquidityAddedEventProcessor2 = GetRequiredService<LiquidityAddedProcessor2>();
+        liquidityAddedEventProcessor2.GetContractAddress(chainId).ShouldBe("XXXXXX2");
+        
+        var liquidityAddedEventProcessor3 = GetRequiredService<LiquidityAddedProcessor3>();
+        liquidityAddedEventProcessor3.GetContractAddress(chainId).ShouldBe("XXXXXX3");
+        
+        var liquidityAddedEventProcessor4 = GetRequiredService<LiquidityAddedProcessor4>();
+        liquidityAddedEventProcessor4.GetContractAddress(chainId).ShouldBe("XXXXXX4");
+        
+        var liquidityAddedEventProcessor5 = GetRequiredService<LiquidityAddedProcessor5>();
+        liquidityAddedEventProcessor5.GetContractAddress(chainId).ShouldBe("XXXXXX5");
 
         //step4: save blockStateSet into es
         await BlockStateSetSaveDataAsync<LogEventInfo>(blockStateSetKey);
@@ -191,7 +203,19 @@ public sealed class LiquidityRecordProcessorTests : SwapIndexerTests
         //step3: handle event and write result to blockStateSet
         var liquidityRemovedEventProcessor = GetRequiredService<LiquidityRemovedProcessor>();
         await liquidityRemovedEventProcessor.HandleEventAsync(logEventInfo, logEventContext);
-        liquidityRemovedEventProcessor.GetContractAddress(chainId);
+        liquidityRemovedEventProcessor.GetContractAddress(chainId).ShouldBe("XXXXXX");
+        
+        var liquidityRemovedEventProcessor2 = GetRequiredService<LiquidityRemovedProcessor2>();
+        liquidityRemovedEventProcessor2.GetContractAddress(chainId).ShouldBe("XXXXXX2");
+        
+        var liquidityRemovedEventProcessor3 = GetRequiredService<LiquidityRemovedProcessor3>();
+        liquidityRemovedEventProcessor3.GetContractAddress(chainId).ShouldBe("XXXXXX3");
+        
+        var liquidityRemovedEventProcessor4 = GetRequiredService<LiquidityRemovedProcessor4>();
+        liquidityRemovedEventProcessor4.GetContractAddress(chainId).ShouldBe("XXXXXX4");;
+        
+        var liquidityRemovedEventProcessor5 = GetRequiredService<LiquidityRemovedProcessor5>();
+        liquidityRemovedEventProcessor5.GetContractAddress(chainId).ShouldBe("XXXXXX5");
 
         //step4: save blockStateSet into es
         await BlockStateSetSaveDataAsync<LogEventInfo>(blockStateSetKey);
@@ -227,14 +251,19 @@ public sealed class LiquidityRecordProcessorTests : SwapIndexerTests
             Address = Address.FromPublicKey("CCC".HexToByteArray()).ToBase58(),
             Pair = Address.FromPublicKey("AAA".HexToByteArray()).ToBase58(),
             TimestampMin = DateTime.UtcNow.ToTimestamp().Seconds * 1000 - 60000,
-            TimestampMax = DateTime.UtcNow.ToTimestamp().Seconds * 1000
+            TimestampMax = DateTime.UtcNow.ToTimestamp().Seconds * 1000,
+            Type = LiquidityRecordIndex.LiquidityType.Mint,
+            Token0 = "AELF",
+            Token1 = "BTC",
+            TokenSymbol = "AELF",
+            TransactionHash = AddTransactionId
         });
         result.TotalCount.ShouldBe(1);
         result.Data.First().LpTokenAmount.ShouldBe(1);
         result.Data.First().Address.ShouldBe(Address.FromPublicKey("CCC".HexToByteArray()).ToBase58());
         result.Data.First().Pair.ShouldBe(Address.FromPublicKey("AAA".HexToByteArray()).ToBase58());
         result.Data.First().ChainId.ShouldBe("AELF");
-        
+
         await LiquidityRemovedAsyncTests();
         var recordDto = new GetLiquidityRecordDto
         {
@@ -280,25 +309,54 @@ public sealed class LiquidityRecordProcessorTests : SwapIndexerTests
         result.TotalCount.ShouldBe(2);
         result.Data.First().Type.ShouldBe(LiquidityRecordIndex.LiquidityType.Burn);
         result.Data.Last().Type.ShouldBe(LiquidityRecordIndex.LiquidityType.Mint);
+        
+        recordDto.Sorting = "tradepair";
+        result = await Query.LiquidityRecordAsync(_recordRepository, _objectMapper, recordDto);
+        result.TotalCount.ShouldBe(2);
+        result.Data.First().Type.ShouldBe(LiquidityRecordIndex.LiquidityType.Mint);
+        result.Data.Last().Type.ShouldBe(LiquidityRecordIndex.LiquidityType.Burn);
+        
+        recordDto.Sorting = "tradepair desc";
+        result = await Query.LiquidityRecordAsync(_recordRepository, _objectMapper, recordDto);
+        result.TotalCount.ShouldBe(2);
+        result.Data.First().Type.ShouldBe(LiquidityRecordIndex.LiquidityType.Mint);
+        result.Data.Last().Type.ShouldBe(LiquidityRecordIndex.LiquidityType.Burn);
     }
     
     [Fact]
     public async Task QueryUserLiquidityAsyncTests()
     {
         await LiquidityAddedAsyncTests();
-        var result = await Query.UserLiquidityAsync(_userLiquidityRepository, _objectMapper, new GetUserLiquidityDto()
+        var recordDto = new GetUserLiquidityDto()
         {
             ChainId = "AELF",
             Address = Address.FromPublicKey("CCC".HexToByteArray()).ToBase58(),
             Pair = Address.FromPublicKey("AAA".HexToByteArray()).ToBase58(),
             SkipCount = 0,
             MaxResultCount = 100
-        });
+        };
+        var result = await Query.UserLiquidityAsync(_userLiquidityRepository, _objectMapper, recordDto);
         result.TotalCount.ShouldBe(1);
         result.Data.First().LpTokenAmount.ShouldBe(1);
         result.Data.First().Address.ShouldBe(Address.FromPublicKey("CCC".HexToByteArray()).ToBase58());
         result.Data.First().Pair.ShouldBe(Address.FromPublicKey("AAA".HexToByteArray()).ToBase58());
         result.Data.First().ChainId.ShouldBe("AELF");
+        
+        recordDto.Sorting = "timestamp";
+        result = await Query.UserLiquidityAsync(_userLiquidityRepository, _objectMapper, recordDto);
+        result.TotalCount.ShouldBe(1);
+        
+        recordDto.Sorting = "lptokenamount";
+        result = await Query.UserLiquidityAsync(_userLiquidityRepository, _objectMapper, recordDto);
+        result.TotalCount.ShouldBe(1);
+        
+        recordDto.Sorting = "timestamp desc";
+        result = await Query.UserLiquidityAsync(_userLiquidityRepository, _objectMapper, recordDto);
+        result.TotalCount.ShouldBe(1);
+        
+        recordDto.Sorting = "lptokenamount desc";
+        result = await Query.UserLiquidityAsync(_userLiquidityRepository, _objectMapper, recordDto);
+        result.TotalCount.ShouldBe(1);
     }
 
     [Fact]
