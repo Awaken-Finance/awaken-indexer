@@ -92,6 +92,27 @@ public class SwapIndexerTestsModule : AbpModule
                         SwapContractAddress = "XXXXXX2",
                         Level = 2,
                         FeeRate = 0.005
+                    },
+                    new()
+                    {
+                        ChainId = "AELF",
+                        SwapContractAddress = "XXXXXX3",
+                        Level = 3,
+                        FeeRate = 0.010
+                    },
+                    new()
+                    {
+                        ChainId = "AELF",
+                        SwapContractAddress = "XXXXXX4",
+                        Level = 4,
+                        FeeRate = 0.015
+                    },
+                    new()
+                    {
+                        ChainId = "AELF",
+                        SwapContractAddress = "XXXXXX5",
+                        Level = 5,
+                        FeeRate = 0.020
                     }
                 };
             }

@@ -93,7 +93,19 @@ public sealed class SwapProcessorTests : SwapIndexerTests
         //step3: handle event and write result to blockStateSet
         var swapProcessor = GetRequiredService<SwapProcessor>();
         await swapProcessor.HandleEventAsync(logEventInfo, logEventContext);
-        swapProcessor.GetContractAddress(chainId);
+        swapProcessor.GetContractAddress(chainId).ShouldBe("XXXXXX");
+        
+        var swapProcessor2 = GetRequiredService<SwapProcessor2>();
+        swapProcessor2.GetContractAddress(chainId).ShouldBe("XXXXXX2");
+        
+        var swapProcessor3 = GetRequiredService<SwapProcessor3>();
+        swapProcessor3.GetContractAddress(chainId).ShouldBe("XXXXXX3");
+        
+        var swapProcessor4 = GetRequiredService<SwapProcessor4>();
+        swapProcessor4.GetContractAddress(chainId).ShouldBe("XXXXXX4");
+        
+        var swapProcessor5 = GetRequiredService<SwapProcessor5>();
+        swapProcessor5.GetContractAddress(chainId).ShouldBe("XXXXXX5");
 
         //step4: save blockStateSet into es
         await BlockStateSetSaveDataAsync<LogEventInfo>(blockStateSetKey);
@@ -116,19 +128,58 @@ public sealed class SwapProcessorTests : SwapIndexerTests
             SkipCount = 0,
             MaxResultCount = 100,
             ChainId = "AELF",
-            PairAddress = Address.FromPublicKey("AAA".HexToByteArray()).ToBase58()
+            PairAddress = Address.FromPublicKey("AAA".HexToByteArray()).ToBase58(),
+            Sender = "AA",
+            TransactionHash = "aa",
+            Timestamp = 11,
+            AmountOut = 100,
+            AmountIn = 99,
+            SymbolOut = "AA",
+            SymbolIn = "BB",
+            Channel = "test"
         });
+        var dto = new GetSwapRecordDto
+        {
+            ChainId = "AELF",
+            PairAddress = Address.FromPublicKey("AAA".HexToByteArray()).ToBase58(),
+            Sender = Address.FromPublicKey("CCC".HexToByteArray()).ToBase58(),
+            TransactionHash = transactionId,
+            Timestamp = DateTimeHelper.ToUnixTimeMilliseconds(logEventContext.BlockTime),
+            AmountOut = 1,
+            AmountIn = 100,
+            SymbolOut = "BTC",
+            SymbolIn = "AELF",
+            Channel = "test"
+        }; 
         result.TotalCount.ShouldBe(1);
         result.Data.First().PairAddress.ShouldBe(Address.FromPublicKey("AAA".HexToByteArray()).ToBase58());
-        result.Data.First().ChainId.ShouldBe("AELF");
+        result.Data.First().ChainId.ShouldBe(dto.ChainId);
+        result.Data.First().Sender.ShouldBe(dto.Sender);
+        result.Data.First().TransactionHash.ShouldBe(dto.TransactionHash);
+        result.Data.First().Timestamp.ShouldBe(dto.Timestamp);
+        result.Data.First().AmountOut.ShouldBe(dto.AmountOut);
+        result.Data.First().AmountIn.ShouldBe(dto.AmountIn);
+        result.Data.First().SymbolOut.ShouldBe(dto.SymbolOut);
+        result.Data.First().SymbolIn.ShouldBe(dto.SymbolIn);
+        result.Data.First().Channel.ShouldBe(dto.Channel);
         
         var ret = await Query.GetSwapRecordsAsync(_recordRepository, _objectMapper, new GetChainBlockHeightDto
         {
-            ChainId = "AELF"
+            ChainId = "AELF",
+            StartBlockHeight = 1,
+            EndBlockHeight = 101
         });
         ret.Count.ShouldBe(1);
         ret.First().PairAddress.ShouldBe(Address.FromPublicKey("AAA".HexToByteArray()).ToBase58());
         ret.First().ChainId.ShouldBe("AELF");
         ret.First().BlockHeight.ShouldBe(100);
+        ret.First().Sender.ShouldBe(Address.FromPublicKey("CCC".HexToByteArray()).ToBase58());
+        ret.First().TransactionHash.ShouldBe(transactionId);
+        ret.First().Timestamp.ShouldBe(DateTimeHelper.ToUnixTimeMilliseconds(logEventContext.BlockTime));
+        ret.First().AmountOut.ShouldBe(1);
+        ret.First().AmountIn.ShouldBe(100);
+        ret.First().TotalFee.ShouldBe(15);
+        ret.First().SymbolOut.ShouldBe("BTC");
+        ret.First().SymbolIn.ShouldBe("AELF");
     }
 }
