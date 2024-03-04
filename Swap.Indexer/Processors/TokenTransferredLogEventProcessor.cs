@@ -40,12 +40,7 @@ public class TokenTransferredLogEventProcessor : AElfLogEventProcessorBase<Trans
     protected override async Task HandleEventAsync(Transferred eventValue, LogEventContext context)
     {
         _logger.Info("received Transferred:" + eventValue + ",context:" + context);
-        var tokenType = TokenHelper.GetTokenType(eventValue.Symbol);
-        if (tokenType != TokenType.Token)
-        {
-            _logger.Info("not token return");
-            return;
-        }
+     
 
         var fromId = IdGenerateHelper.GetId(context.ChainId, eventValue.From.ToBase58(), eventValue.Symbol);
         var fromIndex = await _repository.GetFromBlockStateSetAsync(fromId, context.ChainId);
