@@ -43,12 +43,7 @@ public class TokenProcessorBase<TEvent> : AElfLogEventProcessorBase<TEvent, LogE
 
     protected async Task HandleEventAsync(UserTokenDto dto, LogEventContext context)
     {
-        var tokenType = TokenHelper.GetTokenType(dto.Symbol);
-        if (tokenType != TokenType.Token)
-        {
-            return;
-        }
-
+       
         var id = IdGenerateHelper.GetId(context.ChainId, dto.Address, dto.Symbol);
         var index = await _repository.GetFromBlockStateSetAsync(id, context.ChainId);
         index ??= new SwapUserTokenIndex()
