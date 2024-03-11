@@ -372,6 +372,7 @@ public sealed class LiquidityRecordProcessorTests : SwapIndexerTests
         result.Count.ShouldBe(1);
         result.First().TransactionHash.ShouldBe(AddTransactionId);
         result.First().BlockHeight.ShouldBe(100);
+        
         await LiquidityRemovedAsyncTests();
         result = await Query.GetLiquidityRecordsAsync(_recordRepository, _objectMapper, new GetPullLiquidityRecordDto
         {
@@ -382,6 +383,48 @@ public sealed class LiquidityRecordProcessorTests : SwapIndexerTests
         result.Count.ShouldBe(2);
         result[1].TransactionHash.ShouldBe(RemoveTransactionId);
         result[1].BlockHeight.ShouldBe(100);
+        
+        result = await Query.GetLiquidityRecordsAsync(_recordRepository, _objectMapper, new GetPullLiquidityRecordDto
+        {
+            ChainId = "AELF",
+            StartBlockHeight = 100,
+            EndBlockHeight = 100,
+            SkipCount = 1
+        });
+        result.Count.ShouldBe(1);
+        result.First().TransactionHash.ShouldBe(RemoveTransactionId);
+        result.First().BlockHeight.ShouldBe(100);
+        
+        result = await Query.GetLiquidityRecordsAsync(_recordRepository, _objectMapper, new GetPullLiquidityRecordDto
+        {
+            ChainId = "AELF",
+            StartBlockHeight = 100,
+            EndBlockHeight = 100,
+            SkipCount = 2
+        });
+        result.Count.ShouldBe(0);
+        
+        result = await Query.GetLiquidityRecordsAsync(_recordRepository, _objectMapper, new GetPullLiquidityRecordDto
+        {
+            ChainId = "AELF",
+            StartBlockHeight = 100,
+            EndBlockHeight = 100,
+            MaxResultCount = 1
+        });
+        result.Count.ShouldBe(1);
+        result.First().TransactionHash.ShouldBe(AddTransactionId);
+        result.First().BlockHeight.ShouldBe(100);
+        
+        Func<Task> action = async () => await Query.GetLiquidityRecordsAsync(_recordRepository, _objectMapper, new GetPullLiquidityRecordDto
+        {
+            ChainId = "AELF",
+            StartBlockHeight = 100,
+            EndBlockHeight = 100,
+            MaxResultCount = 1001
+        });
+        
+        var exception = await Assert.ThrowsAsync<ArgumentOutOfRangeException>(action);
+        Assert.Contains("Max allowed value", exception.Message);
     }
 
     [Fact]

@@ -4,6 +4,7 @@ using AElfIndexer.Client;
 using AElfIndexer.Client.Handlers;
 using AElfIndexer.Grains.State.Client;
 using Awaken.Contracts.Swap;
+using Force.DeepCloner;
 using Nethereum.Hex.HexConvertors.Extensions;
 using Shouldly;
 using Swap.Indexer.Entities;
@@ -148,6 +149,34 @@ public sealed class SyncRecordProcessorTests : SwapIndexerTests
         result.Data.First().BlockHeight.ShouldBe(100);
         result.Data.First().Timestamp.ShouldBe(dto.Timestamp);
         
+        result = await Query.SyncRecordAsync(_recordRepository, _objectMapper, new GetSyncRecordDto
+        {
+            SkipCount = 1,
+            MaxResultCount = 100,
+            ChainId = "AELF",
+            PairAddress = Address.FromPublicKey("AAA".HexToByteArray()).ToBase58(),
+            SymbolA = "A",
+            SymbolB = "B",
+            ReserveA = 20,
+            ReserveB = 10,
+            Timestamp = 11
+        });
+        result.Data.Count.ShouldBe(0);
+        
+        result = await Query.SyncRecordAsync(_recordRepository, _objectMapper, new GetSyncRecordDto
+        {
+            SkipCount = 0,
+            MaxResultCount = 0,
+            ChainId = "AELF",
+            PairAddress = Address.FromPublicKey("AAA".HexToByteArray()).ToBase58(),
+            SymbolA = "A",
+            SymbolB = "B",
+            ReserveA = 20,
+            ReserveB = 10,
+            Timestamp = 11
+        });
+        result.Data.Count.ShouldBe(0);
+        
         var ret = await Query.GetSyncRecordsAsync(_recordRepository, _objectMapper, new GetChainBlockHeightDto
         {
             ChainId = "AELF",
@@ -162,5 +191,24 @@ public sealed class SyncRecordProcessorTests : SwapIndexerTests
         ret.First().ReserveA.ShouldBe(100);
         ret.First().ReserveB.ShouldBe(1);
         ret.First().BlockHeight.ShouldBe(100);
+        
+        ret = await Query.GetSyncRecordsAsync(_recordRepository, _objectMapper, new GetChainBlockHeightDto
+        {
+            ChainId = "AELF",
+            StartBlockHeight = 1,
+            EndBlockHeight = 101,
+            SkipCount = 1
+        });
+        ret.Count.ShouldBe(0);
+        
+        ret = await Query.GetSyncRecordsAsync(_recordRepository, _objectMapper, new GetChainBlockHeightDto
+        {
+            ChainId = "AELF",
+            StartBlockHeight = 1,
+            EndBlockHeight = 101,
+            MaxResultCount = 0
+        });
+        ret.Count.ShouldBe(0);
+
     }
 }

@@ -163,6 +163,23 @@ public sealed class SwapProcessorTests : SwapIndexerTests
         result.Data.First().SymbolIn.ShouldBe(dto.SymbolIn);
         result.Data.First().Channel.ShouldBe(dto.Channel);
         
+        result = await Query.SwapRecordAsync(_recordRepository, _objectMapper, new GetSwapRecordDto
+        {
+            SkipCount = 1,
+            MaxResultCount = 100,
+            ChainId = "AELF",
+            PairAddress = Address.FromPublicKey("AAA".HexToByteArray()).ToBase58(),
+            Sender = "AA",
+            TransactionHash = "aa",
+            Timestamp = 11,
+            AmountOut = 100,
+            AmountIn = 99,
+            SymbolOut = "AA",
+            SymbolIn = "BB",
+            Channel = "test"
+        });
+        result.Data.Count.ShouldBe(0);
+        
         var ret = await Query.GetSwapRecordsAsync(_recordRepository, _objectMapper, new GetChainBlockHeightDto
         {
             ChainId = "AELF",
@@ -181,5 +198,24 @@ public sealed class SwapProcessorTests : SwapIndexerTests
         ret.First().TotalFee.ShouldBe(15);
         ret.First().SymbolOut.ShouldBe("BTC");
         ret.First().SymbolIn.ShouldBe("AELF");
+        
+        ret = await Query.GetSwapRecordsAsync(_recordRepository, _objectMapper, new GetChainBlockHeightDto
+        {
+            ChainId = "AELF",
+            StartBlockHeight = 1,
+            EndBlockHeight = 101,
+            SkipCount = 1
+        });
+        ret.Count.ShouldBe(0);
+        
+        ret = await Query.GetSwapRecordsAsync(_recordRepository, _objectMapper, new GetChainBlockHeightDto
+        {
+            ChainId = "AELF",
+            StartBlockHeight = 1,
+            EndBlockHeight = 101,
+            MaxResultCount = 0
+        });
+        ret.Count.ShouldBe(0);
+
     }
 }

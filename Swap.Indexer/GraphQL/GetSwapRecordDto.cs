@@ -1,6 +1,6 @@
 namespace Swap.Indexer.GraphQL;
 
-public class GetSwapRecordDto
+public class GetSwapRecordDto : PagedResultQueryDtoBase
 {
     public string ChainId { get; set; }
     public string PairAddress { get; set; }
@@ -12,6 +12,4 @@ public class GetSwapRecordDto
     public string SymbolOut { get; set; }
     public string SymbolIn { get; set; }
     public string Channel { get; set; }
-    public int SkipCount { get; set; }
-    public int MaxResultCount { get; set; }
 }

@@ -22,5 +22,8 @@ public class TradePairInfoDto
     public string Token1Symbol { get; set; }
     
     public double FeeRate { get; set; }
+    
     public bool IsTokenReversed { get; set; }
+    
+    public long BlockHeight { get; set; }
 }
