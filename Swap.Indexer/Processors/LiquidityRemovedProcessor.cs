@@ -34,8 +34,6 @@ public class LiquidityRemovedProcessor : LiquidityProcessorBase<LiquidityRemoved
             return;
         }
         recordIndex = new LiquidityRecordIndex();
-        ObjectMapper.Map(eventValue, recordIndex);
-        ObjectMapper.Map(context, recordIndex);
 
         recordIndex.Id = id;
         recordIndex.Type = LiquidityRecordIndex.LiquidityType.Burn;

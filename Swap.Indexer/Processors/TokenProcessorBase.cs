@@ -15,13 +15,13 @@ using Volo.Abp.ObjectMapping;
 
 namespace Swap.Indexer.Processors;
 
-public class TokenProcessorBase<TEvent> : AElfLogEventProcessorBase<TEvent, LogEventInfo>
+public abstract class TokenProcessorBase<TEvent> : AElfLogEventProcessorBase<TEvent, LogEventInfo>
     where TEvent : IEvent<TEvent>,new()
 {
     private readonly IObjectMapper _objectMapper;
     private readonly ContractInfoOptions _contractInfoOptions;
     private readonly IAElfDataProvider _aElfDataProvider;
-    private IAElfIndexerClientEntityRepository<SwapUserTokenIndex, LogEventInfo> _repository;
+    private readonly IAElfIndexerClientEntityRepository<SwapUserTokenIndex, LogEventInfo> _repository;
     protected ILogger<TokenProcessorBase<TEvent>> _logger;
     public TokenProcessorBase(ILogger<TokenProcessorBase<TEvent>> logger,
         IAElfIndexerClientEntityRepository<SwapUserTokenIndex, LogEventInfo> repository,
@@ -41,10 +41,8 @@ public class TokenProcessorBase<TEvent> : AElfLogEventProcessorBase<TEvent, LogE
         return _contractInfoOptions.ContractInfos.First(o => o.ChainId == chainId).MultiTokenContractAddress;
     }
 
-    protected async Task HandleEventAsync(UserTokenDto dto, LogEventContext context)
+    protected async Task HandleEventBaseAsync(UserTokenDto dto, LogEventContext context)
     {
-      
-
         var id = IdGenerateHelper.GetId(context.ChainId, dto.Address, dto.Symbol);
         var index = await _repository.GetFromBlockStateSetAsync(id, context.ChainId);
         index ??= new SwapUserTokenIndex()

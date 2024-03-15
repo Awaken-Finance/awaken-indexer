@@ -31,6 +31,6 @@ public class TokenBurnedEventProcessor : TokenProcessorBase<Burned>
             Address = eventValue.Burner.ToBase58(),
             Symbol = eventValue.Symbol
         };
-        await HandleEventAsync(userToken, context);
+        await HandleEventBaseAsync(userToken, context);
     }
 }
