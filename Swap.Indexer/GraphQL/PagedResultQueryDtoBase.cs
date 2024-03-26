@@ -2,10 +2,10 @@ namespace Swap.Indexer.GraphQL;
 
 public class PagedResultQueryDtoBase
 {
-    private const int MaxMaxResultCount = 1000;
+    private const int MaxMaxResultCount = 10000;
     
     public int SkipCount { get; set; } = 0;
-    public int MaxResultCount { get; set; } = 10;
+    public int MaxResultCount { get; set; } = 10000;
     
     public void Validate()
     {
