@@ -32,7 +32,8 @@ public class SyncProcessor : SyncProcessorBase<Sync>
             SymbolB = eventValue.SymbolB,
             ReserveA = eventValue.ReserveA,
             ReserveB = eventValue.ReserveB,
-            Timestamp = DateTimeHelper.ToUnixTimeMilliseconds(context.BlockTime)
+            Timestamp = DateTimeHelper.ToUnixTimeMilliseconds(context.BlockTime),
+            TransactionHash = context.TransactionId
         };
         ObjectMapper.Map(eventValue, record);
         ObjectMapper.Map(context, record);

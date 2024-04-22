@@ -26,4 +26,6 @@ public class TradePairInfoDto
     public bool IsTokenReversed { get; set; }
     
     public long BlockHeight { get; set; }
+    
+    public string TransactionHash { get; set; }
 }
