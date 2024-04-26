@@ -19,6 +19,7 @@ public class TokenTransferredLogEventProcessor : AElfLogEventProcessorBase<Trans
     private readonly IAElfDataProvider _aElfDataProvider;
     private IAElfIndexerClientEntityRepository<SwapUserTokenIndex, LogEventInfo> _repository;
     private ILogger<TokenTransferredLogEventProcessor> _logger;
+
     public TokenTransferredLogEventProcessor(ILogger<TokenTransferredLogEventProcessor> logger,
         IAElfIndexerClientEntityRepository<SwapUserTokenIndex, LogEventInfo> repository,
         IOptionsSnapshot<ContractInfoOptions> contractInfoOptions,
@@ -40,12 +41,7 @@ public class TokenTransferredLogEventProcessor : AElfLogEventProcessorBase<Trans
     protected override async Task HandleEventAsync(Transferred eventValue, LogEventContext context)
     {
         _logger.Info("received Transferred:" + eventValue + ",context:" + context);
-        var tokenType = TokenHelper.GetTokenType(eventValue.Symbol);
-        if (tokenType != TokenType.Token)
-        {
-            _logger.Info("not token return");
-            return;
-        }
+
 
         var fromId = IdGenerateHelper.GetId(context.ChainId, eventValue.From.ToBase58(), eventValue.Symbol);
         var fromIndex = await _repository.GetFromBlockStateSetAsync(fromId, context.ChainId);
@@ -56,7 +52,8 @@ public class TokenTransferredLogEventProcessor : AElfLogEventProcessorBase<Trans
             Symbol = eventValue.Symbol
         };
         _objectMapper.Map(context, fromIndex);
-        fromIndex.Balance = await _aElfDataProvider.GetBalanceAsync(context.ChainId, eventValue.Symbol, eventValue.From);
+        fromIndex.Balance =
+            await _aElfDataProvider.GetBalanceAsync(context.ChainId, eventValue.Symbol, eventValue.From);
         _logger.Info("SwapUserTokenIndex from:" + fromIndex);
         await _repository.AddOrUpdateAsync(fromIndex);
 
