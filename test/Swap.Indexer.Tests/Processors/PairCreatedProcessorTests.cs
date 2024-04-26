@@ -9,6 +9,7 @@ using Moq;
 using Nethereum.Hex.HexConvertors.Extensions;
 using Swap.Indexer.Application.Contracts.Token;
 using Swap.Indexer.Entities;
+using Swap.Indexer.GraphQL;
 using Swap.Indexer.Options;
 using Swap.Indexer.Processors;
 using Swap.Indexer.Providers;
@@ -47,7 +48,7 @@ public class PairCreatedProcessorTests : SwapIndexerTests
     }
 
     [Fact]
-    public void PairCreatedAsycTest()
+    public async void PairCreatedAsycTest()
     {
         //mock processer
         var chainId = "AELF";
@@ -124,5 +125,30 @@ public class PairCreatedProcessorTests : SwapIndexerTests
         
         //检查es
         repositoryMock.Verify(repository => repository.AddOrUpdateAsync(It.IsAny<TradePairInfoIndex>()), Times.Once);
+        await Query.TradePairInfoAsync(_recordRepository, _objectMapper, new GetTradePairInfoDto()
+        {
+            SkipCount = 0,
+            MaxResultCount = 100,
+            ChainId = "ELF",
+            Token0Symbol = "USDT",
+            Token1Symbol = "ELF",
+            TokenSymbol = "ELF",
+            FeeRate = 1.0,
+            Address = "AA",
+            Id = "1"
+        });
+        
+        await Query.GetTradePairInfoListAsync(_recordRepository, _objectMapper, new GetTradePairInfoDto()
+        {
+            SkipCount = 0,
+            MaxResultCount = 100,
+            ChainId = "ELF",
+            Token0Symbol = "USDT",
+            Token1Symbol = "ELF",
+            TokenSymbol = "ELF",
+            FeeRate = 1.0,
+            Address = "AA",
+            Id = "1"
+        });
     }
 }

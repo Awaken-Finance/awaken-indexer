@@ -89,8 +89,20 @@ public sealed class SyncRecordProcessorTests : SwapIndexerTests
         //step3: handle event and write result to blockStateSet
         var syncEventProcessor = GetRequiredService<SyncProcessor>();
         await syncEventProcessor.HandleEventAsync(logEventInfo, logEventContext);
-        syncEventProcessor.GetContractAddress(chainId);
+        syncEventProcessor.GetContractAddress(chainId).ShouldBe("XXXXXX");
 
+        var syncEventProcessor2 = GetRequiredService<SyncProcessor2>();
+        syncEventProcessor2.GetContractAddress(chainId).ShouldBe("XXXXXX2");
+        
+        var syncEventProcessor3 = GetRequiredService<SyncProcessor3>();
+        syncEventProcessor3.GetContractAddress(chainId).ShouldBe("XXXXXX3");
+        
+        var syncEventProcessor4 = GetRequiredService<SyncProcessor4>();
+        syncEventProcessor4.GetContractAddress(chainId).ShouldBe("XXXXXX4");
+        
+        var syncEventProcessor5 = GetRequiredService<SyncProcessor5>();
+        syncEventProcessor5.GetContractAddress(chainId).ShouldBe("XXXXXX5");
+        
         //step4: save blockStateSet into es
         await BlockStateSetSaveDataAsync<LogEventInfo>(blockStateSetKey);
         await BlockStateSetSaveDataAsync<TransactionInfo>(blockStateSetKeyTransaction);
@@ -109,19 +121,38 @@ public sealed class SyncRecordProcessorTests : SwapIndexerTests
             SkipCount = 0,
             MaxResultCount = 100,
             ChainId = "AELF",
-            PairAddress = Address.FromPublicKey("AAA".HexToByteArray()).ToBase58()
+            PairAddress = Address.FromPublicKey("AAA".HexToByteArray()).ToBase58(),
+            SymbolA = "A",
+            SymbolB = "B",
+            ReserveA = 20,
+            ReserveB = 10,
+            Timestamp = 11
         });
+        var dto = new GetSyncRecordDto
+        {
+            ChainId = "AELF",
+            PairAddress = Address.FromPublicKey("AAA".HexToByteArray()).ToBase58(),
+            SymbolA = "AELF",
+            SymbolB = "BTC",
+            ReserveA = 100,
+            ReserveB = 1,
+            Timestamp = DateTimeHelper.ToUnixTimeMilliseconds(logEventContext.BlockTime)
+        };
         result.TotalCount.ShouldBe(1);
         result.Data.First().PairAddress.ShouldBe(Address.FromPublicKey("AAA".HexToByteArray()).ToBase58());
-        result.Data.First().ChainId.ShouldBe("AELF");
-        result.Data.First().SymbolA.ShouldBe("AELF");
-        result.Data.First().SymbolB.ShouldBe("BTC");
-        result.Data.First().ReserveA.ShouldBe(100);
-        result.Data.First().ReserveB.ShouldBe(1);
+        result.Data.First().ChainId.ShouldBe(dto.ChainId);
+        result.Data.First().SymbolA.ShouldBe(dto.SymbolA);
+        result.Data.First().SymbolB.ShouldBe(dto.SymbolB);
+        result.Data.First().ReserveA.ShouldBe(dto.ReserveA);
+        result.Data.First().ReserveB.ShouldBe(dto.ReserveB);
+        result.Data.First().BlockHeight.ShouldBe(100);
+        result.Data.First().Timestamp.ShouldBe(dto.Timestamp);
         
         var ret = await Query.GetSyncRecordsAsync(_recordRepository, _objectMapper, new GetChainBlockHeightDto
         {
-            ChainId = "AELF"
+            ChainId = "AELF",
+            StartBlockHeight = 1,
+            EndBlockHeight = 101
         });
         ret.Count.ShouldBe(1);
         ret.First().PairAddress.ShouldBe(Address.FromPublicKey("AAA".HexToByteArray()).ToBase58());
