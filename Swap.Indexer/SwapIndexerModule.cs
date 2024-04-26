@@ -59,6 +59,6 @@ public class SwapIndexerModule : AElfIndexerClientPluginBaseModule<SwapIndexerMo
     }
 
 
-    protected override string ClientId => "AElfIndexer_Awaken";
-    protected override string Version => "ec6fb65e9fc34ae9a613516b94016853";
+    protected override string ClientId => "AElfIndexer_Swap";
+    protected override string Version => "b9b2291428c14395a86894aacfeaaa5a";
 }

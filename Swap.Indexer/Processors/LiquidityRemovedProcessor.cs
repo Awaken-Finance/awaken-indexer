@@ -48,7 +48,7 @@ public class LiquidityRemovedProcessor : LiquidityProcessorBase<LiquidityRemoved
         recordIndex.Token1 = eventValue.SymbolB;
         recordIndex.Timestamp = context.BlockTime.ToTimestamp().Seconds * 1000 + context.BlockTime.Millisecond;
         recordIndex.TransactionHash = context.TransactionId;
-        
+        ObjectMapper.Map(context, recordIndex);
         Logger.Info("LiquidityRecordIndex:" + recordIndex);
         await Repository.AddOrUpdateAsync(recordIndex);
         await HandlerUserLiquidityAsync(recordIndex, context);
