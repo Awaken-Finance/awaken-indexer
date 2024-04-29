@@ -50,5 +50,6 @@ public class TokenTransferredLogEventProcessor : TokenProcessorBase<Transferred>
         await HandleEventBaseAsync(userToken, context);
         userToken.Address = eventValue.To.ToBase58();
         await HandleEventBaseAsync(userToken, context);
+
     }
 }
