@@ -16,4 +16,6 @@ public class SyncRecordDto
     public long ReserveB { get; set; }
     public long Timestamp { get; set; }
     public long BlockHeight { get; set; }
+    
+    public string TransactionHash { get; set; }
 }

@@ -10,7 +10,7 @@ using Volo.Abp.ObjectMapping;
 
 namespace Swap.Indexer.Processors;
 
-public class SyncProcessorBase<TEvent> : AElfLogEventProcessorBase<TEvent,LogEventInfo>
+public abstract class SyncProcessorBase<TEvent> : AElfLogEventProcessorBase<TEvent,LogEventInfo>
     where TEvent : IEvent<TEvent>,new()
 {
     protected readonly ILogger<SyncProcessorBase<TEvent>> Logger;

@@ -25,6 +25,8 @@ public class Query
         GetPullLiquidityRecordDto dto
         )
     {
+        dto.Validate();
+        
         var mustQuery = new List<Func<QueryContainerDescriptor<LiquidityRecordIndex>, QueryContainer>>();
         mustQuery.Add(q => q.Term(i
             => i.Field(f => f.ChainId).Value(dto.ChainId)));
@@ -43,7 +45,7 @@ public class Query
         QueryContainer Filter(QueryContainerDescriptor<LiquidityRecordIndex> f) =>
             f.Bool(b => b.Must(mustQuery));
 
-        var result = await repository.GetListAsync(Filter, sortType: SortOrder.Ascending, sortExp: o => o.BlockHeight, skip: 0, limit: 10000);
+        var result = await repository.GetListAsync(Filter, sortType: SortOrder.Ascending, sortExp: o => o.BlockHeight, skip: dto.SkipCount, limit: dto.MaxResultCount);
         return objectMapper.Map<List<LiquidityRecordIndex>, List<LiquidityRecordDto>>(result.Item2);
     }
     
@@ -54,11 +56,22 @@ public class Query
         GetLiquidityRecordDto dto
         )
     {
+        dto.Validate();
+        
         var mustQuery = new List<Func<QueryContainerDescriptor<LiquidityRecordIndex>, QueryContainer>>();
-        mustQuery.Add(q => q.Term(i
-            => i.Field(f => f.ChainId).Value(dto.ChainId)));
-        mustQuery.Add(q => q.Term(i
-            => i.Field(f => f.Address).Value(dto.Address)));
+
+        if (!string.IsNullOrEmpty(dto.ChainId))
+        {
+            mustQuery.Add(q => q.Term(i
+                => i.Field(f => f.ChainId).Value(dto.ChainId)));
+        }
+
+        if (!string.IsNullOrEmpty(dto.Address))
+        {
+            mustQuery.Add(q => q.Term(i
+                => i.Field(f => f.Address).Value(dto.Address)));
+        }
+
         if (dto.Pair != null)
         {
             mustQuery.Add(q => q.Term(i
@@ -169,12 +182,21 @@ public class Query
         GetUserLiquidityDto dto
     )
     {
+        dto.Validate();
+        
         var mustQuery = new List<Func<QueryContainerDescriptor<UserLiquidityIndex>, QueryContainer>>();
-        mustQuery.Add(q => q.Term(i
-            => i.Field(f => f.ChainId).Value(dto.ChainId)));
-        mustQuery.Add(q => q.Term(i
-            => i.Field(f => f.Address).Value(dto.Address)));
-       
+        if (!string.IsNullOrEmpty(dto.ChainId))
+        {
+            mustQuery.Add(q => q.Term(i
+                => i.Field(f => f.ChainId).Value(dto.ChainId)));
+        }
+
+        if (!string.IsNullOrEmpty(dto.Address))
+        {
+            mustQuery.Add(q => q.Term(i
+                => i.Field(f => f.Address).Value(dto.Address)));
+        }
+
         QueryContainer Filter(QueryContainerDescriptor<UserLiquidityIndex> f) =>
             f.Bool(b => b.Must(mustQuery));
         var sorting = GetUserLiquiditySorting(dto.Sorting);
@@ -259,10 +281,18 @@ public class Query
         [FromServices] IObjectMapper objectMapper, GetUserTokenDto dto)
     {
         var mustQuery = new List<Func<QueryContainerDescriptor<SwapUserTokenIndex>, QueryContainer>>();
-        mustQuery.Add(q => q.Term(i
-            => i.Field(f => f.ChainId).Value(dto.ChainId)));
-        mustQuery.Add(q => q.Term(i
-            => i.Field(f => f.Address).Value(dto.Address)));
+        if (!string.IsNullOrEmpty(dto.ChainId))
+        {
+            mustQuery.Add(q => q.Term(i
+                => i.Field(f => f.ChainId).Value(dto.ChainId)));
+        }
+
+        if (!string.IsNullOrEmpty(dto.Address))
+        {
+            mustQuery.Add(q => q.Term(i
+                => i.Field(f => f.Address).Value(dto.Address)));
+        }
+
         if (dto.Symbol != null)
         {
             mustQuery.Add(q => q.Term(i
@@ -282,9 +312,16 @@ public class Query
         GetSyncRecordDto getSyncRecordDto
     )
     {
+        getSyncRecordDto.Validate();
+        
         var mustQuery = new List<Func<QueryContainerDescriptor<SyncRecordIndex>, QueryContainer>>();
-        mustQuery.Add(q => q.Term(i
-            => i.Field(f => f.ChainId).Value(getSyncRecordDto.ChainId)));
+        
+        if (!string.IsNullOrEmpty(getSyncRecordDto.ChainId))
+        {
+            mustQuery.Add(q => q.Term(i
+                => i.Field(f => f.ChainId).Value(getSyncRecordDto.ChainId)));
+        }
+       
         
         if (!string.IsNullOrEmpty(getSyncRecordDto.PairAddress))
         {
@@ -311,10 +348,17 @@ public class Query
         GetChainBlockHeightDto dto
     )
     {
+        dto.Validate();
+
         var mustQuery = new List<Func<QueryContainerDescriptor<SyncRecordIndex>, QueryContainer>>();
-        mustQuery.Add(q => q.Term(i
-            => i.Field(f => f.ChainId).Value(dto.ChainId)));
         
+        if (!string.IsNullOrEmpty(dto.ChainId))
+        {
+            mustQuery.Add(q => q.Term(i
+                => i.Field(f => f.ChainId).Value(dto.ChainId)));
+        }
+        
+
         if (dto.StartBlockHeight > 0)
         {
             mustQuery.Add(q => q.Range(i
@@ -330,7 +374,7 @@ public class Query
         QueryContainer Filter(QueryContainerDescriptor<SyncRecordIndex> f) =>
             f.Bool(b => b.Must(mustQuery));
 
-        var result = await repository.GetListAsync(Filter, skip: 0, limit: 10000, sortType: SortOrder.Ascending, sortExp: o => o.BlockHeight);
+        var result = await repository.GetListAsync(Filter, skip: dto.SkipCount, limit: dto.MaxResultCount, sortType: SortOrder.Ascending, sortExp: o => o.BlockHeight);
         return objectMapper.Map<List<SyncRecordIndex>, List<SyncRecordDto>>(result.Item2);
     }
     
@@ -341,9 +385,16 @@ public class Query
         GetSwapRecordDto getSwapRecordDto
     )
     {
+        getSwapRecordDto.Validate();
+        
         var mustQuery = new List<Func<QueryContainerDescriptor<SwapRecordIndex>, QueryContainer>>();
-        mustQuery.Add(q => q.Term(i
-            => i.Field(f => f.ChainId).Value(getSwapRecordDto.ChainId)));
+
+        if (!string.IsNullOrEmpty(getSwapRecordDto.ChainId))
+        {
+            mustQuery.Add(q => q.Term(i
+                => i.Field(f => f.ChainId).Value(getSwapRecordDto.ChainId)));
+        }
+
         if (!string.IsNullOrEmpty(getSwapRecordDto.PairAddress))
         {
             mustQuery.Add(q => q.Term(i
@@ -369,9 +420,16 @@ public class Query
         GetChainBlockHeightDto dto
     )
     {
+        dto.Validate();
+        
         var mustQuery = new List<Func<QueryContainerDescriptor<SwapRecordIndex>, QueryContainer>>();
-        mustQuery.Add(q => q.Term(i
-            => i.Field(f => f.ChainId).Value(dto.ChainId)));
+
+        if (!string.IsNullOrEmpty(dto.ChainId))
+        {
+            mustQuery.Add(q => q.Term(i
+                => i.Field(f => f.ChainId).Value(dto.ChainId)));
+        }
+
         if (dto.StartBlockHeight > 0)
         {
             mustQuery.Add(q => q.Range(i
@@ -387,7 +445,7 @@ public class Query
         QueryContainer Filter(QueryContainerDescriptor<SwapRecordIndex> f) =>
             f.Bool(b => b.Must(mustQuery));
 
-        var result = await repository.GetListAsync(Filter, skip: 0, limit: 10000, sortType: SortOrder.Ascending, sortExp: o => o.BlockHeight);
+        var result = await repository.GetListAsync(Filter, skip: dto.SkipCount, limit: dto.MaxResultCount, sortType: SortOrder.Ascending, sortExp: o => o.BlockHeight);
         return objectMapper.Map<List<SwapRecordIndex>, List<SwapRecordDto>>(result.Item2);
     }
 
@@ -397,13 +455,27 @@ public class Query
         [FromServices] IObjectMapper objectMapper, GetTradePairInfoDto getTradePairInfoDto
     )
     {
+        getTradePairInfoDto.Validate();
+        
         var mustQuery = new List<Func<QueryContainerDescriptor<TradePairInfoIndex>, QueryContainer>>();
-        mustQuery.Add(q => q.Term(i
-            => i.Field(f => f.ChainId).Value(getTradePairInfoDto.ChainId)));
-        mustQuery.Add(q => q.Term(i
-            => i.Field(f => f.Token0Symbol).Value(getTradePairInfoDto.Token0Symbol)));
-        mustQuery.Add(q => q.Term(i
-            => i.Field(f => f.Token1Symbol).Value(getTradePairInfoDto.Token1Symbol)));
+        
+        if (!string.IsNullOrEmpty(getTradePairInfoDto.ChainId))
+        {
+            mustQuery.Add(q => q.Term(i
+                => i.Field(f => f.ChainId).Value(getTradePairInfoDto.ChainId)));
+        }
+
+        if (!string.IsNullOrEmpty(getTradePairInfoDto.Token0Symbol))
+        {
+            mustQuery.Add(q => q.Term(i
+                => i.Field(f => f.Token0Symbol).Value(getTradePairInfoDto.Token0Symbol)));
+        }
+
+        if (!string.IsNullOrEmpty(getTradePairInfoDto.Token1Symbol))
+        {
+            mustQuery.Add(q => q.Term(i
+                => i.Field(f => f.Token1Symbol).Value(getTradePairInfoDto.Token1Symbol)));
+        }
 
         QueryContainer Filter(QueryContainerDescriptor<TradePairInfoIndex> f) =>
             f.Bool(b => b.Must(mustQuery));
@@ -455,6 +527,18 @@ public class Query
         {
             mustQuery.Add(q => q.Term(t => t.Field(f => f.Token0Symbol).Value(getTradePairInfoDto.TokenSymbol))
                                || q.Term(t => t.Field(f => f.Token0Symbol).Value(getTradePairInfoDto.TokenSymbol)));
+        }
+        
+        if (getTradePairInfoDto.StartBlockHeight > 0)
+        {
+            mustQuery.Add(q => q.Range(i
+                => i.Field(f => f.BlockHeight).GreaterThanOrEquals(getTradePairInfoDto.StartBlockHeight)));
+        }
+
+        if (getTradePairInfoDto.EndBlockHeight > 0)
+        {
+            mustQuery.Add(q => q.Range(i
+                => i.Field(f => f.BlockHeight).LessThanOrEquals(getTradePairInfoDto.EndBlockHeight)));
         }
 
         QueryContainer Filter(QueryContainerDescriptor<TradePairInfoIndex> f) =>

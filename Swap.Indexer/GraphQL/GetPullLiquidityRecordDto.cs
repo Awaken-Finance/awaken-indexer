@@ -1,6 +1,6 @@
 namespace Swap.Indexer.GraphQL;
 
-public class GetPullLiquidityRecordDto
+public class GetPullLiquidityRecordDto : PagedResultQueryDtoBase
 {
     public string ChainId { get; set; }
     public long StartBlockHeight { get; set; }

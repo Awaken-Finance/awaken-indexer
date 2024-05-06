@@ -31,8 +31,8 @@ public class TokenCrossChainTransferredProcessor : TokenProcessorBase<CrossChain
             Address = eventValue.From.ToBase58(),
             Symbol = eventValue.Symbol
         };
-        await HandleEventAsync(userToken, context);
+        await HandleEventBaseAsync(userToken, context);
         userToken.Address = eventValue.To.ToBase58();
-        await HandleEventAsync(userToken, context);
+        await HandleEventBaseAsync(userToken, context);
     }
 }
