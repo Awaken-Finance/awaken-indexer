@@ -43,8 +43,8 @@ public class PairCreatedProcessor : SwapProcessorBase<PairCreated>
             IsTokenReversed = isTokenReversed,
             TransactionHash = context.TransactionId
         };
-        ObjectMapper.Map(context, info);
         ObjectMapper.Map(eventValue, info);
+        ObjectMapper.Map(context, info);
         await Repository.AddOrUpdateAsync(info);
     }
 }

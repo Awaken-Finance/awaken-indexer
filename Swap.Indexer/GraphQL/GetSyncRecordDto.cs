@@ -9,4 +9,5 @@ public class GetSyncRecordDto : PagedResultQueryDtoBase
     public long ReserveA { get; set; }
     public long ReserveB { get; set; }
     public long Timestamp { get; set; }
+    public long TimestampMax { get; set; }
 }

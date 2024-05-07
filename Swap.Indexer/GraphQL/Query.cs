@@ -321,12 +321,17 @@ public class Query
             mustQuery.Add(q => q.Term(i
                 => i.Field(f => f.ChainId).Value(getSyncRecordDto.ChainId)));
         }
-       
         
         if (!string.IsNullOrEmpty(getSyncRecordDto.PairAddress))
         {
             mustQuery.Add(q => q.Term(i
                 => i.Field(f => f.PairAddress).Value(getSyncRecordDto.PairAddress)));
+        }
+        
+        if (getSyncRecordDto.TimestampMax > 0)
+        {
+            mustQuery.Add(q => q.Range(i
+                => i.Field(f => f.Timestamp).LessThanOrEquals(getSyncRecordDto.TimestampMax)));
         }
        
         QueryContainer Filter(QueryContainerDescriptor<SyncRecordIndex> f) =>
