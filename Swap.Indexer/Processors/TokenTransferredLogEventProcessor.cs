@@ -10,6 +10,7 @@ using Swap.Indexer.GraphQL;
 using Swap.Indexer.Options;
 using Swap.Indexer.Providers;
 using Volo.Abp.ObjectMapping;
+using JsonConvert = Newtonsoft.Json.JsonConvert;
 
 namespace Swap.Indexer.Processors;
 
@@ -41,15 +42,33 @@ public class TokenTransferredLogEventProcessor : TokenProcessorBase<Transferred>
 
     protected override async Task HandleEventAsync(Transferred eventValue, LogEventContext context)
     {
-        _logger.Info("received Transferred:" + eventValue + ",context:" + context);
-        var userToken = new UserTokenDto
+        _logger.Info("received Transferred:" + eventValue + ", context: " + JsonConvert.SerializeObject(context));
+        
+        var fromId = IdGenerateHelper.GetId(context.ChainId, eventValue.From.ToBase58(), eventValue.Symbol);
+        var fromIndex = await _repository.GetFromBlockStateSetAsync(fromId, context.ChainId);
+        fromIndex ??= new SwapUserTokenIndex()
         {
+            Id = fromId,
             Address = eventValue.From.ToBase58(),
             Symbol = eventValue.Symbol
         };
-        await HandleEventBaseAsync(userToken, context);
-        userToken.Address = eventValue.To.ToBase58();
-        await HandleEventBaseAsync(userToken, context);
+        _objectMapper.Map(context, fromIndex);
+        fromIndex.Balance =
+            await _aElfDataProvider.GetBalanceAsync(context.ChainId, eventValue.Symbol, eventValue.From);
+        _logger.Info("SwapUserTokenIndex from:" + JsonConvert.SerializeObject(fromIndex));
+        await _repository.AddOrUpdateAsync(fromIndex);
 
+        var toId = IdGenerateHelper.GetId(context.ChainId, eventValue.To.ToBase58(), eventValue.Symbol);
+        var toIndex = await _repository.GetFromBlockStateSetAsync(toId, context.ChainId);
+        toIndex ??= new SwapUserTokenIndex()
+        {
+            Id = toId,
+            Address = eventValue.To.ToBase58(),
+            Symbol = eventValue.Symbol
+        };
+        _objectMapper.Map(context, toIndex);
+        toIndex.Balance = await _aElfDataProvider.GetBalanceAsync(context.ChainId, eventValue.Symbol, eventValue.To);
+        _logger.Info("SwapUserTokenIndex to:" + JsonConvert.SerializeObject(toIndex));
+        await _repository.AddOrUpdateAsync(toIndex);
     }
 }
