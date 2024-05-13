@@ -34,10 +34,10 @@ jobs:
       #    echo $ELASTIC_SEARCH_URL
       #    curl -fsSL "$ELASTIC_SEARCH_URL/_cat/health?h=status"
       - name: Install dependencies
-        run: dotnet restore --verbosity quiet
+        run: dotnet restore --verbosity normal
 
       - name: Build
-        run: dotnet build --no-restore /clp:ErrorsOnly /p:GeneratePackageOnBuild=false --verbosity quiet
+        run: dotnet build --no-restore /clp:ErrorsOnly /p:GeneratePackageOnBuild=false --verbosity normal
 
       - name: Test
         run: |
