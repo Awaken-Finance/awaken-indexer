@@ -71,10 +71,10 @@ public class PairCreatedProcessorTests : SwapIndexerTests
         repositoryMock.Setup(repository => repository.AddOrUpdateAsync(It.IsAny<TradePairInfoIndex>()))
             .Callback<TradePairInfoIndex>(e =>
             {
-                Assert.Equal("USDT", e.Token0Symbol);
-                Assert.Equal("ELF", e.Token1Symbol);
+                Assert.Equal("ELF", e.Token0Symbol);
+                Assert.Equal("USDT", e.Token1Symbol);
                 Assert.Equal(chainId, e.ChainId);
-                Assert.False(e.IsTokenReversed);
+                Assert.True(e.IsTokenReversed);
             })
             .Returns(Task.CompletedTask);
         
@@ -130,8 +130,8 @@ public class PairCreatedProcessorTests : SwapIndexerTests
             SkipCount = 0,
             MaxResultCount = 100,
             ChainId = "ELF",
-            Token0Symbol = "USDT",
-            Token1Symbol = "ELF",
+            Token0Symbol = "ELF",
+            Token1Symbol = "USDT",
             TokenSymbol = "ELF",
             FeeRate = 1.0,
             Address = "AA",
@@ -143,8 +143,8 @@ public class PairCreatedProcessorTests : SwapIndexerTests
             SkipCount = 0,
             MaxResultCount = 100,
             ChainId = "ELF",
-            Token0Symbol = "USDT",
-            Token1Symbol = "ELF",
+            Token0Symbol = "ELF",
+            Token1Symbol = "USDT",
             TokenSymbol = "ELF",
             FeeRate = 1.0,
             Address = "AA",
