@@ -1,4 +1,4 @@
-#jobs:
+##jobs:
 #  # All tasks on Windows....
 ##  - job: build_all_windows
 ##    displayName: Build all tasks (Windows)
@@ -69,7 +69,7 @@
 #   pool:
 #     vmImage: macos-latest
 #   variables:
-#     CI_TEST: true
+#     CI_TEST: false
 #   steps:
 #     - task: UseDotNet@2
 #       displayName: 'Install .NET Core SDK'

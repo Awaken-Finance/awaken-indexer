@@ -420,7 +420,7 @@ public sealed class LiquidityRecordProcessorTests : SwapIndexerTests
             ChainId = "AELF",
             StartBlockHeight = 100,
             EndBlockHeight = 100,
-            MaxResultCount = 1001
+            MaxResultCount = 10001
         });
         
         var exception = await Assert.ThrowsAsync<ArgumentOutOfRangeException>(action);
