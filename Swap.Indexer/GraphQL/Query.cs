@@ -309,30 +309,36 @@ public class Query
     public static async Task<SyncRecordPageResultDto> SyncRecordAsync(
         [FromServices] IAElfIndexerClientEntityRepository<SyncRecordIndex, LogEventInfo> repository,
         [FromServices] IObjectMapper objectMapper,
-        GetSyncRecordDto getSyncRecordDto
+        GetSyncRecordDto dto
     )
     {
-        getSyncRecordDto.Validate();
-        
+        dto.Validate();
+
         var mustQuery = new List<Func<QueryContainerDescriptor<SyncRecordIndex>, QueryContainer>>();
-        
-        if (!string.IsNullOrEmpty(getSyncRecordDto.ChainId))
+
+        if (!string.IsNullOrEmpty(dto.ChainId))
         {
             mustQuery.Add(q => q.Term(i
-                => i.Field(f => f.ChainId).Value(getSyncRecordDto.ChainId)));
+                => i.Field(f => f.ChainId).Value(dto.ChainId)));
         }
-       
-        
-        if (!string.IsNullOrEmpty(getSyncRecordDto.PairAddress))
+
+
+        if (!string.IsNullOrEmpty(dto.PairAddress))
         {
             mustQuery.Add(q => q.Term(i
-                => i.Field(f => f.PairAddress).Value(getSyncRecordDto.PairAddress)));
+                => i.Field(f => f.PairAddress).Value(dto.PairAddress)));
         }
-       
+
+        if (dto.TimestampMax > 0)
+        {
+            mustQuery.Add(q => q.Range(i
+                => i.Field(f => f.Timestamp).LessThanOrEquals(dto.TimestampMax)));
+        }
+
         QueryContainer Filter(QueryContainerDescriptor<SyncRecordIndex> f) =>
             f.Bool(b => b.Must(mustQuery));
-        var result = await repository.GetListAsync(Filter,  skip: getSyncRecordDto.SkipCount,
-            limit: getSyncRecordDto.MaxResultCount, sortType: SortOrder.Ascending, sortExp: o => o.Timestamp);
+        var result = await repository.GetListAsync(Filter,  skip: dto.SkipCount,
+            limit: dto.MaxResultCount, sortType: SortOrder.Descending, sortExp: o => o.Timestamp);
         var dataList = objectMapper.Map<List<SyncRecordIndex>, List<SyncRecordDto>>(result.Item2);
         return new SyncRecordPageResultDto()
         {
