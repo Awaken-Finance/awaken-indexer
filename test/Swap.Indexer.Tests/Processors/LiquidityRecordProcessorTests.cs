@@ -138,6 +138,108 @@ public sealed class LiquidityRecordProcessorTests : SwapIndexerTests
         liquidityRecordData.Token1Amount.ShouldBe(1);
     }
     
+    
+    [Fact]
+    public async Task LiquidityAddedSpecialTokenAsyncTests()
+    {
+        //step1: create blockStateSet
+        const string chainId = "AELF";
+        const string blockHash = "dac5cd67a2783d0a3d843426c2d45f1178f4d052235a907a0d796ae4659103b1";
+        const string previousBlockHash = "e38c4fb1cf6af05878657cb3f7b5fc8a5fcfb2eec19cd76b73abb831973fbf4e";
+        const string transactionId = "c1e625d135171c766999274a00a7003abed24cfe59a7215aabf1472ef20a2da2";
+        const long blockHeight = 100;
+        var blockStateSet = new BlockStateSet<LogEventInfo>
+        {
+            BlockHash = blockHash,
+            BlockHeight = blockHeight,
+            Confirmed = true,
+            PreviousBlockHash = previousBlockHash,
+        };
+        var blockStateSetTransaction = new BlockStateSet<TransactionInfo>
+        {
+            BlockHash = blockHash,
+            BlockHeight = blockHeight,
+            Confirmed = true,
+            PreviousBlockHash = previousBlockHash,
+        };
+        
+        var blockStateSetKey = await InitializeBlockStateSetAsync(blockStateSet, chainId);
+        var blockStateSetKeyTransaction = await InitializeBlockStateSetAsync(blockStateSetTransaction, chainId);
+        
+        // step2: create logEventInfo
+        var liquidityAdd = new LiquidityAdded()
+        {
+            Pair = Address.FromPublicKey("AAA".HexToByteArray()),
+            To = Address.FromPublicKey("BBB".HexToByteArray()),
+            Sender = Address.FromPublicKey("CCC".HexToByteArray()),
+            SymbolA = "SGR-1",
+            SymbolB = "ELF",
+            AmountA = 100,
+            AmountB = 1,
+            LiquidityToken = 1,
+            Channel = "test"
+        };
+        var logEventInfo = LogEventHelper.ConvertAElfLogEventToLogEventInfo(liquidityAdd.ToLogEvent());
+        logEventInfo.BlockHeight = blockHeight;
+        logEventInfo.ChainId= chainId;
+        logEventInfo.BlockHash = blockHash;
+        logEventInfo.TransactionId = transactionId;
+        var logEventContext = new LogEventContext
+        {
+            ChainId = chainId,
+            BlockHeight = blockHeight,
+            BlockHash = blockHash,
+            PreviousBlockHash = previousBlockHash,
+            TransactionId = transactionId,
+            Params = "{ \"to\": \"swap\", \"symbol\": \"ELF\", \"amount\": \"100000000000\" }",
+            MethodName = "LiquidityAdd",
+            ExtraProperties = new Dictionary<string, string>
+            {
+                { "TransactionFee", "{\"ELF\":\"3\"}" },
+                { "ResourceFee", "{\"ELF\":\"3\"}" }
+            },
+            BlockTime = DateTime.UtcNow
+        };
+        
+        //step3: handle event and write result to blockStateSet
+        var liquidityAddedEventProcessor = GetRequiredService<LiquidityAddedProcessor>();
+        await liquidityAddedEventProcessor.HandleEventAsync(logEventInfo, logEventContext);
+        liquidityAddedEventProcessor.GetContractAddress(chainId).ShouldBe("XXXXXX");
+        
+        var liquidityAddedEventProcessor2 = GetRequiredService<LiquidityAddedProcessor2>();
+        liquidityAddedEventProcessor2.GetContractAddress(chainId).ShouldBe("XXXXXX2");
+        
+        var liquidityAddedEventProcessor3 = GetRequiredService<LiquidityAddedProcessor3>();
+        liquidityAddedEventProcessor3.GetContractAddress(chainId).ShouldBe("XXXXXX3");
+        
+        var liquidityAddedEventProcessor4 = GetRequiredService<LiquidityAddedProcessor4>();
+        liquidityAddedEventProcessor4.GetContractAddress(chainId).ShouldBe("XXXXXX4");
+        
+        var liquidityAddedEventProcessor5 = GetRequiredService<LiquidityAddedProcessor5>();
+        liquidityAddedEventProcessor5.GetContractAddress(chainId).ShouldBe("XXXXXX5");
+
+        //step4: save blockStateSet into es
+        await BlockStateSetSaveDataAsync<LogEventInfo>(blockStateSetKey);
+        await BlockStateSetSaveDataAsync<TransactionInfo>(blockStateSetKeyTransaction);
+        await Task.Delay(2000);
+        
+        //step5: check result
+        var userLiquidityIndexData = await _userLiquidityRepository.GetAsync(chainId + "-" + liquidityAdd.Sender.ToBase58() + "-" + liquidityAdd.Pair.ToBase58());
+        userLiquidityIndexData.Address.ShouldBe(Address.FromPublicKey("CCC".HexToByteArray()).ToBase58());
+        userLiquidityIndexData.Pair.ShouldBe(Address.FromPublicKey("AAA".HexToByteArray()).ToBase58());
+        userLiquidityIndexData.LpTokenAmount.ShouldBe(liquidityAdd.LiquidityToken);
+        
+        var liquidityRecordData = await _recordRepository.GetAsync(chainId + "-" + transactionId);
+        liquidityRecordData.TransactionHash.ShouldBe(transactionId);
+        liquidityRecordData.Address.ShouldBe(Address.FromPublicKey("CCC".HexToByteArray()).ToBase58());
+        liquidityRecordData.Pair.ShouldBe(Address.FromPublicKey("AAA".HexToByteArray()).ToBase58());
+        liquidityRecordData.Type.ShouldBe(LiquidityRecordIndex.LiquidityType.Mint);
+        liquidityRecordData.Token0.ShouldBe("SGR-1");
+        liquidityRecordData.Token1.ShouldBe("ELF");
+        liquidityRecordData.Token0Amount.ShouldBe(100);
+        liquidityRecordData.Token1Amount.ShouldBe(1);
+    }
+    
     [Fact]
     public async Task LiquidityRemovedAsyncTests()
     {
@@ -321,6 +423,28 @@ public sealed class LiquidityRecordProcessorTests : SwapIndexerTests
         result.TotalCount.ShouldBe(2);
         result.Data.First().Type.ShouldBe(LiquidityRecordIndex.LiquidityType.Mint);
         result.Data.Last().Type.ShouldBe(LiquidityRecordIndex.LiquidityType.Burn);
+    }
+    
+    
+    [Fact]
+    public async Task QueryLiquidityRecordSpecialTokenAsyncTests()
+    {
+        await LiquidityAddedSpecialTokenAsyncTests();
+        var result = await Query.LiquidityRecordAsync(_recordRepository, _objectMapper, new GetLiquidityRecordDto
+        {
+            SkipCount = 0,
+            MaxResultCount = 100,
+            ChainId = "AELF",
+            Address = Address.FromPublicKey("CCC".HexToByteArray()).ToBase58(),
+            TokenSymbol = "sgr"
+        });
+        result.TotalCount.ShouldBe(1);
+        result.Data.First().LpTokenAmount.ShouldBe(1);
+        result.Data.First().Address.ShouldBe(Address.FromPublicKey("CCC".HexToByteArray()).ToBase58());
+        result.Data.First().Pair.ShouldBe(Address.FromPublicKey("AAA".HexToByteArray()).ToBase58());
+        result.Data.First().ChainId.ShouldBe("AELF");
+        result.Data.First().Token0.ShouldBe("SGR-1");
+        result.Data.First().Token1.ShouldBe("ELF");
     }
     
     [Fact]

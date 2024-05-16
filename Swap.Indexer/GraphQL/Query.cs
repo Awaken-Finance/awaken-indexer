@@ -98,8 +98,10 @@ public class Query
         if (dto.TokenSymbol != null)
         {
             mustQuery.Add(q => q.Bool(i => i.Should(
-                s => s.Match(m => m.Field(f => f.Token0).Query(dto.TokenSymbol).Fuzziness(Fuzziness.Auto)),
-                s => s.Match(m => m.Field(f => f.Token1).Query(dto.TokenSymbol).Fuzziness(Fuzziness.Auto)))));
+                s => s.Wildcard(w =>
+                    w.Field(f => f.Token0).Value($"*{dto.TokenSymbol.ToUpper()}*")),
+                s => s.Wildcard(w =>
+                    w.Field(f => f.Token1).Value($"*{dto.TokenSymbol.ToUpper()}*")))));
         }
 
         if (dto.TransactionHash != null)
