@@ -127,7 +127,8 @@ public sealed class SyncRecordProcessorTests : SwapIndexerTests
             SymbolB = "B",
             ReserveA = 20,
             ReserveB = 10,
-            Timestamp = 11
+            Timestamp = 11,
+            TimestampMax = ((DateTimeOffset)(logEventContext.BlockTime.AddHours(3))).ToUnixTimeMilliseconds()
         });
         var dto = new GetSyncRecordDto
         {
