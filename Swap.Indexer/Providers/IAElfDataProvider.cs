@@ -10,6 +10,8 @@ namespace Swap.Indexer.Providers;
 public interface IAElfDataProvider
 {
     Task<long> GetBalanceAsync(string chainId, string symbol, Address owner);
+
+    Task<long> GetDecimaleAsync(string chainId, string symbol);
 }
 
 public class AElfDataProvider : IAElfDataProvider
@@ -43,5 +45,29 @@ public class AElfDataProvider : IAElfDataProvider
         });
         return GetBalanceOutput.Parser.ParseFrom(
             ByteArrayHelper.HexStringToByteArray(transactionGetTokenResult)).Balance;
+    }
+    
+    
+    public async Task<long> GetDecimaleAsync(string chainId, string symbol)
+    {
+        var client = _aElfClientProvider.GetClient(chainId);
+        var paramGetBalance = new GetBalanceInput()
+        {
+            Symbol = symbol
+        };
+        var address = (await client.GetContractAddressByNameAsync(
+            HashHelper.ComputeFrom("AElf.ContractNames.Token"))).ToBase58();
+        var transactionGetToken =
+            await client.GenerateTransactionAsync(client.GetAddressFromPrivateKey(PrivateKey), address,
+                "GetTokenInfo",
+                paramGetBalance);
+        var txWithSignGetToken = client.SignTransaction(PrivateKey, transactionGetToken);
+        var transactionGetTokenResult = await client.ExecuteTransactionAsync(new ExecuteTransactionDto
+        {
+            RawTransaction = txWithSignGetToken.ToByteArray().ToHex()
+        });
+        
+        return TokenInfo.Parser.ParseFrom(
+            ByteArrayHelper.HexStringToByteArray(transactionGetTokenResult)).Decimals;
     }
 }

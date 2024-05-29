@@ -5,12 +5,14 @@ using AElfIndexer.Client.Handlers;
 using AElfIndexer.Grains.State.Client;
 using Awaken.Contracts.Swap;
 using Force.DeepCloner;
+using Microsoft.Extensions.Logging;
 using Nethereum.Hex.HexConvertors.Extensions;
 using Shouldly;
 using Swap.Indexer.Entities;
 using Swap.Indexer.GraphQL;
 using Swap.Indexer.Orleans.TestBase;
 using Swap.Indexer.Processors;
+using Swap.Indexer.Providers;
 using Swap.Indexer.Tests.Helper;
 using Volo.Abp.ObjectMapping;
 using Xunit;
@@ -21,11 +23,17 @@ namespace Swap.Indexer.Tests.Processors;
 public sealed class SyncRecordProcessorTests : SwapIndexerTests
 {
     private readonly IAElfIndexerClientEntityRepository<SyncRecordIndex, LogEventInfo> _recordRepository;
+    private readonly IAElfIndexerClientEntityRepository<TradePairInfoIndex, LogEventInfo> _tradePairRepository;
+    private readonly IAElfDataProvider _aElfDataProvider;
+    private readonly ILogger<SyncRecordIndex> _logger;
     private readonly IObjectMapper _objectMapper;
 
     public SyncRecordProcessorTests()
     {
         _recordRepository = GetRequiredService<IAElfIndexerClientEntityRepository<SyncRecordIndex, LogEventInfo>>();
+        _tradePairRepository = GetRequiredService<IAElfIndexerClientEntityRepository<TradePairInfoIndex, LogEventInfo>>();
+        _aElfDataProvider = GetRequiredService<IAElfDataProvider>();
+        _logger = GetRequiredService<ILogger<SyncRecordIndex>>();
         _objectMapper = GetRequiredService<IObjectMapper>();
     }
 
@@ -210,6 +218,5 @@ public sealed class SyncRecordProcessorTests : SwapIndexerTests
             MaxResultCount = 0
         });
         ret.Count.ShouldBe(0);
-
     }
 }
