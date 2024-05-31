@@ -56,9 +56,10 @@ public class SwapIndexerModule : AElfIndexerClientPluginBaseModule<SwapIndexerMo
         Configure<ContractInfoOptions>(configuration.GetSection("ContractInfo"));
         Configure<NodeOptions>(configuration.GetSection("Node"));
         Configure<TradePairTokenOrderOptions>(configuration.GetSection("TradePairTokenOrderOptions"));
+        Configure<TotalValueLockedOptions>(configuration.GetSection("TotalValueLockedOptions"));
     }
 
 
     protected override string ClientId => "AElfIndexer_Swap";
-    protected override string Version => "05a008af0f8e45eea07cd1bc8f3daaf3";
+    protected override string Version => "b9b2291428c14395a86894aacfeaaa5a";
 }
