@@ -664,11 +664,16 @@ public class Query
                 _logger.LogInformation($"[TotalValueLockedAsync] Exception: {e}");
             }
         }
-        
-        double priceAvg = priceSum / count;
+
+        double priceAvg = 0.0;
+        if (count > 0)
+        {
+            priceAvg = priceSum / count;
+        }
+         
         _logger.LogInformation($"[TotalValueLockedAsync] cal elf price avg: {priceAvg}");
 
-        var tvl = 0.0;
+        double tvl = 0.0;
         foreach (var pairAddress in tradePairAddresses)
         {
             try
@@ -690,7 +695,8 @@ public class Query
                 var result = await repository.GetAsync(Filter, sortType: SortOrder.Descending, sortExp: o => o.Timestamp);
                 if (result != null)
                 {
-                    double value = 0;
+                    double value = 0.0;
+                    
                     if (result.SymbolA == baseToken)
                     {
                         value = 2 * result.ReserveA / Math.Pow(10, baseDecimal);
@@ -704,7 +710,7 @@ public class Query
                     {
                         value = 2 * result.ReserveB / Math.Pow(10, quoteDecimal) * priceAvg;
                     }
-            
+                    
                     _logger.LogInformation($"[TotalValueLockedAsync] pair: {pairAddress}, tokenA: {result.SymbolA}, tokenB: {result.SymbolB}, reserveA: {result.ReserveA}, reserveB: {result.ReserveB}, value: {value}");
             
                     tvl += value;
@@ -717,6 +723,11 @@ public class Query
         }
         
         _logger.LogInformation($"[TotalValueLockedAsync] chain: {dto.ChainId}, time: {dto.Timestamp} result: {tvl}");
+
+        if (Double.IsNaN(tvl))
+        {
+            tvl = 0.0;
+        }
         
         return new TotalValueLockedResultDto()
         {
