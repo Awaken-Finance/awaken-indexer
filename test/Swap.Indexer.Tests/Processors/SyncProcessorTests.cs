@@ -218,5 +218,17 @@ public sealed class SyncRecordProcessorTests : SwapIndexerTests
             MaxResultCount = 0
         });
         ret.Count.ShouldBe(0);
+
+        var pairSyncRecordsResult = await Query.PairSyncRecordsAsync(_recordRepository, _objectMapper,
+            new GetPairSyncRecordsDto
+            {
+                PairAddresses = new (){Address.FromPublicKey("AAA".HexToByteArray()).ToBase58()}
+            });
+        pairSyncRecordsResult.Count.ShouldBe(1);
+        pairSyncRecordsResult.First().PairAddress.ShouldBe(Address.FromPublicKey("AAA".HexToByteArray()).ToBase58());
+        pairSyncRecordsResult.First().SymbolA.ShouldBe("AELF");
+        pairSyncRecordsResult.First().SymbolB.ShouldBe("BTC");
+        pairSyncRecordsResult.First().ReserveA.ShouldBe(100);
+        pairSyncRecordsResult.First().ReserveB.ShouldBe(1);
     }
 }

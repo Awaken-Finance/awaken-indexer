@@ -16,4 +16,17 @@ public class SwapRecordIndex : AElfIndexerClientEntity<string>, IIndexBuild
     [Keyword] public string SymbolOut { get; set; }
     [Keyword] public string SymbolIn { get; set; }
     [Keyword] public string Channel { get; set; }
+
+    public List<SwapRecord> SwapRecords { get; set; } = new();
+}
+
+public class SwapRecord
+{
+    [Keyword] public string PairAddress { get; set; }
+    public long AmountOut { get; set; }
+    public long AmountIn { get; set; }
+    public long TotalFee { get; set; }
+    [Keyword] public string SymbolOut { get; set; }
+    [Keyword] public string SymbolIn { get; set; }
+    [Keyword] public string Channel { get; set; }
 }

@@ -734,4 +734,28 @@ public class Query
             Value = tvl
         };
     }
+
+    [Name("pairSyncRecords")]
+    public static async Task<List<SyncRecordDto>> PairSyncRecordsAsync(
+        [FromServices] IAElfIndexerClientEntityRepository<SyncRecordIndex, LogEventInfo> repository,
+        [FromServices] IObjectMapper objectMapper, GetPairSyncRecordsDto dto
+    )
+    {
+        var result = new List<SyncRecordDto>();
+        foreach (var pairAddress in dto.PairAddresses)
+        {
+            var query = new List<Func<QueryContainerDescriptor<SyncRecordIndex>, QueryContainer>>
+                { q => q.Term(i => i.Field(f => f.PairAddress).Value(pairAddress)) };
+            QueryContainer SyncRecordFilter(QueryContainerDescriptor<SyncRecordIndex> f) =>
+                f.Bool(b => b.Must(query));
+
+            var recentSyncRecord = await repository.GetListAsync(SyncRecordFilter, sortExp: k => k.PairAddress, sortType: SortOrder.Descending,
+                skip:0, limit:1);
+            if (recentSyncRecord.Item1 > 0)
+            {
+                result.Add(objectMapper.Map<SyncRecordIndex, SyncRecordDto>(recentSyncRecord.Item2[0]));
+            }
+        }
+        return result;
+    }
 }
