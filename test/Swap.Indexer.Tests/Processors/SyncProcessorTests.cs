@@ -117,7 +117,7 @@ public sealed class SyncRecordProcessorTests : SwapIndexerTests
         await BlockStateSetSaveDataAsync<TransactionInfo>(blockStateSetKeyTransaction);
         
         //step5: check result
-        var recordData = await _recordRepository.GetAsync($"{chainId}-{transactionId}-{blockHeight}");
+        var recordData = await _recordRepository.GetAsync($"{chainId}-{transactionId}-{sync.Pair.ToBase58()}");
         recordData.PairAddress.ShouldBe(Address.FromPublicKey("AAA".HexToByteArray()).ToBase58());
         recordData.SymbolA.ShouldBe("AELF");
         recordData.SymbolB.ShouldBe("BTC");
