@@ -230,5 +230,16 @@ public sealed class SyncRecordProcessorTests : SwapIndexerTests
         pairSyncRecordsResult.First().SymbolB.ShouldBe("BTC");
         pairSyncRecordsResult.First().ReserveA.ShouldBe(100);
         pairSyncRecordsResult.First().ReserveB.ShouldBe(1);
+        
+        pairSyncRecordsResult = await Query.PairSyncRecordsAsync(_recordRepository, _objectMapper,
+            new GetPairSyncRecordsDto
+            {
+                PairAddresses = new ()
+                {
+                    Address.FromPublicKey("AAA".HexToByteArray()).ToBase58(),
+                    Address.FromPublicKey("BBB".HexToByteArray()).ToBase58()
+                }
+            });
+        pairSyncRecordsResult.Count.ShouldBe(1);
     }
 }
