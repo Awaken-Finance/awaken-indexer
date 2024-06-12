@@ -8,6 +8,7 @@ using GraphQL;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Nest;
+using Nito.AsyncEx;
 using Orleans;
 using Swap.Indexer.Entities;
 using Swap.Indexer.Options;
@@ -741,21 +742,25 @@ public class Query
         [FromServices] IObjectMapper objectMapper, GetPairSyncRecordsDto dto
     )
     {
-        var result = new List<SyncRecordDto>();
-        foreach (var pairAddress in dto.PairAddresses)
-        {
-            var query = new List<Func<QueryContainerDescriptor<SyncRecordIndex>, QueryContainer>>
-                { q => q.Term(i => i.Field(f => f.PairAddress).Value(pairAddress)) };
-            QueryContainer SyncRecordFilter(QueryContainerDescriptor<SyncRecordIndex> f) =>
-                f.Bool(b => b.Must(query));
+        var tasks = dto.PairAddresses.Distinct().Select(t => GetLatestSyncRecordIndexAsync(t, objectMapper, repository));
+        var taskResultList = await tasks.WhenAll();
+        return taskResultList.Where(t => t != null).ToList();
+    }
 
-            var recentSyncRecord = await repository.GetListAsync(SyncRecordFilter, sortExp: k => k.PairAddress, sortType: SortOrder.Descending,
-                skip:0, limit:1);
-            if (recentSyncRecord.Item1 > 0)
-            {
-                result.Add(objectMapper.Map<SyncRecordIndex, SyncRecordDto>(recentSyncRecord.Item2[0]));
-            }
+    private static async Task<SyncRecordDto> GetLatestSyncRecordIndexAsync(string pairAddress, IObjectMapper objectMapper,
+        IAElfIndexerClientEntityRepository<SyncRecordIndex, LogEventInfo> repository)
+    {
+        var query = new List<Func<QueryContainerDescriptor<SyncRecordIndex>, QueryContainer>>
+            { q => q.Term(i => i.Field(f => f.PairAddress).Value(pairAddress)) };
+        QueryContainer SyncRecordFilter(QueryContainerDescriptor<SyncRecordIndex> f) =>
+            f.Bool(b => b.Must(query));
+
+        var recentSyncRecord = await repository.GetListAsync(SyncRecordFilter, sortExp: k => k.Timestamp, sortType: SortOrder.Descending,
+            skip:0, limit:1);
+        if (recentSyncRecord.Item1 > 0)
+        {
+            return objectMapper.Map<SyncRecordIndex, SyncRecordDto>(recentSyncRecord.Item2[0]);
         }
-        return result;
+        return null;
     }
 }
