@@ -37,7 +37,7 @@ public class SyncProcessor : SyncProcessorBase<Sync>
         };
         ObjectMapper.Map(eventValue, record);
         ObjectMapper.Map(context, record);
-        record.Id = IdGenerateHelper.GetId(context.ChainId, context.TransactionId, record.BlockHeight);
+        record.Id = IdGenerateHelper.GetId(context.ChainId, context.TransactionId, eventValue.Pair.ToBase58());
         
         await SyncRecordIndexRepository.AddOrUpdateAsync(record);
     }
