@@ -40,7 +40,7 @@ public class LiquidityRemovedProcessor : LiquidityProcessorBase<LiquidityRemoved
         recordIndex.Sender = eventValue.Sender.ToBase58();
         recordIndex.To = eventValue.To.ToBase58();
         recordIndex.Pair = eventValue.Pair.ToBase58();
-        recordIndex.Address = eventValue.Sender.ToBase58();
+        recordIndex.Address = eventValue.To.ToBase58();
         recordIndex.Token0Amount = eventValue.AmountA;
         recordIndex.Token1Amount = eventValue.AmountB;
         recordIndex.LpTokenAmount = eventValue.LiquidityToken;
