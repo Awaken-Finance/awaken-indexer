@@ -357,6 +357,7 @@ public sealed class SwapProcessorTests : SwapIndexerTests
         var recordData = await _recordRepository.GetAsync($"{chainId}-{transactionId}-{blockHeight}");
         recordData.PairAddress.ShouldBe(Address.FromPublicKey("AAA".HexToByteArray()).ToBase58());
         recordData.Sender.ShouldBe(Address.FromPublicKey("CCC".HexToByteArray()).ToBase58());
+        recordData.MethodName.ShouldBeNull();
 
         var hooksTransactionCreatedLogEvent = new HooksTransactionCreated()
         {
@@ -489,5 +490,6 @@ public sealed class SwapProcessorTests : SwapIndexerTests
         recordData.PairAddress.ShouldBe(Address.FromPublicKey("AAA".HexToByteArray()).ToBase58());
         recordData.Sender.ShouldBe(Address.FromPublicKey("DDD".HexToByteArray()).ToBase58());
         recordData.TransactionHash.ShouldBe(transactionId);
+        recordData.MethodName.ShouldBe("SwapExactTokensForTokens");
     }
 }

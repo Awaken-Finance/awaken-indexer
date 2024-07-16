@@ -28,7 +28,7 @@ public class HooksTransactionCreatedProcessor : SwapProcessorBase<HooksTransacti
 
     public override string GetContractAddress(string chainId)
     {
-        return ContractInfoOptions.ContractInfos.First(o => o.ChainId == chainId).HooksContractAddress;
+        return ContractInfoOptions.ContractInfos.First(o => o.ChainId == chainId && !o.HooksContractAddress.IsNullOrWhiteSpace()).HooksContractAddress;
     }
 
     protected override async Task HandleEventAsync(HooksTransactionCreated eventValue, LogEventContext context)
