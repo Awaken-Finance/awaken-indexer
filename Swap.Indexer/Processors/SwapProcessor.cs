@@ -1,9 +1,12 @@
+using AElf.Client.Extensions;
 using AElfIndexer.Client;
 using AElfIndexer.Client.Handlers;
 using AElfIndexer.Grains.State.Client;
+using Google.Protobuf;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Orleans.Runtime;
+using Portkey.Contracts.CA;
 using Swap.Indexer.Entities;
 using Swap.Indexer.Options;
 using Volo.Abp.ObjectMapping;
@@ -26,23 +29,23 @@ public class SwapProcessor : SwapProcessorBase<Awaken.Contracts.Swap.Swap>
         Logger.Info("received Swap:" + context.BlockTime);
         var indexId = IdGenerateHelper.GetId(context.ChainId, context.TransactionId, context.BlockHeight);
         var record = await SwapRecordIndexRepository.GetFromBlockStateSetAsync(indexId, context.ChainId);
-        if (record == null || record.TransactionHash.IsNullOrWhiteSpace())
+        if (record == null)
         {
-            record ??= new SwapRecordIndex
+            record = new SwapRecordIndex
             {
                 Id = indexId,
-                Sender = eventValue.Sender.ToBase58()
+                ChainId = context.ChainId,
+                PairAddress = eventValue.Pair.ToBase58(),
+                Sender = GetRealSender(eventValue.Sender.ToBase58(), context),
+                TransactionHash = context.TransactionId,
+                Timestamp = DateTimeHelper.ToUnixTimeMilliseconds(context.BlockTime),
+                AmountOut = eventValue.AmountOut,
+                AmountIn = eventValue.AmountIn,
+                TotalFee = eventValue.TotalFee,
+                SymbolOut = eventValue.SymbolOut,
+                SymbolIn = eventValue.SymbolIn,
+                Channel = eventValue.Channel,
             };
-            record.ChainId = context.ChainId;
-            record.PairAddress = eventValue.Pair.ToBase58();
-            record.TransactionHash = context.TransactionId;
-            record.Timestamp = DateTimeHelper.ToUnixTimeMilliseconds(context.BlockTime);
-            record.AmountOut = eventValue.AmountOut;
-            record.AmountIn = eventValue.AmountIn;
-            record.TotalFee = eventValue.TotalFee;
-            record.SymbolIn = eventValue.SymbolIn;
-            record.SymbolOut = eventValue.SymbolOut;
-            record.Channel = eventValue.Channel;
         }
         else
         {
@@ -65,9 +68,38 @@ public class SwapProcessor : SwapProcessorBase<Awaken.Contracts.Swap.Swap>
             record.SwapRecords.Add(swapRecord);
         }
         ObjectMapper.Map(context, record);
+        record.MethodName = GetMethodName(context);
         await SwapRecordIndexRepository.AddOrUpdateAsync(record);
     }
+
+    private string GetRealSender(string sender, LogEventContext context)
+    {
+        if (sender != GetHooksContractAddress(context.ChainId))
+        {
+            return sender;
+        }
+
+        var caContractAddress = GetCaContractAddress(context.ChainId);
+        if (context.To == caContractAddress && context.MethodName == "ManagerForwardCall")
+        {
+            var managerForwardCallInput = ManagerForwardCallInput.Parser.ParseFrom(ByteString.FromBase64(context.Params));
+            return AddressHelper.ConvertVirtualAddressToContractAddress(managerForwardCallInput.CaHash, caContractAddress.ToAddress()).ToBase58();
+        }
+        return context.From;
+    }
+    
+    private string GetMethodName(LogEventContext context)
+    {
+        var caContractAddress = GetCaContractAddress(context.ChainId);
+        if (context.To == caContractAddress && context.MethodName == "ManagerForwardCall")
+        {
+            var managerForwardCallInput = ManagerForwardCallInput.Parser.ParseFrom(ByteString.FromBase64(context.Params));
+            return managerForwardCallInput.MethodName;
+        }
+        return context.MethodName;
+    }
 }
+
 
 public class SwapProcessor2 : SwapProcessor
 {

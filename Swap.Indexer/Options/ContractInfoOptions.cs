@@ -12,6 +12,8 @@ public class ContractInfo
     public string MultiTokenContractAddress { get; set; }
     
     public string HooksContractAddress { get; set; }
+    
+    public string CaContractAddress { get; set; }
     public double FeeRate { get; set; }
     public int Level { get; set; }
 }

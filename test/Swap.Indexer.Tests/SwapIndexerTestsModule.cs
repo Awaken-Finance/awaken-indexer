@@ -2,6 +2,7 @@ using System.Reflection;
 using AElf.Indexing.Elasticsearch;
 using AElf.Indexing.Elasticsearch.Options;
 using AElf.Indexing.Elasticsearch.Services;
+using AElf.Types;
 using AElfIndexer.BlockScan;
 using AElfIndexer.Client;
 using AElfIndexer.Client.Handlers;
@@ -11,6 +12,7 @@ using Elasticsearch.Net;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
+using Nethereum.Hex.HexConvertors.Extensions;
 using Swap.Indexer.Options;
 using Swap.Indexer.Orleans.TestBase;
 using Swap.Indexer.Providers;
@@ -84,7 +86,9 @@ public class SwapIndexerTestsModule : AbpModule
                         ChainId = "AELF",
                         SwapContractAddress = "XXXXXX",
                         Level = 1,
-                        FeeRate = 0.003
+                        FeeRate = 0.003,
+                        HooksContractAddress = Address.FromPublicKey("EEE".HexToByteArray()).ToBase58(),
+                        CaContractAddress = Address.FromPublicKey("DDD".HexToByteArray()).ToBase58()
                     },
                     new()
                     {

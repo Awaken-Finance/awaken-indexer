@@ -1,10 +1,13 @@
+using AElf;
 using AElf.CSharp.Core.Extension;
 using AElf.Types;
 using AElfIndexer.Client;
 using AElfIndexer.Client.Handlers;
 using AElfIndexer.Grains.State.Client;
 using Awaken.Contracts.Hooks;
+using Google.Protobuf;
 using Nethereum.Hex.HexConvertors.Extensions;
+using Portkey.Contracts.CA;
 using Shouldly;
 using Swap.Indexer.Entities;
 using Swap.Indexer.GraphQL;
@@ -199,6 +202,7 @@ public sealed class SwapProcessorTests : SwapIndexerTests
         ret.First().TotalFee.ShouldBe(15);
         ret.First().SymbolOut.ShouldBe("BTC");
         ret.First().SymbolIn.ShouldBe("AELF");
+        ret.First().MethodName.ShouldBe("Swap");
         
         ret = await Query.GetSwapRecordsAsync(_recordRepository, _objectMapper, new GetChainBlockHeightDto
         {
@@ -313,7 +317,7 @@ public sealed class SwapProcessorTests : SwapIndexerTests
         {
             Pair = Address.FromPublicKey("AAA".HexToByteArray()),
             To = Address.FromPublicKey("BBB".HexToByteArray()),
-            Sender = Address.FromPublicKey("CCC".HexToByteArray()),
+            Sender = Address.FromPublicKey("EEE".HexToByteArray()),
             SymbolIn = "AELF",
             SymbolOut = "BTC",
             AmountIn = 100,
@@ -336,6 +340,7 @@ public sealed class SwapProcessorTests : SwapIndexerTests
             Signature = "AELF",
             Params = "{ \"to\": \"swap\", \"symbol\": \"ELF\", \"amount\": \"100000000000\" }",
             MethodName = "Swap",
+            From = Address.FromPublicKey("CCC".HexToByteArray()).ToBase58(),
             ExtraProperties = new Dictionary<string, string>
             {
                 { "TransactionFee", "{\"ELF\":\"3\"}" },
@@ -357,71 +362,28 @@ public sealed class SwapProcessorTests : SwapIndexerTests
         var recordData = await _recordRepository.GetAsync($"{chainId}-{transactionId}-{blockHeight}");
         recordData.PairAddress.ShouldBe(Address.FromPublicKey("AAA".HexToByteArray()).ToBase58());
         recordData.Sender.ShouldBe(Address.FromPublicKey("CCC".HexToByteArray()).ToBase58());
+        recordData.MethodName.ShouldBe("Swap");
+        
+        const string transactionId1 = "DefaultTransactionId1";
 
-        var hooksTransactionCreatedLogEvent = new HooksTransactionCreated()
+        var managerForwardCallInput = new ManagerForwardCallInput()
         {
-            Sender = Address.FromPublicKey("DDD".HexToByteArray()),
-            MethodName = "SwapTokensForExactTokens"
-        };
-        logEventInfo = LogEventHelper.ConvertAElfLogEventToLogEventInfo(hooksTransactionCreatedLogEvent.ToLogEvent());
-        logEventInfo.BlockHeight = blockHeight;
-        logEventInfo.ChainId= chainId;
-        logEventInfo.BlockHash = blockHash;
-        logEventInfo.TransactionId = transactionId;
-        
-        //step3: handle event and write result to blockStateSet
-        var hooksProcessor = GetRequiredService<HooksTransactionCreatedProcessor>();
-        await hooksProcessor.HandleEventAsync(logEventInfo, logEventContext);
-        
-        //step4: save blockStateSet into es
-        await BlockStateSetSaveDataAsync<LogEventInfo>(blockStateSetKey);
-        await BlockStateSetSaveDataAsync<TransactionInfo>(blockStateSetKeyTransaction);
-        await Task.Delay(2000);
-        
-        //step5: check result
-        recordData = await _recordRepository.GetAsync($"{chainId}-{transactionId}-{blockHeight}");
-        recordData.PairAddress.ShouldBe(Address.FromPublicKey("AAA".HexToByteArray()).ToBase58());
-        recordData.Sender.ShouldBe(Address.FromPublicKey("DDD".HexToByteArray()).ToBase58());
-        recordData.MethodName.ShouldBe("SwapTokensForExactTokens");
-    }
-    
-    [Fact]
-    public async Task HooksTransactionCreatedBeforeTests()
-    {
-        //step1: create blockStateSet
-        const string chainId = "AELF";
-        const string blockHash = "DefaultBlockHash";
-        const string previousBlockHash = "DefaultPreviousBlockHash";
-        const string transactionId = "DefaultTransactionId";
-        const long blockHeight = 100;
-        var blockStateSet = new BlockStateSet<LogEventInfo>
-        {
-            BlockHash = blockHash,
-            BlockHeight = blockHeight,
-            Confirmed = true,
-            PreviousBlockHash = previousBlockHash,
-        };
-        var blockStateSetTransaction = new BlockStateSet<TransactionInfo>
-        {
-            BlockHash = blockHash,
-            BlockHeight = blockHeight,
-            Confirmed = true,
-            PreviousBlockHash = previousBlockHash,
+            CaHash = HashHelper.ComputeFrom(1),
+            MethodName = "SwapExactTokensForTokens"
         };
         
-        var blockStateSetKey = await InitializeBlockStateSetAsync(blockStateSet, chainId);
-        var blockStateSetKeyTransaction = await InitializeBlockStateSetAsync(blockStateSetTransaction, chainId);
-
-        var logEventContext = new LogEventContext
+        logEventContext = new LogEventContext
         {
             ChainId = chainId,
             BlockHeight = blockHeight,
             BlockHash = blockHash,
             PreviousBlockHash = previousBlockHash,
-            TransactionId = transactionId,
+            TransactionId = transactionId1,
             Signature = "AELF",
-            Params = "{ \"to\": \"swap\", \"symbol\": \"ELF\", \"amount\": \"100000000000\" }",
-            MethodName = "Swap",
+            Params = managerForwardCallInput.ToByteString().ToBase64(),
+            MethodName = "ManagerForwardCall",
+            From = Address.FromPublicKey("CCC".HexToByteArray()).ToBase58(),
+            To = Address.FromPublicKey("DDD".HexToByteArray()).ToBase58(),
             ExtraProperties = new Dictionary<string, string>
             {
                 { "TransactionFee", "{\"ELF\":\"3\"}" },
@@ -429,54 +391,6 @@ public sealed class SwapProcessorTests : SwapIndexerTests
             },
             BlockTime = DateTime.UtcNow
         };
-        
-        var hooksTransactionCreatedLogEvent = new HooksTransactionCreated()
-        {
-            Sender = Address.FromPublicKey("DDD".HexToByteArray()),
-            MethodName = "SwapExactTokensForTokens"
-        };
-        var logEventInfo = LogEventHelper.ConvertAElfLogEventToLogEventInfo(hooksTransactionCreatedLogEvent.ToLogEvent());
-        logEventInfo.BlockHeight = blockHeight;
-        logEventInfo.ChainId= chainId;
-        logEventInfo.BlockHash = blockHash;
-        logEventInfo.TransactionId = transactionId;
-        
-        //step3: handle event and write result to blockStateSet
-        var hooksProcessor = GetRequiredService<HooksTransactionCreatedProcessor>();
-        await hooksProcessor.HandleEventAsync(logEventInfo, logEventContext);
-        
-        //step4: save blockStateSet into es
-        await BlockStateSetSaveDataAsync<LogEventInfo>(blockStateSetKey);
-        await BlockStateSetSaveDataAsync<TransactionInfo>(blockStateSetKeyTransaction);
-        await Task.Delay(2000);
-        
-        //step5: check result
-        var recordData = await _recordRepository.GetAsync($"{chainId}-{transactionId}-{blockHeight}");
-        recordData.Sender.ShouldBe(Address.FromPublicKey("DDD".HexToByteArray()).ToBase58());
-        recordData.MethodName.ShouldBe("SwapExactTokensForTokens");
-        recordData.TransactionHash.ShouldBeNull();
-        // step2: create logEventInfo
-        var swap = new Awaken.Contracts.Swap.Swap()
-        {
-            Pair = Address.FromPublicKey("AAA".HexToByteArray()),
-            To = Address.FromPublicKey("BBB".HexToByteArray()),
-            Sender = Address.FromPublicKey("CCC".HexToByteArray()),
-            SymbolIn = "AELF",
-            SymbolOut = "BTC",
-            AmountIn = 100,
-            AmountOut = 1,
-            TotalFee = 15,
-            Channel = "test"
-        };
-        logEventInfo = LogEventHelper.ConvertAElfLogEventToLogEventInfo(swap.ToLogEvent());
-        logEventInfo.BlockHeight = blockHeight;
-        logEventInfo.ChainId= chainId;
-        logEventInfo.BlockHash = blockHash;
-        logEventInfo.TransactionId = transactionId;
-        
-        
-        //step3: handle event and write result to blockStateSet
-        var swapProcessor = GetRequiredService<SwapProcessor>();
         await swapProcessor.HandleEventAsync(logEventInfo, logEventContext);
         
         //step4: save blockStateSet into es
@@ -485,9 +399,11 @@ public sealed class SwapProcessorTests : SwapIndexerTests
         await Task.Delay(2000);
         
         //step5: check result
-        recordData = await _recordRepository.GetAsync($"{chainId}-{transactionId}-{blockHeight}");
+        var caAddress = AddressHelper.ConvertVirtualAddressToContractAddress(managerForwardCallInput.CaHash,
+            Address.FromPublicKey("DDD".HexToByteArray()));
+        recordData = await _recordRepository.GetAsync($"{chainId}-{transactionId1}-{blockHeight}");
         recordData.PairAddress.ShouldBe(Address.FromPublicKey("AAA".HexToByteArray()).ToBase58());
-        recordData.Sender.ShouldBe(Address.FromPublicKey("DDD".HexToByteArray()).ToBase58());
-        recordData.TransactionHash.ShouldBe(transactionId);
+        recordData.Sender.ShouldBe(caAddress.ToBase58());
+        recordData.MethodName.ShouldBe("SwapExactTokensForTokens");
     }
 }

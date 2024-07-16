@@ -1,4 +1,6 @@
+using AElf;
 using AElf.CSharp.Core;
+using AElf.Types;
 using AElfIndexer.Client;
 using AElfIndexer.Client.Handlers;
 using AElfIndexer.Grains.State.Client;
@@ -39,5 +41,15 @@ public abstract class SwapProcessorBase<TEvent> : AElfLogEventProcessorBase<TEve
     protected virtual double GetContractFeeRate(string chainId)
     {
         return ContractInfoOptions.ContractInfos.First(o => o.ChainId == chainId && o.Level == 1).FeeRate;
+    }
+    
+    protected string GetHooksContractAddress(string chainId)
+    {
+        return ContractInfoOptions.ContractInfos.First(o => o.ChainId == chainId && !o.HooksContractAddress.IsNullOrWhiteSpace()).HooksContractAddress;
+    }
+    
+    protected string GetCaContractAddress(string chainId)
+    {
+        return ContractInfoOptions.ContractInfos.First(o => o.ChainId == chainId && !o.CaContractAddress.IsNullOrWhiteSpace()).CaContractAddress;
     }
 }

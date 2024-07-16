@@ -5,7 +5,6 @@ using AElfIndexer.Client;
 using AElfIndexer.Client.Handlers;
 using AElfIndexer.Client.Providers;
 using AElfIndexer.Grains.State.Client;
-using Awaken.Contracts.Hooks;
 using Awaken.Contracts.Swap;
 using Google.Protobuf.WellKnownTypes;
 using Nethereum.Hex.HexConvertors.Extensions;
