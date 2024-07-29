@@ -13,8 +13,6 @@ namespace Swap.Indexer.Processors;
 
 public class HooksTransactionCreatedProcessor : SwapProcessorBase<HooksTransactionCreated>
 {
-    private readonly IAElfIndexerClientEntityRepository<LiquidityRecordIndex, LogEventInfo> _liquidityRecordRepository;
-
     public HooksTransactionCreatedProcessor(ILogger<SwapProcessorBase<HooksTransactionCreated>> logger, IObjectMapper objectMapper,
         IOptionsSnapshot<ContractInfoOptions> contractInfoOptions,
         IAElfIndexerClientEntityRepository<TradePairInfoIndex, LogEventInfo> repository,
@@ -23,12 +21,11 @@ public class HooksTransactionCreatedProcessor : SwapProcessorBase<HooksTransacti
         ) 
         : base(logger, objectMapper, contractInfoOptions, repository, swapRecordIndexRepository)
     {
-        _liquidityRecordRepository = liquidityRecordRepository;
     }
 
     public override string GetContractAddress(string chainId)
     {
-        return ContractInfoOptions.ContractInfos.First(o => o.ChainId == chainId && !o.HooksContractAddress.IsNullOrWhiteSpace()).HooksContractAddress;
+        return ContractInfoOptions.ContractInfos.First(o => o.ChainId == chainId && o.Level == 1).HooksContractAddress;
     }
 
     protected override async Task HandleEventAsync(HooksTransactionCreated eventValue, LogEventContext context)
