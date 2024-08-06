@@ -1,5 +1,6 @@
 using AElfIndexer.Client.Handlers;
 using AutoMapper;
+using Awaken.Contracts.Order;
 using Awaken.Contracts.Swap;
 using Swap.Indexer.Application.Contracts.Token;
 using Swap.Indexer.Entities;
@@ -34,5 +35,16 @@ public class SwapIndexerAutoMapperProfile : Profile
         CreateMap<TokenRecordIndex, TokenRecordIndexDto>();
         CreateMap<LogEventContext, TradePairInfoIndex>();
         CreateMap<PairCreated, TradePairInfoIndex>();
+        CreateMap<LimitOrderIndex, LimitOrderDto>();
+        CreateMap<LogEventContext, LimitOrderIndex>();
+        CreateMap<LimitOrderCreated, LimitOrderIndex>()
+            .ForMember(
+            destination => destination.CommitTime,
+            opt => opt.MapFrom(source => DateTimeHelper.ToUnixTimeMilliseconds(source.CommitTime.ToDateTime())))
+            .ForMember(
+                destination => destination.Deadline,
+                opt => opt.MapFrom(source => DateTimeHelper.ToUnixTimeMilliseconds(source.Deadline.ToDateTime())))
+            .ForMember(destination => destination.Maker,
+                opt => opt.MapFrom(source => source.Maker.ToBase58()));
     }
 }

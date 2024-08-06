@@ -763,4 +763,47 @@ public class Query
         }
         return null;
     }
+    
+    [Name("limitOrders")]
+    public static async Task<LimitOrderPageResultDto> LimitOrderAsync(
+        [FromServices] IAElfIndexerClientEntityRepository<LimitOrderIndex, LogEventInfo> repository,
+        [FromServices] IObjectMapper objectMapper,
+        GetLimitOrderDto dto
+    )
+    {
+        dto.Validate();
+        
+        var mustQuery = new List<Func<QueryContainerDescriptor<LimitOrderIndex>, QueryContainer>>();
+        if (dto.LimitOrderStatus > 0)
+        {
+            mustQuery.Add(q => q.Term(i
+                => i.Field(f => f.LimitOrderStatus).Value(dto.LimitOrderStatus)));
+        }
+
+        if (!string.IsNullOrEmpty(dto.MakerAddress))
+        {
+            mustQuery.Add(q => q.Term(i
+                => i.Field(f => f.Maker).Value(dto.MakerAddress)));
+        }
+        
+        if (dto.OrderId > 0)
+        {
+            mustQuery.Add(q => q.Term(i
+                => i.Field(f => f.OrderId).Value(dto.OrderId)));
+        }
+
+        QueryContainer Filter(QueryContainerDescriptor<LimitOrderIndex> f) =>
+            f.Bool(b => b.Must(mustQuery));
+        var result = await repository.GetSortListAsync(Filter,
+            sortFunc: s => s.Descending(t => t.Deadline),
+            skip: dto.SkipCount,
+            limit: dto.MaxResultCount);
+        var dataList = objectMapper.Map<List<LimitOrderIndex>, List<LimitOrderDto>>(result.Item2);
+        var count = await repository.CountAsync(Filter);
+        return new LimitOrderPageResultDto()
+        {
+            Data = dataList,
+            TotalCount = count.Count
+        };
+    }
 }
