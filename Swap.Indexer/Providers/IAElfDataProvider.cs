@@ -12,13 +12,15 @@ public interface IAElfDataProvider
     Task<long> GetBalanceAsync(string chainId, string symbol, Address owner);
 
     Task<long> GetDecimaleAsync(string chainId, string symbol);
+    Task<string> GetTokenUriAsync(string chainId, string symbol);
 }
 
 public class AElfDataProvider : IAElfDataProvider
 {
     private const string PrivateKey = "09da44778f8db2e602fb484334f37df19e221c84c4582ce5b7770ccfbc3ddbef";
+    private const string ImageUriKey = "__ft_image_uri";
     private readonly IAElfClientProvider _aElfClientProvider;
-
+    
     public AElfDataProvider(IAElfClientProvider aElfClientProvider)
     {
         _aElfClientProvider = aElfClientProvider;
@@ -69,5 +71,33 @@ public class AElfDataProvider : IAElfDataProvider
         
         return TokenInfo.Parser.ParseFrom(
             ByteArrayHelper.HexStringToByteArray(transactionGetTokenResult)).Decimals;
+    }
+    
+    public async Task<string> GetTokenUriAsync(string chainId, string symbol)
+    {
+        var client = _aElfClientProvider.GetClient(chainId);
+        var paramGetBalance = new GetTokenInfoInput()
+        {
+            Symbol = symbol
+        };
+        var address = (await client.GetContractAddressByNameAsync(
+            HashHelper.ComputeFrom("AElf.ContractNames.Token"))).ToBase58();
+        var transactionGetToken =
+            await client.GenerateTransactionAsync(client.GetAddressFromPrivateKey(PrivateKey), address,
+                "GetTokenInfo",
+                paramGetBalance);
+        var txWithSignGetToken = client.SignTransaction(PrivateKey, transactionGetToken);
+        var transactionGetTokenResult = await client.ExecuteTransactionAsync(new ExecuteTransactionDto
+        {
+            RawTransaction = txWithSignGetToken.ToByteArray().ToHex()
+        });
+        
+        var externalInfo = TokenInfo.Parser.ParseFrom(
+            ByteArrayHelper.HexStringToByteArray(transactionGetTokenResult)).ExternalInfo;
+        if (externalInfo != null && externalInfo.Value != null && externalInfo.Value.ContainsKey(ImageUriKey))
+        {
+            return externalInfo.Value[ImageUriKey];
+        }
+        return null;
     }
 }

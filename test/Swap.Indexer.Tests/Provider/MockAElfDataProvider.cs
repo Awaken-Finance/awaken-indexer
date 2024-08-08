@@ -41,4 +41,9 @@ public class MockAElfDataProvider : IAElfDataProvider
         }
         return 0;
     }
+
+    public async Task<string> GetTokenUriAsync(string chainId, string symbol)
+    {
+        return null;
+    }
 }

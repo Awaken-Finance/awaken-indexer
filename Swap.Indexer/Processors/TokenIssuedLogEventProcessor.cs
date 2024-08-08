@@ -31,6 +31,6 @@ public class TokenIssuedEventProcessor : TokenProcessorBase<Issued>
             Address = eventValue.To.ToBase58(),
             Symbol = eventValue.Symbol
         };
-        await HandleEventBaseAsync(userToken, context);
+        await HandleTokenIssueEventAsync(userToken, context);
     }
 }
