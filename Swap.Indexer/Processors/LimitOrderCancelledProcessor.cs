@@ -24,7 +24,7 @@ public class LimitOrderCancelledProcessor : LimitOrderProcessorBase<LimitOrderCa
     protected override async Task HandleEventAsync(LimitOrderCancelled eventValue, LogEventContext context)
     {
         Logger.Info("received LimitOrderCancelled:" + eventValue + ",context:" + context);
-        var id = IdGenerateHelper.GetId(eventValue.OrderId);
+        var id = IdGenerateHelper.GetId(context.ChainId, eventValue.OrderId);
         var recordIndex = await Repository.GetFromBlockStateSetAsync(id, context.ChainId);
         if (recordIndex == null)
         {
@@ -39,7 +39,7 @@ public class LimitOrderCancelledProcessor : LimitOrderProcessorBase<LimitOrderCa
         {
             TransactionTime = DateTimeHelper.ToUnixTimeMilliseconds(eventValue.CancelTime.ToDateTime()),
             TransactionHash = context.TransactionId,
-            Status = LimitOrderRecordStatus.Cancel
+            Status = LimitOrderStatus.Cancelled
         });
         
         ObjectMapper.Map(context, recordIndex);

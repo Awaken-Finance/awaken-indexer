@@ -37,113 +37,124 @@ namespace Awaken.Contracts.Order {
             "YWNoX29yZGVyX2Jvb2sYASABKAUSIgoabWF4X3ByaWNlc19lYWNoX3ByaWNl",
             "X2Jvb2sYAiABKAUSHAoUbWF4X2ZpbGxfb3JkZXJfY291bnQYAyABKAUSFgoO",
             "cHJpY2VfbXVsdGlwbGUYBCABKAMSHAoUZXJhc2VfcHJpY2VfbXVsdGlwbGUY",
-            "BSABKAMSHwoXbWluX29yZGVyX3ZhbHVlX2luX3VzZHQYBiABKAMikwEKFUNv",
-            "bW1pdExpbWl0T3JkZXJJbnB1dBIRCglhbW91bnRfaW4YASABKAMSEQoJc3lt",
-            "Ym9sX2luGAIgASgJEhIKCmFtb3VudF9vdXQYAyABKAMSEgoKc3ltYm9sX291",
-            "dBgEIAEoCRIsCghkZWFkbGluZRgFIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5U",
-            "aW1lc3RhbXAiKQoVQ2FuY2VsTGltaXRPcmRlcklucHV0EhAKCG9yZGVyX2lk",
-            "GAEgASgDIoIBChNGaWxsTGltaXRPcmRlcklucHV0EhEKCWFtb3VudF9pbhgB",
-            "IAEoAxIRCglzeW1ib2xfaW4YAiABKAkSFgoObWF4X3NlbGxfcHJpY2UYAyAB",
-            "KAMSEgoKc3ltYm9sX291dBgEIAEoCRIZCgJ0bxgFIAEoCzINLmFlbGYuQWRk",
-            "cmVzcyJRChVHZXRCZXN0U2VsbFByaWNlSW5wdXQSEQoJc3ltYm9sX2luGAEg",
-            "ASgJEhIKCnN5bWJvbF9vdXQYAiABKAkSEQoJbWluX3ByaWNlGAMgASgDIicK",
-            "FkdldEJlc3RTZWxsUHJpY2VPdXRwdXQSDQoFcHJpY2UYASABKAMidAoSR2V0",
-            "RmlsbFJlc3VsdElucHV0EhEKCWFtb3VudF9pbhgBIAEoAxIRCglzeW1ib2xf",
-            "aW4YAiABKAkSEgoKc3ltYm9sX291dBgDIAEoCRIRCgltaW5fcHJpY2UYBCAB",
-            "KAMSEQoJbWF4X3ByaWNlGAUgASgDIoABChNHZXRGaWxsUmVzdWx0T3V0cHV0",
-            "EhgKEGFtb3VudF9pbl9maWxsZWQYASABKAMSGAoQbWF4X3ByaWNlX2ZpbGxl",
-            "ZBgCIAEoAxIZChFhbW91bnRfb3V0X2ZpbGxlZBgDIAEoAxIaChJvcmRlcl9m",
-            "aWxsZWRfY291bnQYBCABKAUiYwoTQ2FsY3VsYXRlUHJpY2VJbnB1dBIRCglz",
-            "eW1ib2xfaW4YASABKAkSEgoKc3ltYm9sX291dBgCIAEoCRIRCglhbW91bnRf",
-            "aW4YAyABKAMSEgoKYW1vdW50X291dBgEIAEoAyKWAQoJT3JkZXJCb29rEh8K",
-            "F25leHRfcGFnZV9vcmRlcl9ib29rX2lkGAEgASgDEioKEXVzZXJfbGltaXRf",
-            "b3JkZXJzGAIgAygLMg8uVXNlckxpbWl0T3JkZXISFQoNb3JkZXJfYm9va19p",
-            "ZBgDIAEoAxIRCglzeW1ib2xfaW4YBCABKAkSEgoKc3ltYm9sX291dBgFIAEo",
-            "CSKPAgoOVXNlckxpbWl0T3JkZXISEQoJYW1vdW50X2luGAEgASgDEhIKCmFt",
-            "b3VudF9vdXQYAiABKAMSLwoLY29tbWl0X3RpbWUYAyABKAsyGi5nb29nbGUu",
-            "cHJvdG9idWYuVGltZXN0YW1wEiwKCGRlYWRsaW5lGAQgASgLMhouZ29vZ2xl",
-            "LnByb3RvYnVmLlRpbWVzdGFtcBItCglmaWxsX3RpbWUYBSABKAsyGi5nb29n",
-            "bGUucHJvdG9idWYuVGltZXN0YW1wEhwKBW1ha2VyGAYgASgLMg0uYWVsZi5B",
-            "ZGRyZXNzEhgKEGFtb3VudF9pbl9maWxsZWQYByABKAMSEAoIb3JkZXJfaWQY",
-            "CCABKAMiYgoJUHJpY2VCb29rEh8KF25leHRfcGFnZV9wcmljZV9ib29rX2lk",
-            "GAEgASgDEh0KCXByaWNlTGlzdBgCIAEoCzIKLlByaWNlTGlzdBIVCg1wcmlj",
-            "ZV9ib29rX2lkGAMgASgDIhsKCVByaWNlTGlzdBIOCgZwcmljZXMYASADKAMi",
-            "9gEKEUxpbWl0T3JkZXJDcmVhdGVkEhEKCWFtb3VudF9pbhgBIAEoAxIRCglz",
-            "eW1ib2xfaW4YAiABKAkSEgoKYW1vdW50X291dBgDIAEoAxISCgpzeW1ib2xf",
-            "b3V0GAQgASgJEiwKCGRlYWRsaW5lGAUgASgLMhouZ29vZ2xlLnByb3RvYnVm",
-            "LlRpbWVzdGFtcBIvCgtjb21taXRfdGltZRgGIAEoCzIaLmdvb2dsZS5wcm90",
-            "b2J1Zi5UaW1lc3RhbXASEAoIb3JkZXJfaWQYByABKAMSHAoFbWFrZXIYCCAB",
-            "KAsyDS5hZWxmLkFkZHJlc3M6BKC7GAEirAEKEExpbWl0T3JkZXJGaWxsZWQS",
-            "EAoIb3JkZXJfaWQYASABKAMSLQoJZmlsbF90aW1lGAIgASgLMhouZ29vZ2xl",
-            "LnByb3RvYnVmLlRpbWVzdGFtcBIYChBhbW91bnRfaW5fZmlsbGVkGAMgASgD",
-            "EhkKEWFtb3VudF9vdXRfZmlsbGVkGAQgASgDEhwKBXRha2VyGAUgASgLMg0u",
-            "YWVsZi5BZGRyZXNzOgSguxgBIl4KE0xpbWl0T3JkZXJDYW5jZWxsZWQSEAoI",
-            "b3JkZXJfaWQYASABKAMSLwoLY2FuY2VsX3RpbWUYAiABKAsyGi5nb29nbGUu",
-            "cHJvdG9idWYuVGltZXN0YW1wOgSguxgBIlwKEUxpbWl0T3JkZXJSZW1vdmVk",
-            "EhAKCG9yZGVyX2lkGAEgASgDEi8KC3JlbW92ZV90aW1lGAIgASgLMhouZ29v",
-            "Z2xlLnByb3RvYnVmLlRpbWVzdGFtcDoEoLsYASodCghTaWRlVHlwZRIHCgNC",
-            "VVkQABIICgRTRUxMEAEy7AkKE0F3YWtlbk9yZGVyQ29udHJhY3QSOAoKSW5p",
-            "dGlhbGl6ZRIQLkluaXRpYWxpemVJbnB1dBoWLmdvb2dsZS5wcm90b2J1Zi5F",
-            "bXB0eSIAEjMKCFNldEFkbWluEg0uYWVsZi5BZGRyZXNzGhYuZ29vZ2xlLnBy",
-            "b3RvYnVmLkVtcHR5IgASOwoQU2V0SG9va3NDb250cmFjdBINLmFlbGYuQWRk",
-            "cmVzcxoWLmdvb2dsZS5wcm90b2J1Zi5FbXB0eSIAEkgKElNldE9yZGVyQm9v",
-            "a0NvbmZpZxIYLlNldE9yZGVyQm9va0NvbmZpZ0lucHV0GhYuZ29vZ2xlLnBy",
-            "b3RvYnVmLkVtcHR5IgASRAoQQ29tbWl0TGltaXRPcmRlchIWLkNvbW1pdExp",
-            "bWl0T3JkZXJJbnB1dBoWLmdvb2dsZS5wcm90b2J1Zi5FbXB0eSIAEkQKEENh",
-            "bmNlbExpbWl0T3JkZXISFi5DYW5jZWxMaW1pdE9yZGVySW5wdXQaFi5nb29n",
-            "bGUucHJvdG9idWYuRW1wdHkiABJACg5GaWxsTGltaXRPcmRlchIULkZpbGxM",
-            "aW1pdE9yZGVySW5wdXQaFi5nb29nbGUucHJvdG9idWYuRW1wdHkiABJBCg1H",
-            "ZXRGaWxsUmVzdWx0EhMuR2V0RmlsbFJlc3VsdElucHV0GhQuR2V0RmlsbFJl",
-            "c3VsdE91dHB1dCIFiIn3AQESSgoQR2V0QmVzdFNlbGxQcmljZRIWLkdldEJl",
-            "c3RTZWxsUHJpY2VJbnB1dBoXLkdldEJlc3RTZWxsUHJpY2VPdXRwdXQiBYiJ",
-            "9wEBEjgKCEdldEFkbWluEhYuZ29vZ2xlLnByb3RvYnVmLkVtcHR5Gg0uYWVs",
-            "Zi5BZGRyZXNzIgWIifcBARJAChBHZXRIb29rc0NvbnRyYWN0EhYuZ29vZ2xl",
-            "LnByb3RvYnVmLkVtcHR5Gg0uYWVsZi5BZGRyZXNzIgWIifcBARJOChJHZXRP",
-            "cmRlckJvb2tDb25maWcSFi5nb29nbGUucHJvdG9idWYuRW1wdHkaGS5HZXRP",
-            "cmRlckJvb2tDb25maWdPdXRwdXQiBYiJ9wEBEj4KDEdldFByaWNlQm9vaxIb",
-            "Lmdvb2dsZS5wcm90b2J1Zi5JbnQ2NFZhbHVlGgouUHJpY2VCb29rIgWIifcB",
-            "ARI+CgxHZXRPcmRlckJvb2sSGy5nb29nbGUucHJvdG9idWYuSW50NjRWYWx1",
-            "ZRoKLk9yZGVyQm9vayIFiIn3AQESSAoRR2V0VXNlckxpbWl0T3JkZXISGy5n",
-            "b29nbGUucHJvdG9idWYuSW50NjRWYWx1ZRoPLlVzZXJMaW1pdE9yZGVyIgWI",
-            "ifcBARJaChdHZXRPcmRlckJvb2tJZEJ5T3JkZXJJZBIbLmdvb2dsZS5wcm90",
-            "b2J1Zi5JbnQ2NFZhbHVlGhsuZ29vZ2xlLnByb3RvYnVmLkludDY0VmFsdWUi",
-            "BYiJ9wEBEkoKDkNhbGN1bGF0ZVByaWNlEhQuQ2FsY3VsYXRlUHJpY2VJbnB1",
-            "dBobLmdvb2dsZS5wcm90b2J1Zi5JbnQ2NFZhbHVlIgWIifcBARpEssz2AS9B",
-            "d2FrZW4uQ29udHJhY3RzLk9yZGVyLkF3YWtlbk9yZGVyQ29udHJhY3RTdGF0",
-            "ZcrK9gELYWNzMTIucHJvdG9CGaoCFkF3YWtlbi5Db250cmFjdHMuT3JkZXJi",
-            "BnByb3RvMw=="));
+            "BSABKAMSHwoXbWluX29yZGVyX3ZhbHVlX2luX3VzZHQYBiABKAMiKQoJV2hp",
+            "dGVMaXN0EhwKBXZhbHVlGAEgAygLMg0uYWVsZi5BZGRyZXNzIpMBChVDb21t",
+            "aXRMaW1pdE9yZGVySW5wdXQSEQoJYW1vdW50X2luGAEgASgDEhEKCXN5bWJv",
+            "bF9pbhgCIAEoCRISCgphbW91bnRfb3V0GAMgASgDEhIKCnN5bWJvbF9vdXQY",
+            "BCABKAkSLAoIZGVhZGxpbmUYBSABKAsyGi5nb29nbGUucHJvdG9idWYuVGlt",
+            "ZXN0YW1wIikKFUNhbmNlbExpbWl0T3JkZXJJbnB1dBIQCghvcmRlcl9pZBgB",
+            "IAEoAyKLAQoTRmlsbExpbWl0T3JkZXJJbnB1dBIRCglhbW91bnRfaW4YASAB",
+            "KAMSEQoJc3ltYm9sX2luGAIgASgJEh8KF21heF9vcGVuX2ludGVydmFsX3By",
+            "aWNlGAMgASgDEhIKCnN5bWJvbF9vdXQYBCABKAkSGQoCdG8YBSABKAsyDS5h",
+            "ZWxmLkFkZHJlc3MiXwoVR2V0QmVzdFNlbGxQcmljZUlucHV0EhEKCXN5bWJv",
+            "bF9pbhgBIAEoCRISCgpzeW1ib2xfb3V0GAIgASgJEh8KF21pbl9vcGVuX2lu",
+            "dGVydmFsX3ByaWNlGAMgASgDIicKFkdldEJlc3RTZWxsUHJpY2VPdXRwdXQS",
+            "DQoFcHJpY2UYASABKAMipQEKEkdldEZpbGxSZXN1bHRJbnB1dBIRCglhbW91",
+            "bnRfaW4YASABKAMSEgoKYW1vdW50X291dBgCIAEoAxIRCglzeW1ib2xfaW4Y",
+            "AyABKAkSEgoKc3ltYm9sX291dBgEIAEoCRIgChhtaW5fY2xvc2VfaW50ZXJ2",
+            "YWxfcHJpY2UYBSABKAMSHwoXbWF4X29wZW5faW50ZXJ2YWxfcHJpY2UYBiAB",
+            "KAMigAEKE0dldEZpbGxSZXN1bHRPdXRwdXQSGAoQYW1vdW50X2luX2ZpbGxl",
+            "ZBgBIAEoAxIYChBtYXhfcHJpY2VfZmlsbGVkGAIgASgDEhkKEWFtb3VudF9v",
+            "dXRfZmlsbGVkGAMgASgDEhoKEm9yZGVyX2ZpbGxlZF9jb3VudBgEIAEoBSJj",
+            "ChNDYWxjdWxhdGVQcmljZUlucHV0EhEKCXN5bWJvbF9pbhgBIAEoCRISCgpz",
+            "eW1ib2xfb3V0GAIgASgJEhEKCWFtb3VudF9pbhgDIAEoAxISCgphbW91bnRf",
+            "b3V0GAQgASgDIpYBCglPcmRlckJvb2sSHwoXbmV4dF9wYWdlX29yZGVyX2Jv",
+            "b2tfaWQYASABKAMSKgoRdXNlcl9saW1pdF9vcmRlcnMYAiADKAsyDy5Vc2Vy",
+            "TGltaXRPcmRlchIVCg1vcmRlcl9ib29rX2lkGAMgASgDEhEKCXN5bWJvbF9p",
+            "bhgEIAEoCRISCgpzeW1ib2xfb3V0GAUgASgJIqoCCg5Vc2VyTGltaXRPcmRl",
+            "chIRCglhbW91bnRfaW4YASABKAMSEgoKYW1vdW50X291dBgCIAEoAxIvCgtj",
+            "b21taXRfdGltZRgDIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXAS",
+            "LAoIZGVhZGxpbmUYBCABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1w",
+            "Ei0KCWZpbGxfdGltZRgFIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3Rh",
+            "bXASHAoFbWFrZXIYBiABKAsyDS5hZWxmLkFkZHJlc3MSGAoQYW1vdW50X2lu",
+            "X2ZpbGxlZBgHIAEoAxIQCghvcmRlcl9pZBgIIAEoAxIZChFhbW91bnRfb3V0",
+            "X2ZpbGxlZBgJIAEoAyJiCglQcmljZUJvb2sSHwoXbmV4dF9wYWdlX3ByaWNl",
+            "X2Jvb2tfaWQYASABKAMSHQoJcHJpY2VMaXN0GAIgASgLMgouUHJpY2VMaXN0",
+            "EhUKDXByaWNlX2Jvb2tfaWQYAyABKAMiGwoJUHJpY2VMaXN0Eg4KBnByaWNl",
+            "cxgBIAMoAyL2AQoRTGltaXRPcmRlckNyZWF0ZWQSEQoJYW1vdW50X2luGAEg",
+            "ASgDEhEKCXN5bWJvbF9pbhgCIAEoCRISCgphbW91bnRfb3V0GAMgASgDEhIK",
+            "CnN5bWJvbF9vdXQYBCABKAkSLAoIZGVhZGxpbmUYBSABKAsyGi5nb29nbGUu",
+            "cHJvdG9idWYuVGltZXN0YW1wEi8KC2NvbW1pdF90aW1lGAYgASgLMhouZ29v",
+            "Z2xlLnByb3RvYnVmLlRpbWVzdGFtcBIQCghvcmRlcl9pZBgHIAEoAxIcCgVt",
+            "YWtlchgIIAEoCzINLmFlbGYuQWRkcmVzczoEoLsYASKsAQoQTGltaXRPcmRl",
+            "ckZpbGxlZBIQCghvcmRlcl9pZBgBIAEoAxItCglmaWxsX3RpbWUYAiABKAsy",
+            "Gi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEhgKEGFtb3VudF9pbl9maWxs",
+            "ZWQYAyABKAMSGQoRYW1vdW50X291dF9maWxsZWQYBCABKAMSHAoFdGFrZXIY",
+            "BSABKAsyDS5hZWxmLkFkZHJlc3M6BKC7GAEiXgoTTGltaXRPcmRlckNhbmNl",
+            "bGxlZBIQCghvcmRlcl9pZBgBIAEoAxIvCgtjYW5jZWxfdGltZRgCIAEoCzIa",
+            "Lmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXA6BKC7GAEifgoRTGltaXRPcmRl",
+            "clJlbW92ZWQSEAoIb3JkZXJfaWQYASABKAMSLwoLcmVtb3ZlX3RpbWUYAiAB",
+            "KAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEiAKC3JlYXNvbl90eXBl",
+            "GAMgASgOMgsuUmVhc29uVHlwZToEoLsYASpLCgpSZWFzb25UeXBlEgsKB0V4",
+            "cGlyZWQQABIYChRBbGxvd2FuY2VfTm90X0Vub3VnaBABEhYKEkJhbGFuY2Vf",
+            "Tm90X0Vub3VnaBACMrcLChNBd2FrZW5PcmRlckNvbnRyYWN0EjgKCkluaXRp",
+            "YWxpemUSEC5Jbml0aWFsaXplSW5wdXQaFi5nb29nbGUucHJvdG9idWYuRW1w",
+            "dHkiABIzCghTZXRBZG1pbhINLmFlbGYuQWRkcmVzcxoWLmdvb2dsZS5wcm90",
+            "b2J1Zi5FbXB0eSIAEjsKEFNldEhvb2tzQ29udHJhY3QSDS5hZWxmLkFkZHJl",
+            "c3MaFi5nb29nbGUucHJvdG9idWYuRW1wdHkiABJIChJTZXRPcmRlckJvb2tD",
+            "b25maWcSGC5TZXRPcmRlckJvb2tDb25maWdJbnB1dBoWLmdvb2dsZS5wcm90",
+            "b2J1Zi5FbXB0eSIAEkAKFUFkZEZpbGxPcmRlcldoaXRlTGlzdBINLmFlbGYu",
+            "QWRkcmVzcxoWLmdvb2dsZS5wcm90b2J1Zi5FbXB0eSIAEkMKGFJlbW92ZUZp",
+            "bGxPcmRlcldoaXRlTGlzdBINLmFlbGYuQWRkcmVzcxoWLmdvb2dsZS5wcm90",
+            "b2J1Zi5FbXB0eSIAEkQKEENvbW1pdExpbWl0T3JkZXISFi5Db21taXRMaW1p",
+            "dE9yZGVySW5wdXQaFi5nb29nbGUucHJvdG9idWYuRW1wdHkiABJEChBDYW5j",
+            "ZWxMaW1pdE9yZGVyEhYuQ2FuY2VsTGltaXRPcmRlcklucHV0GhYuZ29vZ2xl",
+            "LnByb3RvYnVmLkVtcHR5IgASQAoORmlsbExpbWl0T3JkZXISFC5GaWxsTGlt",
+            "aXRPcmRlcklucHV0GhYuZ29vZ2xlLnByb3RvYnVmLkVtcHR5IgASQQoNR2V0",
+            "RmlsbFJlc3VsdBITLkdldEZpbGxSZXN1bHRJbnB1dBoULkdldEZpbGxSZXN1",
+            "bHRPdXRwdXQiBYiJ9wEBEkoKEEdldEJlc3RTZWxsUHJpY2USFi5HZXRCZXN0",
+            "U2VsbFByaWNlSW5wdXQaFy5HZXRCZXN0U2VsbFByaWNlT3V0cHV0IgWIifcB",
+            "ARI4CghHZXRBZG1pbhIWLmdvb2dsZS5wcm90b2J1Zi5FbXB0eRoNLmFlbGYu",
+            "QWRkcmVzcyIFiIn3AQESQgoVR2V0RmlsbE9yZGVyV2hpdGVMaXN0EhYuZ29v",
+            "Z2xlLnByb3RvYnVmLkVtcHR5GgouV2hpdGVMaXN0IgWIifcBARJAChBHZXRI",
+            "b29rc0NvbnRyYWN0EhYuZ29vZ2xlLnByb3RvYnVmLkVtcHR5Gg0uYWVsZi5B",
+            "ZGRyZXNzIgWIifcBARJOChJHZXRPcmRlckJvb2tDb25maWcSFi5nb29nbGUu",
+            "cHJvdG9idWYuRW1wdHkaGS5HZXRPcmRlckJvb2tDb25maWdPdXRwdXQiBYiJ",
+            "9wEBEj4KDEdldFByaWNlQm9vaxIbLmdvb2dsZS5wcm90b2J1Zi5JbnQ2NFZh",
+            "bHVlGgouUHJpY2VCb29rIgWIifcBARI+CgxHZXRPcmRlckJvb2sSGy5nb29n",
+            "bGUucHJvdG9idWYuSW50NjRWYWx1ZRoKLk9yZGVyQm9vayIFiIn3AQESSAoR",
+            "R2V0VXNlckxpbWl0T3JkZXISGy5nb29nbGUucHJvdG9idWYuSW50NjRWYWx1",
+            "ZRoPLlVzZXJMaW1pdE9yZGVyIgWIifcBARJaChdHZXRPcmRlckJvb2tJZEJ5",
+            "T3JkZXJJZBIbLmdvb2dsZS5wcm90b2J1Zi5JbnQ2NFZhbHVlGhsuZ29vZ2xl",
+            "LnByb3RvYnVmLkludDY0VmFsdWUiBYiJ9wEBEkoKDkNhbGN1bGF0ZVByaWNl",
+            "EhQuQ2FsY3VsYXRlUHJpY2VJbnB1dBobLmdvb2dsZS5wcm90b2J1Zi5JbnQ2",
+            "NFZhbHVlIgWIifcBARpEssz2AS9Bd2FrZW4uQ29udHJhY3RzLk9yZGVyLkF3",
+            "YWtlbk9yZGVyQ29udHJhY3RTdGF0ZcrK9gELYWNzMTIucHJvdG9CGaoCFkF3",
+            "YWtlbi5Db250cmFjdHMuT3JkZXJiBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::AElf.Types.CoreReflection.Descriptor, global::AElf.OptionsReflection.Descriptor, global::Google.Protobuf.WellKnownTypes.EmptyReflection.Descriptor, global::Google.Protobuf.WellKnownTypes.WrappersReflection.Descriptor, global::Google.Protobuf.WellKnownTypes.TimestampReflection.Descriptor, global::AElf.Standards.ACS12.Acs12Reflection.Descriptor, },
-          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Awaken.Contracts.Order.SideType), }, null, new pbr::GeneratedClrTypeInfo[] {
+          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Awaken.Contracts.Order.ReasonType), }, null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::Awaken.Contracts.Order.InitializeInput), global::Awaken.Contracts.Order.InitializeInput.Parser, new[]{ "HooksContractAddress", "Admin" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Awaken.Contracts.Order.SetOrderBookConfigInput), global::Awaken.Contracts.Order.SetOrderBookConfigInput.Parser, new[]{ "OrderBookConfig" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Awaken.Contracts.Order.GetOrderBookConfigOutput), global::Awaken.Contracts.Order.GetOrderBookConfigOutput.Parser, new[]{ "OrderBookConfig" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Awaken.Contracts.Order.OrderBookConfig), global::Awaken.Contracts.Order.OrderBookConfig.Parser, new[]{ "MaxOrdersEachOrderBook", "MaxPricesEachPriceBook", "MaxFillOrderCount", "PriceMultiple", "ErasePriceMultiple", "MinOrderValueInUsdt" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Awaken.Contracts.Order.WhiteList), global::Awaken.Contracts.Order.WhiteList.Parser, new[]{ "Value" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Awaken.Contracts.Order.CommitLimitOrderInput), global::Awaken.Contracts.Order.CommitLimitOrderInput.Parser, new[]{ "AmountIn", "SymbolIn", "AmountOut", "SymbolOut", "Deadline" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Awaken.Contracts.Order.CancelLimitOrderInput), global::Awaken.Contracts.Order.CancelLimitOrderInput.Parser, new[]{ "OrderId" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Awaken.Contracts.Order.FillLimitOrderInput), global::Awaken.Contracts.Order.FillLimitOrderInput.Parser, new[]{ "AmountIn", "SymbolIn", "MaxSellPrice", "SymbolOut", "To" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Awaken.Contracts.Order.GetBestSellPriceInput), global::Awaken.Contracts.Order.GetBestSellPriceInput.Parser, new[]{ "SymbolIn", "SymbolOut", "MinPrice" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Awaken.Contracts.Order.FillLimitOrderInput), global::Awaken.Contracts.Order.FillLimitOrderInput.Parser, new[]{ "AmountIn", "SymbolIn", "MaxOpenIntervalPrice", "SymbolOut", "To" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Awaken.Contracts.Order.GetBestSellPriceInput), global::Awaken.Contracts.Order.GetBestSellPriceInput.Parser, new[]{ "SymbolIn", "SymbolOut", "MinOpenIntervalPrice" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Awaken.Contracts.Order.GetBestSellPriceOutput), global::Awaken.Contracts.Order.GetBestSellPriceOutput.Parser, new[]{ "Price" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Awaken.Contracts.Order.GetFillResultInput), global::Awaken.Contracts.Order.GetFillResultInput.Parser, new[]{ "AmountIn", "SymbolIn", "SymbolOut", "MinPrice", "MaxPrice" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Awaken.Contracts.Order.GetFillResultInput), global::Awaken.Contracts.Order.GetFillResultInput.Parser, new[]{ "AmountIn", "AmountOut", "SymbolIn", "SymbolOut", "MinCloseIntervalPrice", "MaxOpenIntervalPrice" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Awaken.Contracts.Order.GetFillResultOutput), global::Awaken.Contracts.Order.GetFillResultOutput.Parser, new[]{ "AmountInFilled", "MaxPriceFilled", "AmountOutFilled", "OrderFilledCount" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Awaken.Contracts.Order.CalculatePriceInput), global::Awaken.Contracts.Order.CalculatePriceInput.Parser, new[]{ "SymbolIn", "SymbolOut", "AmountIn", "AmountOut" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Awaken.Contracts.Order.OrderBook), global::Awaken.Contracts.Order.OrderBook.Parser, new[]{ "NextPageOrderBookId", "UserLimitOrders", "OrderBookId", "SymbolIn", "SymbolOut" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Awaken.Contracts.Order.UserLimitOrder), global::Awaken.Contracts.Order.UserLimitOrder.Parser, new[]{ "AmountIn", "AmountOut", "CommitTime", "Deadline", "FillTime", "Maker", "AmountInFilled", "OrderId" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Awaken.Contracts.Order.UserLimitOrder), global::Awaken.Contracts.Order.UserLimitOrder.Parser, new[]{ "AmountIn", "AmountOut", "CommitTime", "Deadline", "FillTime", "Maker", "AmountInFilled", "OrderId", "AmountOutFilled" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Awaken.Contracts.Order.PriceBook), global::Awaken.Contracts.Order.PriceBook.Parser, new[]{ "NextPagePriceBookId", "PriceList", "PriceBookId" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Awaken.Contracts.Order.PriceList), global::Awaken.Contracts.Order.PriceList.Parser, new[]{ "Prices" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Awaken.Contracts.Order.LimitOrderCreated), global::Awaken.Contracts.Order.LimitOrderCreated.Parser, new[]{ "AmountIn", "SymbolIn", "AmountOut", "SymbolOut", "Deadline", "CommitTime", "OrderId", "Maker" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Awaken.Contracts.Order.LimitOrderFilled), global::Awaken.Contracts.Order.LimitOrderFilled.Parser, new[]{ "OrderId", "FillTime", "AmountInFilled", "AmountOutFilled", "Taker" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Awaken.Contracts.Order.LimitOrderCancelled), global::Awaken.Contracts.Order.LimitOrderCancelled.Parser, new[]{ "OrderId", "CancelTime" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Awaken.Contracts.Order.LimitOrderRemoved), global::Awaken.Contracts.Order.LimitOrderRemoved.Parser, new[]{ "OrderId", "RemoveTime" }, null, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Awaken.Contracts.Order.LimitOrderRemoved), global::Awaken.Contracts.Order.LimitOrderRemoved.Parser, new[]{ "OrderId", "RemoveTime", "ReasonType" }, null, null, null, null)
           }));
     }
     #endregion
 
   }
   #region Enums
-  public enum SideType {
-    [pbr::OriginalName("BUY")] Buy = 0,
-    [pbr::OriginalName("SELL")] Sell = 1,
+  public enum ReasonType {
+    [pbr::OriginalName("Expired")] Expired = 0,
+    [pbr::OriginalName("Allowance_Not_Enough")] AllowanceNotEnough = 1,
+    [pbr::OriginalName("Balance_Not_Enough")] BalanceNotEnough = 2,
   }
 
   #endregion
@@ -1166,6 +1177,184 @@ namespace Awaken.Contracts.Order {
 
   }
 
+  public sealed partial class WhiteList : pb::IMessage<WhiteList>
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      , pb::IBufferMessage
+  #endif
+  {
+    private static readonly pb::MessageParser<WhiteList> _parser = new pb::MessageParser<WhiteList>(() => new WhiteList());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pb::MessageParser<WhiteList> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Awaken.Contracts.Order.AwakenOrderContractReflection.Descriptor.MessageTypes[4]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public WhiteList() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public WhiteList(WhiteList other) : this() {
+      value_ = other.value_.Clone();
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public WhiteList Clone() {
+      return new WhiteList(this);
+    }
+
+    /// <summary>Field number for the "value" field.</summary>
+    public const int ValueFieldNumber = 1;
+    private static readonly pb::FieldCodec<global::AElf.Types.Address> _repeated_value_codec
+        = pb::FieldCodec.ForMessage(10, global::AElf.Types.Address.Parser);
+    private readonly pbc::RepeatedField<global::AElf.Types.Address> value_ = new pbc::RepeatedField<global::AElf.Types.Address>();
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public pbc::RepeatedField<global::AElf.Types.Address> Value {
+      get { return value_; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override bool Equals(object other) {
+      return Equals(other as WhiteList);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool Equals(WhiteList other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if(!value_.Equals(other.value_)) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override int GetHashCode() {
+      int hash = 1;
+      hash ^= value_.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void WriteTo(pb::CodedOutputStream output) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      output.WriteRawMessage(this);
+    #else
+      value_.WriteTo(output, _repeated_value_codec);
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+      value_.WriteTo(ref output, _repeated_value_codec);
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(ref output);
+      }
+    }
+    #endif
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int CalculateSize() {
+      int size = 0;
+      size += value_.CalculateSize(_repeated_value_codec);
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(WhiteList other) {
+      if (other == null) {
+        return;
+      }
+      value_.Add(other.value_);
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(pb::CodedInputStream input) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      input.ReadRawMessage(this);
+    #else
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 10: {
+            value_.AddEntriesFrom(input, _repeated_value_codec);
+            break;
+          }
+        }
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+            break;
+          case 10: {
+            value_.AddEntriesFrom(ref input, _repeated_value_codec);
+            break;
+          }
+        }
+      }
+    }
+    #endif
+
+  }
+
   public sealed partial class CommitLimitOrderInput : pb::IMessage<CommitLimitOrderInput>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -1180,7 +1369,7 @@ namespace Awaken.Contracts.Order {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Awaken.Contracts.Order.AwakenOrderContractReflection.Descriptor.MessageTypes[4]; }
+      get { return global::Awaken.Contracts.Order.AwakenOrderContractReflection.Descriptor.MessageTypes[5]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1526,7 +1715,7 @@ namespace Awaken.Contracts.Order {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Awaken.Contracts.Order.AwakenOrderContractReflection.Descriptor.MessageTypes[5]; }
+      get { return global::Awaken.Contracts.Order.AwakenOrderContractReflection.Descriptor.MessageTypes[6]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1715,7 +1904,7 @@ namespace Awaken.Contracts.Order {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Awaken.Contracts.Order.AwakenOrderContractReflection.Descriptor.MessageTypes[6]; }
+      get { return global::Awaken.Contracts.Order.AwakenOrderContractReflection.Descriptor.MessageTypes[7]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1737,7 +1926,7 @@ namespace Awaken.Contracts.Order {
     public FillLimitOrderInput(FillLimitOrderInput other) : this() {
       amountIn_ = other.amountIn_;
       symbolIn_ = other.symbolIn_;
-      maxSellPrice_ = other.maxSellPrice_;
+      maxOpenIntervalPrice_ = other.maxOpenIntervalPrice_;
       symbolOut_ = other.symbolOut_;
       to_ = other.to_ != null ? other.to_.Clone() : null;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
@@ -1773,15 +1962,15 @@ namespace Awaken.Contracts.Order {
       }
     }
 
-    /// <summary>Field number for the "max_sell_price" field.</summary>
-    public const int MaxSellPriceFieldNumber = 3;
-    private long maxSellPrice_;
+    /// <summary>Field number for the "max_open_interval_price" field.</summary>
+    public const int MaxOpenIntervalPriceFieldNumber = 3;
+    private long maxOpenIntervalPrice_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public long MaxSellPrice {
-      get { return maxSellPrice_; }
+    public long MaxOpenIntervalPrice {
+      get { return maxOpenIntervalPrice_; }
       set {
-        maxSellPrice_ = value;
+        maxOpenIntervalPrice_ = value;
       }
     }
 
@@ -1826,7 +2015,7 @@ namespace Awaken.Contracts.Order {
       }
       if (AmountIn != other.AmountIn) return false;
       if (SymbolIn != other.SymbolIn) return false;
-      if (MaxSellPrice != other.MaxSellPrice) return false;
+      if (MaxOpenIntervalPrice != other.MaxOpenIntervalPrice) return false;
       if (SymbolOut != other.SymbolOut) return false;
       if (!object.Equals(To, other.To)) return false;
       return Equals(_unknownFields, other._unknownFields);
@@ -1838,7 +2027,7 @@ namespace Awaken.Contracts.Order {
       int hash = 1;
       if (AmountIn != 0L) hash ^= AmountIn.GetHashCode();
       if (SymbolIn.Length != 0) hash ^= SymbolIn.GetHashCode();
-      if (MaxSellPrice != 0L) hash ^= MaxSellPrice.GetHashCode();
+      if (MaxOpenIntervalPrice != 0L) hash ^= MaxOpenIntervalPrice.GetHashCode();
       if (SymbolOut.Length != 0) hash ^= SymbolOut.GetHashCode();
       if (to_ != null) hash ^= To.GetHashCode();
       if (_unknownFields != null) {
@@ -1867,9 +2056,9 @@ namespace Awaken.Contracts.Order {
         output.WriteRawTag(18);
         output.WriteString(SymbolIn);
       }
-      if (MaxSellPrice != 0L) {
+      if (MaxOpenIntervalPrice != 0L) {
         output.WriteRawTag(24);
-        output.WriteInt64(MaxSellPrice);
+        output.WriteInt64(MaxOpenIntervalPrice);
       }
       if (SymbolOut.Length != 0) {
         output.WriteRawTag(34);
@@ -1897,9 +2086,9 @@ namespace Awaken.Contracts.Order {
         output.WriteRawTag(18);
         output.WriteString(SymbolIn);
       }
-      if (MaxSellPrice != 0L) {
+      if (MaxOpenIntervalPrice != 0L) {
         output.WriteRawTag(24);
-        output.WriteInt64(MaxSellPrice);
+        output.WriteInt64(MaxOpenIntervalPrice);
       }
       if (SymbolOut.Length != 0) {
         output.WriteRawTag(34);
@@ -1925,8 +2114,8 @@ namespace Awaken.Contracts.Order {
       if (SymbolIn.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(SymbolIn);
       }
-      if (MaxSellPrice != 0L) {
-        size += 1 + pb::CodedOutputStream.ComputeInt64Size(MaxSellPrice);
+      if (MaxOpenIntervalPrice != 0L) {
+        size += 1 + pb::CodedOutputStream.ComputeInt64Size(MaxOpenIntervalPrice);
       }
       if (SymbolOut.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(SymbolOut);
@@ -1952,8 +2141,8 @@ namespace Awaken.Contracts.Order {
       if (other.SymbolIn.Length != 0) {
         SymbolIn = other.SymbolIn;
       }
-      if (other.MaxSellPrice != 0L) {
-        MaxSellPrice = other.MaxSellPrice;
+      if (other.MaxOpenIntervalPrice != 0L) {
+        MaxOpenIntervalPrice = other.MaxOpenIntervalPrice;
       }
       if (other.SymbolOut.Length != 0) {
         SymbolOut = other.SymbolOut;
@@ -1988,7 +2177,7 @@ namespace Awaken.Contracts.Order {
             break;
           }
           case 24: {
-            MaxSellPrice = input.ReadInt64();
+            MaxOpenIntervalPrice = input.ReadInt64();
             break;
           }
           case 34: {
@@ -2026,7 +2215,7 @@ namespace Awaken.Contracts.Order {
             break;
           }
           case 24: {
-            MaxSellPrice = input.ReadInt64();
+            MaxOpenIntervalPrice = input.ReadInt64();
             break;
           }
           case 34: {
@@ -2061,7 +2250,7 @@ namespace Awaken.Contracts.Order {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Awaken.Contracts.Order.AwakenOrderContractReflection.Descriptor.MessageTypes[7]; }
+      get { return global::Awaken.Contracts.Order.AwakenOrderContractReflection.Descriptor.MessageTypes[8]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2083,7 +2272,7 @@ namespace Awaken.Contracts.Order {
     public GetBestSellPriceInput(GetBestSellPriceInput other) : this() {
       symbolIn_ = other.symbolIn_;
       symbolOut_ = other.symbolOut_;
-      minPrice_ = other.minPrice_;
+      minOpenIntervalPrice_ = other.minOpenIntervalPrice_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -2117,18 +2306,15 @@ namespace Awaken.Contracts.Order {
       }
     }
 
-    /// <summary>Field number for the "min_price" field.</summary>
-    public const int MinPriceFieldNumber = 3;
-    private long minPrice_;
-    /// <summary>
-    /// open interval
-    /// </summary>
+    /// <summary>Field number for the "min_open_interval_price" field.</summary>
+    public const int MinOpenIntervalPriceFieldNumber = 3;
+    private long minOpenIntervalPrice_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public long MinPrice {
-      get { return minPrice_; }
+    public long MinOpenIntervalPrice {
+      get { return minOpenIntervalPrice_; }
       set {
-        minPrice_ = value;
+        minOpenIntervalPrice_ = value;
       }
     }
 
@@ -2149,7 +2335,7 @@ namespace Awaken.Contracts.Order {
       }
       if (SymbolIn != other.SymbolIn) return false;
       if (SymbolOut != other.SymbolOut) return false;
-      if (MinPrice != other.MinPrice) return false;
+      if (MinOpenIntervalPrice != other.MinOpenIntervalPrice) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -2159,7 +2345,7 @@ namespace Awaken.Contracts.Order {
       int hash = 1;
       if (SymbolIn.Length != 0) hash ^= SymbolIn.GetHashCode();
       if (SymbolOut.Length != 0) hash ^= SymbolOut.GetHashCode();
-      if (MinPrice != 0L) hash ^= MinPrice.GetHashCode();
+      if (MinOpenIntervalPrice != 0L) hash ^= MinOpenIntervalPrice.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -2186,9 +2372,9 @@ namespace Awaken.Contracts.Order {
         output.WriteRawTag(18);
         output.WriteString(SymbolOut);
       }
-      if (MinPrice != 0L) {
+      if (MinOpenIntervalPrice != 0L) {
         output.WriteRawTag(24);
-        output.WriteInt64(MinPrice);
+        output.WriteInt64(MinOpenIntervalPrice);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
@@ -2208,9 +2394,9 @@ namespace Awaken.Contracts.Order {
         output.WriteRawTag(18);
         output.WriteString(SymbolOut);
       }
-      if (MinPrice != 0L) {
+      if (MinOpenIntervalPrice != 0L) {
         output.WriteRawTag(24);
-        output.WriteInt64(MinPrice);
+        output.WriteInt64(MinOpenIntervalPrice);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
@@ -2228,8 +2414,8 @@ namespace Awaken.Contracts.Order {
       if (SymbolOut.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(SymbolOut);
       }
-      if (MinPrice != 0L) {
-        size += 1 + pb::CodedOutputStream.ComputeInt64Size(MinPrice);
+      if (MinOpenIntervalPrice != 0L) {
+        size += 1 + pb::CodedOutputStream.ComputeInt64Size(MinOpenIntervalPrice);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -2249,8 +2435,8 @@ namespace Awaken.Contracts.Order {
       if (other.SymbolOut.Length != 0) {
         SymbolOut = other.SymbolOut;
       }
-      if (other.MinPrice != 0L) {
-        MinPrice = other.MinPrice;
+      if (other.MinOpenIntervalPrice != 0L) {
+        MinOpenIntervalPrice = other.MinOpenIntervalPrice;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -2276,7 +2462,7 @@ namespace Awaken.Contracts.Order {
             break;
           }
           case 24: {
-            MinPrice = input.ReadInt64();
+            MinOpenIntervalPrice = input.ReadInt64();
             break;
           }
         }
@@ -2303,7 +2489,7 @@ namespace Awaken.Contracts.Order {
             break;
           }
           case 24: {
-            MinPrice = input.ReadInt64();
+            MinOpenIntervalPrice = input.ReadInt64();
             break;
           }
         }
@@ -2327,7 +2513,7 @@ namespace Awaken.Contracts.Order {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Awaken.Contracts.Order.AwakenOrderContractReflection.Descriptor.MessageTypes[8]; }
+      get { return global::Awaken.Contracts.Order.AwakenOrderContractReflection.Descriptor.MessageTypes[9]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2516,7 +2702,7 @@ namespace Awaken.Contracts.Order {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Awaken.Contracts.Order.AwakenOrderContractReflection.Descriptor.MessageTypes[9]; }
+      get { return global::Awaken.Contracts.Order.AwakenOrderContractReflection.Descriptor.MessageTypes[10]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2537,10 +2723,11 @@ namespace Awaken.Contracts.Order {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public GetFillResultInput(GetFillResultInput other) : this() {
       amountIn_ = other.amountIn_;
+      amountOut_ = other.amountOut_;
       symbolIn_ = other.symbolIn_;
       symbolOut_ = other.symbolOut_;
-      minPrice_ = other.minPrice_;
-      maxPrice_ = other.maxPrice_;
+      minCloseIntervalPrice_ = other.minCloseIntervalPrice_;
+      maxOpenIntervalPrice_ = other.maxOpenIntervalPrice_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -2553,6 +2740,9 @@ namespace Awaken.Contracts.Order {
     /// <summary>Field number for the "amount_in" field.</summary>
     public const int AmountInFieldNumber = 1;
     private long amountIn_;
+    /// <summary>
+    /// choose one set value from amount_in and amount_out
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public long AmountIn {
@@ -2562,8 +2752,20 @@ namespace Awaken.Contracts.Order {
       }
     }
 
+    /// <summary>Field number for the "amount_out" field.</summary>
+    public const int AmountOutFieldNumber = 2;
+    private long amountOut_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public long AmountOut {
+      get { return amountOut_; }
+      set {
+        amountOut_ = value;
+      }
+    }
+
     /// <summary>Field number for the "symbol_in" field.</summary>
-    public const int SymbolInFieldNumber = 2;
+    public const int SymbolInFieldNumber = 3;
     private string symbolIn_ = "";
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -2575,7 +2777,7 @@ namespace Awaken.Contracts.Order {
     }
 
     /// <summary>Field number for the "symbol_out" field.</summary>
-    public const int SymbolOutFieldNumber = 3;
+    public const int SymbolOutFieldNumber = 4;
     private string symbolOut_ = "";
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -2586,33 +2788,27 @@ namespace Awaken.Contracts.Order {
       }
     }
 
-    /// <summary>Field number for the "min_price" field.</summary>
-    public const int MinPriceFieldNumber = 4;
-    private long minPrice_;
-    /// <summary>
-    /// close interval
-    /// </summary>
+    /// <summary>Field number for the "min_close_interval_price" field.</summary>
+    public const int MinCloseIntervalPriceFieldNumber = 5;
+    private long minCloseIntervalPrice_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public long MinPrice {
-      get { return minPrice_; }
+    public long MinCloseIntervalPrice {
+      get { return minCloseIntervalPrice_; }
       set {
-        minPrice_ = value;
+        minCloseIntervalPrice_ = value;
       }
     }
 
-    /// <summary>Field number for the "max_price" field.</summary>
-    public const int MaxPriceFieldNumber = 5;
-    private long maxPrice_;
-    /// <summary>
-    /// open interval
-    /// </summary>
+    /// <summary>Field number for the "max_open_interval_price" field.</summary>
+    public const int MaxOpenIntervalPriceFieldNumber = 6;
+    private long maxOpenIntervalPrice_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public long MaxPrice {
-      get { return maxPrice_; }
+    public long MaxOpenIntervalPrice {
+      get { return maxOpenIntervalPrice_; }
       set {
-        maxPrice_ = value;
+        maxOpenIntervalPrice_ = value;
       }
     }
 
@@ -2632,10 +2828,11 @@ namespace Awaken.Contracts.Order {
         return true;
       }
       if (AmountIn != other.AmountIn) return false;
+      if (AmountOut != other.AmountOut) return false;
       if (SymbolIn != other.SymbolIn) return false;
       if (SymbolOut != other.SymbolOut) return false;
-      if (MinPrice != other.MinPrice) return false;
-      if (MaxPrice != other.MaxPrice) return false;
+      if (MinCloseIntervalPrice != other.MinCloseIntervalPrice) return false;
+      if (MaxOpenIntervalPrice != other.MaxOpenIntervalPrice) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -2644,10 +2841,11 @@ namespace Awaken.Contracts.Order {
     public override int GetHashCode() {
       int hash = 1;
       if (AmountIn != 0L) hash ^= AmountIn.GetHashCode();
+      if (AmountOut != 0L) hash ^= AmountOut.GetHashCode();
       if (SymbolIn.Length != 0) hash ^= SymbolIn.GetHashCode();
       if (SymbolOut.Length != 0) hash ^= SymbolOut.GetHashCode();
-      if (MinPrice != 0L) hash ^= MinPrice.GetHashCode();
-      if (MaxPrice != 0L) hash ^= MaxPrice.GetHashCode();
+      if (MinCloseIntervalPrice != 0L) hash ^= MinCloseIntervalPrice.GetHashCode();
+      if (MaxOpenIntervalPrice != 0L) hash ^= MaxOpenIntervalPrice.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -2670,21 +2868,25 @@ namespace Awaken.Contracts.Order {
         output.WriteRawTag(8);
         output.WriteInt64(AmountIn);
       }
+      if (AmountOut != 0L) {
+        output.WriteRawTag(16);
+        output.WriteInt64(AmountOut);
+      }
       if (SymbolIn.Length != 0) {
-        output.WriteRawTag(18);
+        output.WriteRawTag(26);
         output.WriteString(SymbolIn);
       }
       if (SymbolOut.Length != 0) {
-        output.WriteRawTag(26);
+        output.WriteRawTag(34);
         output.WriteString(SymbolOut);
       }
-      if (MinPrice != 0L) {
-        output.WriteRawTag(32);
-        output.WriteInt64(MinPrice);
-      }
-      if (MaxPrice != 0L) {
+      if (MinCloseIntervalPrice != 0L) {
         output.WriteRawTag(40);
-        output.WriteInt64(MaxPrice);
+        output.WriteInt64(MinCloseIntervalPrice);
+      }
+      if (MaxOpenIntervalPrice != 0L) {
+        output.WriteRawTag(48);
+        output.WriteInt64(MaxOpenIntervalPrice);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
@@ -2700,21 +2902,25 @@ namespace Awaken.Contracts.Order {
         output.WriteRawTag(8);
         output.WriteInt64(AmountIn);
       }
+      if (AmountOut != 0L) {
+        output.WriteRawTag(16);
+        output.WriteInt64(AmountOut);
+      }
       if (SymbolIn.Length != 0) {
-        output.WriteRawTag(18);
+        output.WriteRawTag(26);
         output.WriteString(SymbolIn);
       }
       if (SymbolOut.Length != 0) {
-        output.WriteRawTag(26);
+        output.WriteRawTag(34);
         output.WriteString(SymbolOut);
       }
-      if (MinPrice != 0L) {
-        output.WriteRawTag(32);
-        output.WriteInt64(MinPrice);
-      }
-      if (MaxPrice != 0L) {
+      if (MinCloseIntervalPrice != 0L) {
         output.WriteRawTag(40);
-        output.WriteInt64(MaxPrice);
+        output.WriteInt64(MinCloseIntervalPrice);
+      }
+      if (MaxOpenIntervalPrice != 0L) {
+        output.WriteRawTag(48);
+        output.WriteInt64(MaxOpenIntervalPrice);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
@@ -2729,17 +2935,20 @@ namespace Awaken.Contracts.Order {
       if (AmountIn != 0L) {
         size += 1 + pb::CodedOutputStream.ComputeInt64Size(AmountIn);
       }
+      if (AmountOut != 0L) {
+        size += 1 + pb::CodedOutputStream.ComputeInt64Size(AmountOut);
+      }
       if (SymbolIn.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(SymbolIn);
       }
       if (SymbolOut.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(SymbolOut);
       }
-      if (MinPrice != 0L) {
-        size += 1 + pb::CodedOutputStream.ComputeInt64Size(MinPrice);
+      if (MinCloseIntervalPrice != 0L) {
+        size += 1 + pb::CodedOutputStream.ComputeInt64Size(MinCloseIntervalPrice);
       }
-      if (MaxPrice != 0L) {
-        size += 1 + pb::CodedOutputStream.ComputeInt64Size(MaxPrice);
+      if (MaxOpenIntervalPrice != 0L) {
+        size += 1 + pb::CodedOutputStream.ComputeInt64Size(MaxOpenIntervalPrice);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -2756,17 +2965,20 @@ namespace Awaken.Contracts.Order {
       if (other.AmountIn != 0L) {
         AmountIn = other.AmountIn;
       }
+      if (other.AmountOut != 0L) {
+        AmountOut = other.AmountOut;
+      }
       if (other.SymbolIn.Length != 0) {
         SymbolIn = other.SymbolIn;
       }
       if (other.SymbolOut.Length != 0) {
         SymbolOut = other.SymbolOut;
       }
-      if (other.MinPrice != 0L) {
-        MinPrice = other.MinPrice;
+      if (other.MinCloseIntervalPrice != 0L) {
+        MinCloseIntervalPrice = other.MinCloseIntervalPrice;
       }
-      if (other.MaxPrice != 0L) {
-        MaxPrice = other.MaxPrice;
+      if (other.MaxOpenIntervalPrice != 0L) {
+        MaxOpenIntervalPrice = other.MaxOpenIntervalPrice;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -2787,20 +2999,24 @@ namespace Awaken.Contracts.Order {
             AmountIn = input.ReadInt64();
             break;
           }
-          case 18: {
-            SymbolIn = input.ReadString();
+          case 16: {
+            AmountOut = input.ReadInt64();
             break;
           }
           case 26: {
+            SymbolIn = input.ReadString();
+            break;
+          }
+          case 34: {
             SymbolOut = input.ReadString();
             break;
           }
-          case 32: {
-            MinPrice = input.ReadInt64();
+          case 40: {
+            MinCloseIntervalPrice = input.ReadInt64();
             break;
           }
-          case 40: {
-            MaxPrice = input.ReadInt64();
+          case 48: {
+            MaxOpenIntervalPrice = input.ReadInt64();
             break;
           }
         }
@@ -2822,20 +3038,24 @@ namespace Awaken.Contracts.Order {
             AmountIn = input.ReadInt64();
             break;
           }
-          case 18: {
-            SymbolIn = input.ReadString();
+          case 16: {
+            AmountOut = input.ReadInt64();
             break;
           }
           case 26: {
+            SymbolIn = input.ReadString();
+            break;
+          }
+          case 34: {
             SymbolOut = input.ReadString();
             break;
           }
-          case 32: {
-            MinPrice = input.ReadInt64();
+          case 40: {
+            MinCloseIntervalPrice = input.ReadInt64();
             break;
           }
-          case 40: {
-            MaxPrice = input.ReadInt64();
+          case 48: {
+            MaxOpenIntervalPrice = input.ReadInt64();
             break;
           }
         }
@@ -2859,7 +3079,7 @@ namespace Awaken.Contracts.Order {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Awaken.Contracts.Order.AwakenOrderContractReflection.Descriptor.MessageTypes[10]; }
+      get { return global::Awaken.Contracts.Order.AwakenOrderContractReflection.Descriptor.MessageTypes[11]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -3159,7 +3379,7 @@ namespace Awaken.Contracts.Order {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Awaken.Contracts.Order.AwakenOrderContractReflection.Descriptor.MessageTypes[11]; }
+      get { return global::Awaken.Contracts.Order.AwakenOrderContractReflection.Descriptor.MessageTypes[12]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -3459,7 +3679,7 @@ namespace Awaken.Contracts.Order {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Awaken.Contracts.Order.AwakenOrderContractReflection.Descriptor.MessageTypes[12]; }
+      get { return global::Awaken.Contracts.Order.AwakenOrderContractReflection.Descriptor.MessageTypes[13]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -3788,7 +4008,7 @@ namespace Awaken.Contracts.Order {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Awaken.Contracts.Order.AwakenOrderContractReflection.Descriptor.MessageTypes[13]; }
+      get { return global::Awaken.Contracts.Order.AwakenOrderContractReflection.Descriptor.MessageTypes[14]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -3816,6 +4036,7 @@ namespace Awaken.Contracts.Order {
       maker_ = other.maker_ != null ? other.maker_.Clone() : null;
       amountInFilled_ = other.amountInFilled_;
       orderId_ = other.orderId_;
+      amountOutFilled_ = other.amountOutFilled_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -3921,6 +4142,18 @@ namespace Awaken.Contracts.Order {
       }
     }
 
+    /// <summary>Field number for the "amount_out_filled" field.</summary>
+    public const int AmountOutFilledFieldNumber = 9;
+    private long amountOutFilled_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public long AmountOutFilled {
+      get { return amountOutFilled_; }
+      set {
+        amountOutFilled_ = value;
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
@@ -3944,6 +4177,7 @@ namespace Awaken.Contracts.Order {
       if (!object.Equals(Maker, other.Maker)) return false;
       if (AmountInFilled != other.AmountInFilled) return false;
       if (OrderId != other.OrderId) return false;
+      if (AmountOutFilled != other.AmountOutFilled) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -3959,6 +4193,7 @@ namespace Awaken.Contracts.Order {
       if (maker_ != null) hash ^= Maker.GetHashCode();
       if (AmountInFilled != 0L) hash ^= AmountInFilled.GetHashCode();
       if (OrderId != 0L) hash ^= OrderId.GetHashCode();
+      if (AmountOutFilled != 0L) hash ^= AmountOutFilled.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -4009,6 +4244,10 @@ namespace Awaken.Contracts.Order {
         output.WriteRawTag(64);
         output.WriteInt64(OrderId);
       }
+      if (AmountOutFilled != 0L) {
+        output.WriteRawTag(72);
+        output.WriteInt64(AmountOutFilled);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -4051,6 +4290,10 @@ namespace Awaken.Contracts.Order {
         output.WriteRawTag(64);
         output.WriteInt64(OrderId);
       }
+      if (AmountOutFilled != 0L) {
+        output.WriteRawTag(72);
+        output.WriteInt64(AmountOutFilled);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -4084,6 +4327,9 @@ namespace Awaken.Contracts.Order {
       }
       if (OrderId != 0L) {
         size += 1 + pb::CodedOutputStream.ComputeInt64Size(OrderId);
+      }
+      if (AmountOutFilled != 0L) {
+        size += 1 + pb::CodedOutputStream.ComputeInt64Size(AmountOutFilled);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -4132,6 +4378,9 @@ namespace Awaken.Contracts.Order {
       }
       if (other.OrderId != 0L) {
         OrderId = other.OrderId;
+      }
+      if (other.AmountOutFilled != 0L) {
+        AmountOutFilled = other.AmountOutFilled;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -4190,6 +4439,10 @@ namespace Awaken.Contracts.Order {
           }
           case 64: {
             OrderId = input.ReadInt64();
+            break;
+          }
+          case 72: {
+            AmountOutFilled = input.ReadInt64();
             break;
           }
         }
@@ -4251,6 +4504,10 @@ namespace Awaken.Contracts.Order {
             OrderId = input.ReadInt64();
             break;
           }
+          case 72: {
+            AmountOutFilled = input.ReadInt64();
+            break;
+          }
         }
       }
     }
@@ -4272,7 +4529,7 @@ namespace Awaken.Contracts.Order {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Awaken.Contracts.Order.AwakenOrderContractReflection.Descriptor.MessageTypes[14]; }
+      get { return global::Awaken.Contracts.Order.AwakenOrderContractReflection.Descriptor.MessageTypes[15]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -4544,7 +4801,7 @@ namespace Awaken.Contracts.Order {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Awaken.Contracts.Order.AwakenOrderContractReflection.Descriptor.MessageTypes[15]; }
+      get { return global::Awaken.Contracts.Order.AwakenOrderContractReflection.Descriptor.MessageTypes[16]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -4724,7 +4981,7 @@ namespace Awaken.Contracts.Order {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Awaken.Contracts.Order.AwakenOrderContractReflection.Descriptor.MessageTypes[16]; }
+      get { return global::Awaken.Contracts.Order.AwakenOrderContractReflection.Descriptor.MessageTypes[17]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -5199,7 +5456,7 @@ namespace Awaken.Contracts.Order {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Awaken.Contracts.Order.AwakenOrderContractReflection.Descriptor.MessageTypes[17]; }
+      get { return global::Awaken.Contracts.Order.AwakenOrderContractReflection.Descriptor.MessageTypes[18]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -5554,7 +5811,7 @@ namespace Awaken.Contracts.Order {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Awaken.Contracts.Order.AwakenOrderContractReflection.Descriptor.MessageTypes[18]; }
+      get { return global::Awaken.Contracts.Order.AwakenOrderContractReflection.Descriptor.MessageTypes[19]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -5789,7 +6046,7 @@ namespace Awaken.Contracts.Order {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Awaken.Contracts.Order.AwakenOrderContractReflection.Descriptor.MessageTypes[19]; }
+      get { return global::Awaken.Contracts.Order.AwakenOrderContractReflection.Descriptor.MessageTypes[20]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -5811,6 +6068,7 @@ namespace Awaken.Contracts.Order {
     public LimitOrderRemoved(LimitOrderRemoved other) : this() {
       orderId_ = other.orderId_;
       removeTime_ = other.removeTime_ != null ? other.removeTime_.Clone() : null;
+      reasonType_ = other.reasonType_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -5844,6 +6102,18 @@ namespace Awaken.Contracts.Order {
       }
     }
 
+    /// <summary>Field number for the "reason_type" field.</summary>
+    public const int ReasonTypeFieldNumber = 3;
+    private global::Awaken.Contracts.Order.ReasonType reasonType_ = global::Awaken.Contracts.Order.ReasonType.Expired;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::Awaken.Contracts.Order.ReasonType ReasonType {
+      get { return reasonType_; }
+      set {
+        reasonType_ = value;
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
@@ -5861,6 +6131,7 @@ namespace Awaken.Contracts.Order {
       }
       if (OrderId != other.OrderId) return false;
       if (!object.Equals(RemoveTime, other.RemoveTime)) return false;
+      if (ReasonType != other.ReasonType) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -5870,6 +6141,7 @@ namespace Awaken.Contracts.Order {
       int hash = 1;
       if (OrderId != 0L) hash ^= OrderId.GetHashCode();
       if (removeTime_ != null) hash ^= RemoveTime.GetHashCode();
+      if (ReasonType != global::Awaken.Contracts.Order.ReasonType.Expired) hash ^= ReasonType.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -5896,6 +6168,10 @@ namespace Awaken.Contracts.Order {
         output.WriteRawTag(18);
         output.WriteMessage(RemoveTime);
       }
+      if (ReasonType != global::Awaken.Contracts.Order.ReasonType.Expired) {
+        output.WriteRawTag(24);
+        output.WriteEnum((int) ReasonType);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -5914,6 +6190,10 @@ namespace Awaken.Contracts.Order {
         output.WriteRawTag(18);
         output.WriteMessage(RemoveTime);
       }
+      if (ReasonType != global::Awaken.Contracts.Order.ReasonType.Expired) {
+        output.WriteRawTag(24);
+        output.WriteEnum((int) ReasonType);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -5929,6 +6209,9 @@ namespace Awaken.Contracts.Order {
       }
       if (removeTime_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(RemoveTime);
+      }
+      if (ReasonType != global::Awaken.Contracts.Order.ReasonType.Expired) {
+        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) ReasonType);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -5950,6 +6233,9 @@ namespace Awaken.Contracts.Order {
           RemoveTime = new global::Google.Protobuf.WellKnownTypes.Timestamp();
         }
         RemoveTime.MergeFrom(other.RemoveTime);
+      }
+      if (other.ReasonType != global::Awaken.Contracts.Order.ReasonType.Expired) {
+        ReasonType = other.ReasonType;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -5977,6 +6263,10 @@ namespace Awaken.Contracts.Order {
             input.ReadMessage(RemoveTime);
             break;
           }
+          case 24: {
+            ReasonType = (global::Awaken.Contracts.Order.ReasonType) input.ReadEnum();
+            break;
+          }
         }
       }
     #endif
@@ -6001,6 +6291,10 @@ namespace Awaken.Contracts.Order {
               RemoveTime = new global::Google.Protobuf.WellKnownTypes.Timestamp();
             }
             input.ReadMessage(RemoveTime);
+            break;
+          }
+          case 24: {
+            ReasonType = (global::Awaken.Contracts.Order.ReasonType) input.ReadEnum();
             break;
           }
         }

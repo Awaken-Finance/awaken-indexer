@@ -24,7 +24,7 @@ public class LimitOrderRemovedProcessor : LimitOrderProcessorBase<LimitOrderRemo
     protected override async Task HandleEventAsync(LimitOrderRemoved eventValue, LogEventContext context)
     {
         Logger.Info("received LimitOrderRemoved:" + eventValue + ",context:" + context);
-        var id = IdGenerateHelper.GetId(eventValue.OrderId);
+        var id = IdGenerateHelper.GetId(context.ChainId, eventValue.OrderId);
         var recordIndex = await Repository.GetFromBlockStateSetAsync(id, context.ChainId);
         if (recordIndex == null)
         {
@@ -34,16 +34,17 @@ public class LimitOrderRemovedProcessor : LimitOrderProcessorBase<LimitOrderRemo
 
         recordIndex.RemoveTime = DateTimeHelper.ToUnixTimeMilliseconds(eventValue.RemoveTime.ToDateTime());
         recordIndex.LastUpdateTime = recordIndex.RemoveTime;
-        recordIndex.LimitOrderStatus = LimitOrderStatus.Removed; // todo expired, ...
+        recordIndex.LimitOrderStatus = eventValue.ReasonType == ReasonType.Expired
+            ? LimitOrderStatus.Epired
+            : LimitOrderStatus.Revoked;
+        
         recordIndex.FillRecords.Add(new FillRecord()
         {
             TransactionTime = DateTimeHelper.ToUnixTimeMilliseconds(eventValue.RemoveTime.ToDateTime()),
             TransactionHash = context.TransactionId,
-            Status = LimitOrderRecordStatus.Remove // todo expired, ...
+            Status = recordIndex.LimitOrderStatus
         });
-        
         ObjectMapper.Map(context, recordIndex);
-        
         Logger.Info("LimitOrderIndex:" + recordIndex);
         await Repository.AddOrUpdateAsync(recordIndex);
     }

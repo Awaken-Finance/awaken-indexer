@@ -76,7 +76,7 @@ public sealed class LimitOrderProcessorTests : SwapIndexerTests
         {
             OrderId = orderId,
             AmountIn = 1000,
-            AmountOut = 0,
+            AmountOut = 100,
             CommitTime = commitTime,
             Deadline = deadLine,
             Maker = Address.FromPublicKey("AAA".HexToByteArray()),
@@ -116,12 +116,13 @@ public sealed class LimitOrderProcessorTests : SwapIndexerTests
         await Task.Delay(2000);
         
         //step5: check result
-        var limitOrderIndexData = await _recordRepository.GetAsync(IdGenerateHelper.GetId(orderId));
+        var limitOrderIndexData = await _recordRepository.GetAsync(IdGenerateHelper.GetId(chainId, orderId));
         limitOrderIndexData.ShouldNotBe(null);
+        limitOrderIndexData.ChainId.ShouldBe(chainId);
         limitOrderIndexData.Maker.ShouldBe(Address.FromPublicKey("AAA".HexToByteArray()).ToBase58());
         limitOrderIndexData.OrderId.ShouldBe(1);
         limitOrderIndexData.AmountIn.ShouldBe(1000);
-        limitOrderIndexData.AmountOut.ShouldBe(0);
+        limitOrderIndexData.AmountOut.ShouldBe(100);
         limitOrderIndexData.CommitTime.ShouldBe(DateTimeHelper.ToUnixTimeMilliseconds(commitTime.ToDateTime()));
         limitOrderIndexData.Deadline.ShouldBe(DateTimeHelper.ToUnixTimeMilliseconds(deadLine.ToDateTime()));
         limitOrderIndexData.SymbolIn.ShouldBe("ELF");
@@ -170,6 +171,7 @@ public sealed class LimitOrderProcessorTests : SwapIndexerTests
             OrderId = orderId,
             FillTime = fillTime,
             AmountInFilled = 100,
+            AmountOutFilled = 10,
             Taker = Address.FromPublicKey("BBB".HexToByteArray())
         };
         var logEventInfo = LogEventHelper.ConvertAElfLogEventToLogEventInfo(limitOrderCreated.ToLogEvent());
@@ -205,20 +207,22 @@ public sealed class LimitOrderProcessorTests : SwapIndexerTests
         await Task.Delay(2000);
         
         //step5: check result
-        var limitOrderIndexData = await _recordRepository.GetAsync(IdGenerateHelper.GetId(orderId));
+        var limitOrderIndexData = await _recordRepository.GetAsync(IdGenerateHelper.GetId(chainId, orderId));
         limitOrderIndexData.ShouldNotBe(null);
         limitOrderIndexData.Maker.ShouldBe(Address.FromPublicKey("AAA".HexToByteArray()).ToBase58());
         limitOrderIndexData.OrderId.ShouldBe(1);
         limitOrderIndexData.AmountIn.ShouldBe(1000);
-        limitOrderIndexData.AmountOut.ShouldBe(0);
+        limitOrderIndexData.AmountOut.ShouldBe(100);
         limitOrderIndexData.CommitTime.ShouldBe(DateTimeHelper.ToUnixTimeMilliseconds(commitTime.ToDateTime()));
         limitOrderIndexData.FillTime.ShouldBe(DateTimeHelper.ToUnixTimeMilliseconds(fillTime.ToDateTime()));
         limitOrderIndexData.SymbolIn.ShouldBe("ELF");
         limitOrderIndexData.SymbolOut.ShouldBe("BTC");
         limitOrderIndexData.LimitOrderStatus.ShouldBe(LimitOrderStatus.PartiallyFilling);
         limitOrderIndexData.AmountInFilled.ShouldBe(100);
+        limitOrderIndexData.AmountOutFilled.ShouldBe(10);
         limitOrderIndexData.FillRecords.Count.ShouldBe(1);
         limitOrderIndexData.FillRecords[0].AmountInFilled.ShouldBe(100);
+        limitOrderIndexData.FillRecords[0].AmountOutFilled.ShouldBe(10);
         limitOrderIndexData.FillRecords[0].TakerAddress.ShouldBe(Address.FromPublicKey("BBB".HexToByteArray()).ToBase58());
         limitOrderIndexData.FillRecords[0].TransactionTime.ShouldBe(DateTimeHelper.ToUnixTimeMilliseconds(fillTime.ToDateTime()));
         limitOrderIndexData.FillRecords[0].TransactionHash.ShouldBe(FilledTransactionId1);
@@ -264,6 +268,7 @@ public sealed class LimitOrderProcessorTests : SwapIndexerTests
             OrderId = orderId,
             FillTime = fillTime2,
             AmountInFilled = 900,
+            AmountOutFilled = 90,
             Taker = Address.FromPublicKey("CCC".HexToByteArray())
         };
         var logEventInfo = LogEventHelper.ConvertAElfLogEventToLogEventInfo(limitOrderCreated.ToLogEvent());
@@ -299,12 +304,12 @@ public sealed class LimitOrderProcessorTests : SwapIndexerTests
         await Task.Delay(2000);
         
         //step5: check result
-        var limitOrderIndexData = await _recordRepository.GetAsync(IdGenerateHelper.GetId(orderId));
+        var limitOrderIndexData = await _recordRepository.GetAsync(IdGenerateHelper.GetId(chainId, orderId));
         limitOrderIndexData.ShouldNotBe(null);
         limitOrderIndexData.Maker.ShouldBe(Address.FromPublicKey("AAA".HexToByteArray()).ToBase58());
         limitOrderIndexData.OrderId.ShouldBe(1);
         limitOrderIndexData.AmountIn.ShouldBe(1000);
-        limitOrderIndexData.AmountOut.ShouldBe(0);
+        limitOrderIndexData.AmountOut.ShouldBe(100);
         limitOrderIndexData.CommitTime.ShouldBe(DateTimeHelper.ToUnixTimeMilliseconds(commitTime.ToDateTime()));
         limitOrderIndexData.FillTime.ShouldBe(DateTimeHelper.ToUnixTimeMilliseconds(fillTime2.ToDateTime()));
         limitOrderIndexData.SymbolIn.ShouldBe("ELF");
@@ -313,15 +318,17 @@ public sealed class LimitOrderProcessorTests : SwapIndexerTests
         limitOrderIndexData.AmountInFilled.ShouldBe(1000);
         limitOrderIndexData.FillRecords.Count.ShouldBe(2);
         limitOrderIndexData.FillRecords[0].AmountInFilled.ShouldBe(100);
+        limitOrderIndexData.FillRecords[0].AmountOutFilled.ShouldBe(10);
         limitOrderIndexData.FillRecords[0].TakerAddress.ShouldBe(Address.FromPublicKey("BBB".HexToByteArray()).ToBase58());
         limitOrderIndexData.FillRecords[0].TransactionTime.ShouldBe(DateTimeHelper.ToUnixTimeMilliseconds(fillTime1.ToDateTime()));
         limitOrderIndexData.FillRecords[0].TransactionHash.ShouldBe(FilledTransactionId1);
-        limitOrderIndexData.FillRecords[0].Status.ShouldBe(LimitOrderRecordStatus.Fill);
+        limitOrderIndexData.FillRecords[0].Status.ShouldBe(LimitOrderStatus.PartiallyFilling);
         limitOrderIndexData.FillRecords[1].AmountInFilled.ShouldBe(900);
+        limitOrderIndexData.FillRecords[1].AmountOutFilled.ShouldBe(90);
         limitOrderIndexData.FillRecords[1].TakerAddress.ShouldBe(Address.FromPublicKey("CCC".HexToByteArray()).ToBase58());
         limitOrderIndexData.FillRecords[1].TransactionTime.ShouldBe(DateTimeHelper.ToUnixTimeMilliseconds(fillTime2.ToDateTime()));
         limitOrderIndexData.FillRecords[1].TransactionHash.ShouldBe(FilledTransactionId2);
-        limitOrderIndexData.FillRecords[1].Status.ShouldBe(LimitOrderRecordStatus.Fill);
+        limitOrderIndexData.FillRecords[1].Status.ShouldBe(LimitOrderStatus.PartiallyFilling);
     }
     
     [Fact]
@@ -397,22 +404,23 @@ public sealed class LimitOrderProcessorTests : SwapIndexerTests
         await Task.Delay(2000);
         
         //step5: check result
-        var limitOrderIndexData = await _recordRepository.GetAsync(IdGenerateHelper.GetId(orderId));
+        var limitOrderIndexData = await _recordRepository.GetAsync(IdGenerateHelper.GetId(chainId, orderId));
         limitOrderIndexData.ShouldNotBe(null);
         limitOrderIndexData.Maker.ShouldBe(Address.FromPublicKey("AAA".HexToByteArray()).ToBase58());
         limitOrderIndexData.OrderId.ShouldBe(1);
         limitOrderIndexData.AmountIn.ShouldBe(1000);
-        limitOrderIndexData.AmountOut.ShouldBe(0);
+        limitOrderIndexData.AmountOut.ShouldBe(100);
         limitOrderIndexData.CommitTime.ShouldBe(DateTimeHelper.ToUnixTimeMilliseconds(commitTime.ToDateTime()));
         limitOrderIndexData.CancelTime.ShouldBe(DateTimeHelper.ToUnixTimeMilliseconds(cancelledTime.ToDateTime()));
         limitOrderIndexData.SymbolIn.ShouldBe("ELF");
         limitOrderIndexData.SymbolOut.ShouldBe("BTC");
         limitOrderIndexData.LimitOrderStatus.ShouldBe(LimitOrderStatus.Cancelled);
         limitOrderIndexData.AmountInFilled.ShouldBe(100);
+        limitOrderIndexData.AmountOutFilled.ShouldBe(10);
         limitOrderIndexData.FillRecords.Count.ShouldBe(2);
         limitOrderIndexData.FillRecords[1].TransactionTime.ShouldBe(DateTimeHelper.ToUnixTimeMilliseconds(cancelledTime.ToDateTime()));
         limitOrderIndexData.FillRecords[1].TransactionHash.ShouldBe(CancelledTransactionId);
-        limitOrderIndexData.FillRecords[1].Status.ShouldBe(LimitOrderRecordStatus.Cancel);
+        limitOrderIndexData.FillRecords[1].Status.ShouldBe(LimitOrderStatus.Cancelled);
         
         var result = await Query.LimitOrderAsync(_recordRepository, _objectMapper, new GetLimitOrderDto()
         {
@@ -422,6 +430,7 @@ public sealed class LimitOrderProcessorTests : SwapIndexerTests
         });
         result.Data.Count.ShouldBe(1);
         result.Data[0].OrderId.ShouldBe(1);
+        result.Data[0].ChainId.ShouldBe(chainId);
     }
     
     
@@ -462,7 +471,8 @@ public sealed class LimitOrderProcessorTests : SwapIndexerTests
         var limitOrderCancelled = new LimitOrderRemoved()
         {
             OrderId = orderId,
-            RemoveTime = removedTime
+            RemoveTime = removedTime,
+            ReasonType = ReasonType.Expired
         };
         var logEventInfo = LogEventHelper.ConvertAElfLogEventToLogEventInfo(limitOrderCancelled.ToLogEvent());
         logEventInfo.BlockHeight = blockHeight;
@@ -497,25 +507,26 @@ public sealed class LimitOrderProcessorTests : SwapIndexerTests
         await Task.Delay(2000);
         
         //step5: check result
-        var limitOrderIndexData = await _recordRepository.GetAsync(IdGenerateHelper.GetId(orderId));
+        var limitOrderIndexData = await _recordRepository.GetAsync(IdGenerateHelper.GetId(chainId, orderId));
         limitOrderIndexData.ShouldNotBe(null);
         limitOrderIndexData.Maker.ShouldBe(Address.FromPublicKey("AAA".HexToByteArray()).ToBase58());
         limitOrderIndexData.OrderId.ShouldBe(1);
         limitOrderIndexData.AmountIn.ShouldBe(1000);
-        limitOrderIndexData.AmountOut.ShouldBe(0);
+        limitOrderIndexData.AmountOut.ShouldBe(100);
         limitOrderIndexData.CommitTime.ShouldBe(DateTimeHelper.ToUnixTimeMilliseconds(commitTime.ToDateTime()));
         limitOrderIndexData.RemoveTime.ShouldBe(DateTimeHelper.ToUnixTimeMilliseconds(removedTime.ToDateTime()));
         limitOrderIndexData.SymbolIn.ShouldBe("ELF");
         limitOrderIndexData.SymbolOut.ShouldBe("BTC");
-        limitOrderIndexData.LimitOrderStatus.ShouldBe(LimitOrderStatus.Removed);
+        limitOrderIndexData.LimitOrderStatus.ShouldBe(LimitOrderStatus.Epired);
         limitOrderIndexData.AmountInFilled.ShouldBe(100);
-        limitOrderIndexData.FillRecords.Count.ShouldBe(1);
+        limitOrderIndexData.AmountOutFilled.ShouldBe(10);
+        limitOrderIndexData.FillRecords.Count.ShouldBe(2);
         
         var result = await Query.LimitOrderAsync(_recordRepository, _objectMapper, new GetLimitOrderDto()
         {
             SkipCount = 0,
             MaxResultCount = 100,
-            LimitOrderStatus = LimitOrderStatus.Removed
+            LimitOrderStatus = LimitOrderStatus.Epired
         });
         result.Data.Count.ShouldBe(1);
         result.Data[0].OrderId.ShouldBe(1);
@@ -542,12 +553,13 @@ public sealed class LimitOrderProcessorTests : SwapIndexerTests
         result.Data[0].Maker.ShouldBe(Address.FromPublicKey("AAA".HexToByteArray()).ToBase58());
         result.Data[0].OrderId.ShouldBe(1);
         result.Data[0].AmountIn.ShouldBe(1000);
-        result.Data[0].AmountOut.ShouldBe(0);
+        result.Data[0].AmountOut.ShouldBe(100);
         result.Data[0].CommitTime.ShouldBe(DateTimeHelper.ToUnixTimeMilliseconds(commitTime.ToDateTime()));
         result.Data[0].SymbolIn.ShouldBe("ELF");
         result.Data[0].SymbolOut.ShouldBe("BTC");
         result.Data[0].LimitOrderStatus.ShouldBe(LimitOrderStatus.FullFilled);
         result.Data[0].AmountInFilled.ShouldBe(1000);
+        result.Data[0].AmountOutFilled.ShouldBe(100);
         result.Data[0].FillRecords.Count.ShouldBe(2);
         
         // by maker address and status

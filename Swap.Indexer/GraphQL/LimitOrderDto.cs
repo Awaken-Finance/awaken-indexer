@@ -10,6 +10,7 @@ public class LimitOrderPageResultDto
 
 public class LimitOrderDto
 {
+    public string ChainId { get; set; }
     public long OrderId { get; set; }
     public string Maker { get; set; }
     public string SymbolIn { get; set; }

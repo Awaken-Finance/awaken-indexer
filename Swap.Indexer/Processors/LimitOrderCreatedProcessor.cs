@@ -26,7 +26,7 @@ public class LimitOrderCreatedProcessor : LimitOrderProcessorBase<LimitOrderCrea
     protected override async Task HandleEventAsync(LimitOrderCreated eventValue, LogEventContext context)
     {
         Logger.Info("received LimitOrderCreated:" + eventValue + ",context:" + context);
-        var id = IdGenerateHelper.GetId(eventValue.OrderId);
+        var id = IdGenerateHelper.GetId(context.ChainId, eventValue.OrderId);
         var recordIndex = await Repository.GetFromBlockStateSetAsync(id, context.ChainId) ?? new LimitOrderIndex()
         {
             Id = id

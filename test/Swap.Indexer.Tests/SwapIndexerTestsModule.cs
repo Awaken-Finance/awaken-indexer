@@ -83,6 +83,7 @@ public class SwapIndexerTestsModule : AbpModule
                     {
                         ChainId = "AELF",
                         SwapContractAddress = "XXXXXX",
+                        LimitOrderContractAddress = "CCCCCC",
                         Level = 1,
                         FeeRate = 0.003
                     },
@@ -113,12 +114,6 @@ public class SwapIndexerTestsModule : AbpModule
                         SwapContractAddress = "XXXXXX5",
                         Level = 5,
                         FeeRate = 0.020
-                    },
-                    new()
-                    {
-                        ChainId = "AELF",
-                        LimitOrderContractAddress = "CCCCCC",
-                        Level = 1
                     }
                 };
             }

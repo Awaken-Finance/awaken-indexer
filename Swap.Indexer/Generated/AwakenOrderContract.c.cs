@@ -92,6 +92,7 @@ namespace Awaken.Contracts.Order {
       {
         OrderId = OrderId,
         RemoveTime = RemoveTime,
+        ReasonType = ReasonType,
       };
     }
   }
@@ -113,6 +114,7 @@ namespace Awaken.Contracts.Order {
     static readonly aelf::Marshaller<global::Awaken.Contracts.Order.GetFillResultOutput> __Marshaller_GetFillResultOutput = aelf::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Awaken.Contracts.Order.GetFillResultOutput.Parser.ParseFrom);
     static readonly aelf::Marshaller<global::Awaken.Contracts.Order.GetBestSellPriceInput> __Marshaller_GetBestSellPriceInput = aelf::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Awaken.Contracts.Order.GetBestSellPriceInput.Parser.ParseFrom);
     static readonly aelf::Marshaller<global::Awaken.Contracts.Order.GetBestSellPriceOutput> __Marshaller_GetBestSellPriceOutput = aelf::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Awaken.Contracts.Order.GetBestSellPriceOutput.Parser.ParseFrom);
+    static readonly aelf::Marshaller<global::Awaken.Contracts.Order.WhiteList> __Marshaller_WhiteList = aelf::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Awaken.Contracts.Order.WhiteList.Parser.ParseFrom);
     static readonly aelf::Marshaller<global::Awaken.Contracts.Order.GetOrderBookConfigOutput> __Marshaller_GetOrderBookConfigOutput = aelf::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Awaken.Contracts.Order.GetOrderBookConfigOutput.Parser.ParseFrom);
     static readonly aelf::Marshaller<global::Google.Protobuf.WellKnownTypes.Int64Value> __Marshaller_google_protobuf_Int64Value = aelf::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Google.Protobuf.WellKnownTypes.Int64Value.Parser.ParseFrom);
     static readonly aelf::Marshaller<global::Awaken.Contracts.Order.PriceBook> __Marshaller_PriceBook = aelf::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Awaken.Contracts.Order.PriceBook.Parser.ParseFrom);
@@ -148,6 +150,20 @@ namespace Awaken.Contracts.Order {
         __ServiceName,
         "SetOrderBookConfig",
         __Marshaller_SetOrderBookConfigInput,
+        __Marshaller_google_protobuf_Empty);
+
+    static readonly aelf::Method<global::AElf.Types.Address, global::Google.Protobuf.WellKnownTypes.Empty> __Method_AddFillOrderWhiteList = new aelf::Method<global::AElf.Types.Address, global::Google.Protobuf.WellKnownTypes.Empty>(
+        aelf::MethodType.Action,
+        __ServiceName,
+        "AddFillOrderWhiteList",
+        __Marshaller_aelf_Address,
+        __Marshaller_google_protobuf_Empty);
+
+    static readonly aelf::Method<global::AElf.Types.Address, global::Google.Protobuf.WellKnownTypes.Empty> __Method_RemoveFillOrderWhiteList = new aelf::Method<global::AElf.Types.Address, global::Google.Protobuf.WellKnownTypes.Empty>(
+        aelf::MethodType.Action,
+        __ServiceName,
+        "RemoveFillOrderWhiteList",
+        __Marshaller_aelf_Address,
         __Marshaller_google_protobuf_Empty);
 
     static readonly aelf::Method<global::Awaken.Contracts.Order.CommitLimitOrderInput, global::Google.Protobuf.WellKnownTypes.Empty> __Method_CommitLimitOrder = new aelf::Method<global::Awaken.Contracts.Order.CommitLimitOrderInput, global::Google.Protobuf.WellKnownTypes.Empty>(
@@ -191,6 +207,13 @@ namespace Awaken.Contracts.Order {
         "GetAdmin",
         __Marshaller_google_protobuf_Empty,
         __Marshaller_aelf_Address);
+
+    static readonly aelf::Method<global::Google.Protobuf.WellKnownTypes.Empty, global::Awaken.Contracts.Order.WhiteList> __Method_GetFillOrderWhiteList = new aelf::Method<global::Google.Protobuf.WellKnownTypes.Empty, global::Awaken.Contracts.Order.WhiteList>(
+        aelf::MethodType.View,
+        __ServiceName,
+        "GetFillOrderWhiteList",
+        __Marshaller_google_protobuf_Empty,
+        __Marshaller_WhiteList);
 
     static readonly aelf::Method<global::Google.Protobuf.WellKnownTypes.Empty, global::AElf.Types.Address> __Method_GetHooksContract = new aelf::Method<global::Google.Protobuf.WellKnownTypes.Empty, global::AElf.Types.Address>(
         aelf::MethodType.View,
@@ -285,6 +308,16 @@ namespace Awaken.Contracts.Order {
     //     throw new global::System.NotImplementedException();
     //   }
     //
+    //   public virtual global::Google.Protobuf.WellKnownTypes.Empty AddFillOrderWhiteList(global::AElf.Types.Address input)
+    //   {
+    //     throw new global::System.NotImplementedException();
+    //   }
+    //
+    //   public virtual global::Google.Protobuf.WellKnownTypes.Empty RemoveFillOrderWhiteList(global::AElf.Types.Address input)
+    //   {
+    //     throw new global::System.NotImplementedException();
+    //   }
+    //
     //   public virtual global::Google.Protobuf.WellKnownTypes.Empty CommitLimitOrder(global::Awaken.Contracts.Order.CommitLimitOrderInput input)
     //   {
     //     throw new global::System.NotImplementedException();
@@ -311,6 +344,11 @@ namespace Awaken.Contracts.Order {
     //   }
     //
     //   public virtual global::AElf.Types.Address GetAdmin(global::Google.Protobuf.WellKnownTypes.Empty input)
+    //   {
+    //     throw new global::System.NotImplementedException();
+    //   }
+    //
+    //   public virtual global::Awaken.Contracts.Order.WhiteList GetFillOrderWhiteList(global::Google.Protobuf.WellKnownTypes.Empty input)
     //   {
     //     throw new global::System.NotImplementedException();
     //   }
@@ -351,7 +389,7 @@ namespace Awaken.Contracts.Order {
     //   }
     //
     // }
-
+    //
     // public static aelf::ServerServiceDefinition BindService(AwakenOrderContractBase serviceImpl)
     // {
     //   return aelf::ServerServiceDefinition.CreateBuilder()
@@ -360,12 +398,15 @@ namespace Awaken.Contracts.Order {
     //       .AddMethod(__Method_SetAdmin, serviceImpl.SetAdmin)
     //       .AddMethod(__Method_SetHooksContract, serviceImpl.SetHooksContract)
     //       .AddMethod(__Method_SetOrderBookConfig, serviceImpl.SetOrderBookConfig)
+    //       .AddMethod(__Method_AddFillOrderWhiteList, serviceImpl.AddFillOrderWhiteList)
+    //       .AddMethod(__Method_RemoveFillOrderWhiteList, serviceImpl.RemoveFillOrderWhiteList)
     //       .AddMethod(__Method_CommitLimitOrder, serviceImpl.CommitLimitOrder)
     //       .AddMethod(__Method_CancelLimitOrder, serviceImpl.CancelLimitOrder)
     //       .AddMethod(__Method_FillLimitOrder, serviceImpl.FillLimitOrder)
     //       .AddMethod(__Method_GetFillResult, serviceImpl.GetFillResult)
     //       .AddMethod(__Method_GetBestSellPrice, serviceImpl.GetBestSellPrice)
     //       .AddMethod(__Method_GetAdmin, serviceImpl.GetAdmin)
+    //       .AddMethod(__Method_GetFillOrderWhiteList, serviceImpl.GetFillOrderWhiteList)
     //       .AddMethod(__Method_GetHooksContract, serviceImpl.GetHooksContract)
     //       .AddMethod(__Method_GetOrderBookConfig, serviceImpl.GetOrderBookConfig)
     //       .AddMethod(__Method_GetPriceBook, serviceImpl.GetPriceBook)

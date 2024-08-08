@@ -33,7 +33,7 @@ public class FillRecord
     public long AmountOutFilled { get; set; }
     public long TransactionTime { get; set; }
     public string TransactionHash { get; set; }
-    public LimitOrderRecordStatus Status { get; set; }
+    public LimitOrderStatus Status { get; set; }
 }
 
 public enum LimitOrderStatus
@@ -42,12 +42,6 @@ public enum LimitOrderStatus
     PartiallyFilling = 2,
     FullFilled = 3,
     Cancelled = 4,
-    Removed = 5
-}
-
-public enum LimitOrderRecordStatus
-{
-    Fill = 1,
-    Cancel = 2,
-    Remove = 3
+    Epired = 5,
+    Revoked = 6
 }
