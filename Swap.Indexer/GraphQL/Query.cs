@@ -648,15 +648,17 @@ public class Query
                 QueryContainer Filter(QueryContainerDescriptor<SyncRecordIndex> f) =>
                     f.Bool(b => b.Must(mustQuery));
                 var result = await repository.GetAsync(Filter, sortType: SortOrder.Descending, sortExp: o => o.Timestamp);
-            
-                if (result.SymbolA == baseToken)
+                if (result != null)
                 {
-                    ++count;
-                    priceSum += (result.ReserveA / Math.Pow(10, baseDecimal)) / (result.ReserveB / Math.Pow(10, quoteDecimal));
-                } else if (result.SymbolB == baseToken)
-                {
-                    ++count;
-                    priceSum += (result.ReserveB / Math.Pow(10, baseDecimal)) / (result.ReserveA / Math.Pow(10, quoteDecimal));
+                    if (result.SymbolA == baseToken)
+                    {
+                        ++count;
+                        priceSum += (result.ReserveA / Math.Pow(10, baseDecimal)) / (result.ReserveB / Math.Pow(10, quoteDecimal));
+                    } else if (result.SymbolB == baseToken)
+                    {
+                        ++count;
+                        priceSum += (result.ReserveB / Math.Pow(10, baseDecimal)) / (result.ReserveA / Math.Pow(10, quoteDecimal));
+                    }
                 }
                 _logger.LogInformation($"[TotalValueLockedAsync] cal elf price count: {count}, price sum: {priceSum}");
             }
