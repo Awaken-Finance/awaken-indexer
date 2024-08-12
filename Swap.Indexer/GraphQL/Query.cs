@@ -786,6 +786,15 @@ public class Query
                 => i.Field(f => f.Maker).Value(dto.MakerAddress)));
         }
         
+        if (!string.IsNullOrEmpty(dto.TokenSymbol))
+        {
+            mustQuery.Add(q => q.Bool(i => i.Should(
+                s => s.Wildcard(w =>
+                    w.Field(f => f.SymbolIn).Value($"*{dto.TokenSymbol.ToUpper()}*")),
+                s => s.Wildcard(w =>
+                    w.Field(f => f.SymbolOut).Value($"*{dto.TokenSymbol.ToUpper()}*")))));
+        }
+        
         if (dto.OrderId > 0)
         {
             mustQuery.Add(q => q.Term(i
@@ -806,4 +815,60 @@ public class Query
             TotalCount = count.Count
         };
     }
+    
+    [Name("limitOrderRemainingUnfilled")]
+    public static async Task<LimitOrderRemainingUnfilledResultDto> LimitOrderRemainingUnfilledAsync(
+        [FromServices] IAElfIndexerClientEntityRepository<LimitOrderIndex, LogEventInfo> repository,
+        [FromServices] IObjectMapper objectMapper,
+        [FromServices] IAElfDataProvider aelfDataProvider,
+        [FromServices] ILogger<LimitOrderIndex> logger,
+        GetLimitOrderRemainingUnfilledDto dto
+    )
+    {
+        logger.LogInformation($"[LimitOrderRemainingUnfilled] ChainId: {dto.ChainId} MakerAddress: {dto.MakerAddress} TokenSymbol: {dto.TokenSymbol}");
+        
+        dto.Validate();
+        
+        var mustQuery = new List<Func<QueryContainerDescriptor<LimitOrderIndex>, QueryContainer>>();
+        
+        if (!string.IsNullOrEmpty(dto.MakerAddress))
+        {
+            mustQuery.Add(q => q.Term(i
+                => i.Field(f => f.Maker).Value(dto.MakerAddress)));
+        }
+        
+        if (!string.IsNullOrEmpty(dto.TokenSymbol))
+        {
+            mustQuery.Add(q => q.Term(i
+                => i.Field(f => f.SymbolIn).Value(dto.TokenSymbol)));
+        }
+
+        QueryContainer Filter(QueryContainerDescriptor<LimitOrderIndex> f) =>
+            f.Bool(b => b.Must(mustQuery));
+        var result = await repository.GetSortListAsync(Filter,
+            sortFunc: s => s.Descending(t => t.Deadline),
+            skip: 0,
+            limit: 10000);
+        var dataList = objectMapper.Map<List<LimitOrderIndex>, List<LimitOrderDto>>(result.Item2);
+
+        var tokenDecimal = await aelfDataProvider.GetDecimaleAsync(dto.ChainId, dto.TokenSymbol);
+        var amountIn = 0d;
+        var filledAmountIn = 0d;
+        foreach (var limitOrderDto in dataList)
+        {
+            amountIn += limitOrderDto.AmountIn / Math.Pow(10, tokenDecimal);
+            filledAmountIn += limitOrderDto.AmountInFilled / Math.Pow(10, tokenDecimal);
+            logger.LogInformation($"[LimitOrderRemainingUnfilled] amountIn: {amountIn} filledAmountIn: {filledAmountIn}");
+        }
+
+        var remainingUnfilled = amountIn - filledAmountIn;
+        
+        logger.LogInformation($"[LimitOrderRemainingUnfilled] remainingUnfilled: {remainingUnfilled}");
+        
+        return new LimitOrderRemainingUnfilledResultDto()
+        {
+            Value = remainingUnfilled.ToString()
+        };
+    }
+    
 }

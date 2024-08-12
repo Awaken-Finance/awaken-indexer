@@ -1,4 +1,5 @@
 using AElf.CSharp.Core.Extension;
+using AElf.Kernel;
 using AElf.Types;
 using AElfIndexer;
 using AElfIndexer.Client;
@@ -9,6 +10,7 @@ using Awaken.Contracts.Hooks;
 using Awaken.Contracts.Order;
 using Awaken.Contracts.Swap;
 using Google.Protobuf.WellKnownTypes;
+using Microsoft.Extensions.Logging;
 using Nethereum.Hex.HexConvertors.Extensions;
 using Orleans;
 using Shouldly;
@@ -16,6 +18,7 @@ using Swap.Indexer.Entities;
 using Swap.Indexer.GraphQL;
 using Swap.Indexer.Orleans.TestBase;
 using Swap.Indexer.Processors;
+using Swap.Indexer.Providers;
 using Swap.Indexer.Tests.Helper;
 using Volo.Abp.ObjectMapping;
 using Xunit;
@@ -27,11 +30,15 @@ public sealed class LimitOrderProcessorTests : SwapIndexerTests
 {
     private readonly IAElfIndexerClientEntityRepository<LimitOrderIndex, LogEventInfo> _recordRepository;
     private readonly IObjectMapper _objectMapper;
-
+    private readonly IAElfDataProvider _aelfDataProvider;
+    private readonly ILogger<LimitOrderIndex> _logger;
+        
     public LimitOrderProcessorTests()
     {
         _recordRepository = GetRequiredService<IAElfIndexerClientEntityRepository<LimitOrderIndex, LogEventInfo>>();
         _objectMapper = GetRequiredService<IObjectMapper>();
+        _aelfDataProvider = GetRequiredService<IAElfDataProvider>();
+        _logger = GetRequiredService<ILogger<LimitOrderIndex>>();
     }
     
     const string CreatedTransactionId = "e1e625d135171c766999274a00a7003abed24cfe59a7215aabf1472ef20a2da2";
@@ -129,6 +136,7 @@ public sealed class LimitOrderProcessorTests : SwapIndexerTests
         limitOrderIndexData.SymbolOut.ShouldBe("BTC");
         limitOrderIndexData.LimitOrderStatus.ShouldBe(LimitOrderStatus.Committed);
         limitOrderIndexData.TransactionHash.ShouldBe(CreatedTransactionId);
+        limitOrderIndexData.TransactionFee.ShouldBe(2000);
     }
     
     
@@ -226,6 +234,7 @@ public sealed class LimitOrderProcessorTests : SwapIndexerTests
         limitOrderIndexData.FillRecords[0].TakerAddress.ShouldBe(Address.FromPublicKey("BBB".HexToByteArray()).ToBase58());
         limitOrderIndexData.FillRecords[0].TransactionTime.ShouldBe(DateTimeHelper.ToUnixTimeMilliseconds(fillTime.ToDateTime()));
         limitOrderIndexData.FillRecords[0].TransactionHash.ShouldBe(FilledTransactionId1);
+        limitOrderIndexData.FillRecords[0].TransactionFee.ShouldBe(0);
     }
     
     [Fact]
@@ -269,7 +278,7 @@ public sealed class LimitOrderProcessorTests : SwapIndexerTests
             FillTime = fillTime2,
             AmountInFilled = 900,
             AmountOutFilled = 90,
-            Taker = Address.FromPublicKey("CCC".HexToByteArray())
+            Taker = Address.FromPublicKey("AAA".HexToByteArray())
         };
         var logEventInfo = LogEventHelper.ConvertAElfLogEventToLogEventInfo(limitOrderCreated.ToLogEvent());
         logEventInfo.BlockHeight = blockHeight;
@@ -325,9 +334,10 @@ public sealed class LimitOrderProcessorTests : SwapIndexerTests
         limitOrderIndexData.FillRecords[0].Status.ShouldBe(LimitOrderStatus.PartiallyFilling);
         limitOrderIndexData.FillRecords[1].AmountInFilled.ShouldBe(900);
         limitOrderIndexData.FillRecords[1].AmountOutFilled.ShouldBe(90);
-        limitOrderIndexData.FillRecords[1].TakerAddress.ShouldBe(Address.FromPublicKey("CCC".HexToByteArray()).ToBase58());
+        limitOrderIndexData.FillRecords[1].TakerAddress.ShouldBe(Address.FromPublicKey("AAA".HexToByteArray()).ToBase58());
         limitOrderIndexData.FillRecords[1].TransactionTime.ShouldBe(DateTimeHelper.ToUnixTimeMilliseconds(fillTime2.ToDateTime()));
         limitOrderIndexData.FillRecords[1].TransactionHash.ShouldBe(FilledTransactionId2);
+        limitOrderIndexData.FillRecords[1].TransactionFee.ShouldBe(1500);
         limitOrderIndexData.FillRecords[1].Status.ShouldBe(LimitOrderStatus.PartiallyFilling);
     }
     
@@ -420,6 +430,7 @@ public sealed class LimitOrderProcessorTests : SwapIndexerTests
         limitOrderIndexData.FillRecords.Count.ShouldBe(2);
         limitOrderIndexData.FillRecords[1].TransactionTime.ShouldBe(DateTimeHelper.ToUnixTimeMilliseconds(cancelledTime.ToDateTime()));
         limitOrderIndexData.FillRecords[1].TransactionHash.ShouldBe(CancelledTransactionId);
+        limitOrderIndexData.FillRecords[1].TransactionFee.ShouldBe(1000);
         limitOrderIndexData.FillRecords[1].Status.ShouldBe(LimitOrderStatus.Cancelled);
         
         var result = await Query.LimitOrderAsync(_recordRepository, _objectMapper, new GetLimitOrderDto()
@@ -561,6 +572,7 @@ public sealed class LimitOrderProcessorTests : SwapIndexerTests
         result.Data[0].AmountInFilled.ShouldBe(1000);
         result.Data[0].AmountOutFilled.ShouldBe(100);
         result.Data[0].FillRecords.Count.ShouldBe(2);
+        result.Data[0].FillRecords[0].TotalFee.ShouldBe(0);
         
         // by maker address and status
         result = await Query.LimitOrderAsync(_recordRepository, _objectMapper, new GetLimitOrderDto()
@@ -583,5 +595,35 @@ public sealed class LimitOrderProcessorTests : SwapIndexerTests
         result.Data.Count.ShouldBe(1);
         result.Data[0].OrderId.ShouldBe(1);
 
+    }
+    
+    [Fact]
+    public async Task LimitOrderRemainingUnfilledAsyncTests1()
+    {
+        await LimitOrderFilled1AsyncTests();
+        
+        var result = await Query.LimitOrderRemainingUnfilledAsync(_recordRepository, _objectMapper, _aelfDataProvider, _logger, new GetLimitOrderRemainingUnfilledDto()
+        {
+            MakerAddress = Address.FromPublicKey("AAA".HexToByteArray()).ToBase58(),
+            TokenSymbol = "ELF",
+            ChainId = "AELF"
+        });
+        
+        result.Value.ShouldBe("9E-06");
+    }
+    
+    [Fact]
+    public async Task LimitOrderRemainingUnfilledAsyncTests2()
+    {
+        await LimitOrderFilled2AsyncTests();
+        
+        var result = await Query.LimitOrderRemainingUnfilledAsync(_recordRepository, _objectMapper, _aelfDataProvider, _logger, new GetLimitOrderRemainingUnfilledDto()
+        {
+            MakerAddress = Address.FromPublicKey("AAA".HexToByteArray()).ToBase58(),
+            TokenSymbol = "ELF",
+            ChainId = "AELF"
+        });
+        
+        result.Value.ShouldBe("0");
     }
 }

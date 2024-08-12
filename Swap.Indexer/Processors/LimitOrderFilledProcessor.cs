@@ -7,6 +7,7 @@ using Microsoft.Extensions.Options;
 using Orleans.Runtime;
 using Swap.Indexer.Entities;
 using Swap.Indexer.Options;
+using Swap.Indexer.Providers;
 using Volo.Abp.ObjectMapping;
 
 namespace Swap.Indexer.Processors;
@@ -17,7 +18,8 @@ public class LimitOrderFilledProcessor : LimitOrderProcessorBase<LimitOrderFille
         ILogger<LimitOrderFilledProcessor> logger,
         IObjectMapper objectMapper,
         IAElfIndexerClientEntityRepository<LimitOrderIndex, LogEventInfo> repository,
-        IOptionsSnapshot<ContractInfoOptions> contractInfoOptions) : base(logger,objectMapper, contractInfoOptions, repository)
+        IOptionsSnapshot<ContractInfoOptions> contractInfoOptions,
+        IAElfDataProvider aelfDataProvider) : base(logger,objectMapper, contractInfoOptions, repository, aelfDataProvider)
     {
     }
     
@@ -37,14 +39,22 @@ public class LimitOrderFilledProcessor : LimitOrderProcessorBase<LimitOrderFille
         recordIndex.LastUpdateTime = recordIndex.FillTime;
         recordIndex.AmountInFilled += eventValue.AmountInFilled;
         recordIndex.AmountOutFilled += eventValue.AmountOutFilled;
+        var transactionFee = 0L;
+        var takerAddress = eventValue.Taker.ToBase58();
+        if (takerAddress == recordIndex.Maker)
+        {
+            transactionFee = await AElfDataProvider.GetTransactionFeeAsync(context.ChainId, context.TransactionId);
+        }
         recordIndex.FillRecords.Add(new FillRecord()
         {
             AmountInFilled = eventValue.AmountInFilled,
             AmountOutFilled = eventValue.AmountOutFilled,
             TransactionTime = DateTimeHelper.ToUnixTimeMilliseconds(eventValue.FillTime.ToDateTime()),
-            TakerAddress = eventValue.Taker.ToBase58(),
+            TakerAddress = takerAddress,
             TransactionHash = context.TransactionId,
-            Status = LimitOrderStatus.PartiallyFilling
+            Status = LimitOrderStatus.PartiallyFilling,
+            TotalFee = eventValue.TotalFee,
+            TransactionFee = transactionFee
         });
         
         if ((recordIndex.AmountIn > 0 && recordIndex.AmountIn == recordIndex.AmountInFilled) || 

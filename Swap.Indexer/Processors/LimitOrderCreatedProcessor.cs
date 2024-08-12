@@ -9,6 +9,7 @@ using Microsoft.Extensions.Options;
 using Orleans.Runtime;
 using Swap.Indexer.Entities;
 using Swap.Indexer.Options;
+using Swap.Indexer.Providers;
 using Volo.Abp.ObjectMapping;
 
 namespace Swap.Indexer.Processors;
@@ -19,7 +20,8 @@ public class LimitOrderCreatedProcessor : LimitOrderProcessorBase<LimitOrderCrea
         ILogger<LimitOrderCreatedProcessor> logger,
         IObjectMapper objectMapper,
         IAElfIndexerClientEntityRepository<LimitOrderIndex, LogEventInfo> repository,
-        IOptionsSnapshot<ContractInfoOptions> contractInfoOptions) : base(logger,objectMapper, contractInfoOptions, repository)
+        IOptionsSnapshot<ContractInfoOptions> contractInfoOptions,
+        IAElfDataProvider aelfDataProvider) : base(logger,objectMapper, contractInfoOptions, repository, aelfDataProvider)
     {
     }
     
@@ -36,6 +38,7 @@ public class LimitOrderCreatedProcessor : LimitOrderProcessorBase<LimitOrderCrea
         recordIndex.LimitOrderStatus = LimitOrderStatus.Committed;
         recordIndex.TransactionHash = context.TransactionId;
         recordIndex.LastUpdateTime = recordIndex.CommitTime;
+        recordIndex.TransactionFee = await AElfDataProvider.GetTransactionFeeAsync(context.ChainId, context.TransactionId);
         ObjectMapper.Map(context, recordIndex);
         Logger.Info("LimitOrderIndex:" + recordIndex);
         await Repository.AddOrUpdateAsync(recordIndex);

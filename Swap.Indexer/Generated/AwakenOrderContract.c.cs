@@ -54,6 +54,7 @@ namespace Awaken.Contracts.Order {
         AmountInFilled = AmountInFilled,
         AmountOutFilled = AmountOutFilled,
         Taker = Taker,
+        TotalFee = TotalFee,
       };
     }
   }

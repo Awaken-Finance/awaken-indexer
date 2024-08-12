@@ -7,6 +7,7 @@ using Microsoft.Extensions.Options;
 using Orleans.Runtime;
 using Swap.Indexer.Entities;
 using Swap.Indexer.Options;
+using Swap.Indexer.Providers;
 using Volo.Abp.ObjectMapping;
 
 namespace Swap.Indexer.Processors;
@@ -17,7 +18,8 @@ public class LimitOrderRemovedProcessor : LimitOrderProcessorBase<LimitOrderRemo
         ILogger<LimitOrderRemovedProcessor> logger,
         IObjectMapper objectMapper,
         IAElfIndexerClientEntityRepository<LimitOrderIndex, LogEventInfo> repository,
-        IOptionsSnapshot<ContractInfoOptions> contractInfoOptions) : base(logger,objectMapper, contractInfoOptions, repository)
+        IOptionsSnapshot<ContractInfoOptions> contractInfoOptions,
+        IAElfDataProvider aelfDataProvider) : base(logger,objectMapper, contractInfoOptions, repository, aelfDataProvider)
     {
     }
     

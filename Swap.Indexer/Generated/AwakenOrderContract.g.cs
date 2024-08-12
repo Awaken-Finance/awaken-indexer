@@ -33,108 +33,111 @@ namespace Awaken.Contracts.Order {
             "RgoXU2V0T3JkZXJCb29rQ29uZmlnSW5wdXQSKwoRb3JkZXJfYm9va19jb25m",
             "aWcYASABKAsyEC5PcmRlckJvb2tDb25maWciRwoYR2V0T3JkZXJCb29rQ29u",
             "ZmlnT3V0cHV0EisKEW9yZGVyX2Jvb2tfY29uZmlnGAEgASgLMhAuT3JkZXJC",
-            "b29rQ29uZmlnIs4BCg9PcmRlckJvb2tDb25maWcSIgoabWF4X29yZGVyc19l",
+            "b29rQ29uZmlnIpsCCg9PcmRlckJvb2tDb25maWcSIgoabWF4X29yZGVyc19l",
             "YWNoX29yZGVyX2Jvb2sYASABKAUSIgoabWF4X3ByaWNlc19lYWNoX3ByaWNl",
             "X2Jvb2sYAiABKAUSHAoUbWF4X2ZpbGxfb3JkZXJfY291bnQYAyABKAUSFgoO",
             "cHJpY2VfbXVsdGlwbGUYBCABKAMSHAoUZXJhc2VfcHJpY2VfbXVsdGlwbGUY",
-            "BSABKAMSHwoXbWluX29yZGVyX3ZhbHVlX2luX3VzZHQYBiABKAMiKQoJV2hp",
-            "dGVMaXN0EhwKBXZhbHVlGAEgAygLMg0uYWVsZi5BZGRyZXNzIpMBChVDb21t",
-            "aXRMaW1pdE9yZGVySW5wdXQSEQoJYW1vdW50X2luGAEgASgDEhEKCXN5bWJv",
-            "bF9pbhgCIAEoCRISCgphbW91bnRfb3V0GAMgASgDEhIKCnN5bWJvbF9vdXQY",
-            "BCABKAkSLAoIZGVhZGxpbmUYBSABKAsyGi5nb29nbGUucHJvdG9idWYuVGlt",
-            "ZXN0YW1wIikKFUNhbmNlbExpbWl0T3JkZXJJbnB1dBIQCghvcmRlcl9pZBgB",
-            "IAEoAyKLAQoTRmlsbExpbWl0T3JkZXJJbnB1dBIRCglhbW91bnRfaW4YASAB",
-            "KAMSEQoJc3ltYm9sX2luGAIgASgJEh8KF21heF9vcGVuX2ludGVydmFsX3By",
-            "aWNlGAMgASgDEhIKCnN5bWJvbF9vdXQYBCABKAkSGQoCdG8YBSABKAsyDS5h",
-            "ZWxmLkFkZHJlc3MiXwoVR2V0QmVzdFNlbGxQcmljZUlucHV0EhEKCXN5bWJv",
-            "bF9pbhgBIAEoCRISCgpzeW1ib2xfb3V0GAIgASgJEh8KF21pbl9vcGVuX2lu",
-            "dGVydmFsX3ByaWNlGAMgASgDIicKFkdldEJlc3RTZWxsUHJpY2VPdXRwdXQS",
-            "DQoFcHJpY2UYASABKAMipQEKEkdldEZpbGxSZXN1bHRJbnB1dBIRCglhbW91",
-            "bnRfaW4YASABKAMSEgoKYW1vdW50X291dBgCIAEoAxIRCglzeW1ib2xfaW4Y",
-            "AyABKAkSEgoKc3ltYm9sX291dBgEIAEoCRIgChhtaW5fY2xvc2VfaW50ZXJ2",
-            "YWxfcHJpY2UYBSABKAMSHwoXbWF4X29wZW5faW50ZXJ2YWxfcHJpY2UYBiAB",
-            "KAMigAEKE0dldEZpbGxSZXN1bHRPdXRwdXQSGAoQYW1vdW50X2luX2ZpbGxl",
-            "ZBgBIAEoAxIYChBtYXhfcHJpY2VfZmlsbGVkGAIgASgDEhkKEWFtb3VudF9v",
-            "dXRfZmlsbGVkGAMgASgDEhoKEm9yZGVyX2ZpbGxlZF9jb3VudBgEIAEoBSJj",
-            "ChNDYWxjdWxhdGVQcmljZUlucHV0EhEKCXN5bWJvbF9pbhgBIAEoCRISCgpz",
-            "eW1ib2xfb3V0GAIgASgJEhEKCWFtb3VudF9pbhgDIAEoAxISCgphbW91bnRf",
-            "b3V0GAQgASgDIpYBCglPcmRlckJvb2sSHwoXbmV4dF9wYWdlX29yZGVyX2Jv",
-            "b2tfaWQYASABKAMSKgoRdXNlcl9saW1pdF9vcmRlcnMYAiADKAsyDy5Vc2Vy",
-            "TGltaXRPcmRlchIVCg1vcmRlcl9ib29rX2lkGAMgASgDEhEKCXN5bWJvbF9p",
-            "bhgEIAEoCRISCgpzeW1ib2xfb3V0GAUgASgJIqoCCg5Vc2VyTGltaXRPcmRl",
-            "chIRCglhbW91bnRfaW4YASABKAMSEgoKYW1vdW50X291dBgCIAEoAxIvCgtj",
-            "b21taXRfdGltZRgDIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXAS",
-            "LAoIZGVhZGxpbmUYBCABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1w",
-            "Ei0KCWZpbGxfdGltZRgFIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3Rh",
-            "bXASHAoFbWFrZXIYBiABKAsyDS5hZWxmLkFkZHJlc3MSGAoQYW1vdW50X2lu",
-            "X2ZpbGxlZBgHIAEoAxIQCghvcmRlcl9pZBgIIAEoAxIZChFhbW91bnRfb3V0",
-            "X2ZpbGxlZBgJIAEoAyJiCglQcmljZUJvb2sSHwoXbmV4dF9wYWdlX3ByaWNl",
-            "X2Jvb2tfaWQYASABKAMSHQoJcHJpY2VMaXN0GAIgASgLMgouUHJpY2VMaXN0",
-            "EhUKDXByaWNlX2Jvb2tfaWQYAyABKAMiGwoJUHJpY2VMaXN0Eg4KBnByaWNl",
-            "cxgBIAMoAyL2AQoRTGltaXRPcmRlckNyZWF0ZWQSEQoJYW1vdW50X2luGAEg",
-            "ASgDEhEKCXN5bWJvbF9pbhgCIAEoCRISCgphbW91bnRfb3V0GAMgASgDEhIK",
-            "CnN5bWJvbF9vdXQYBCABKAkSLAoIZGVhZGxpbmUYBSABKAsyGi5nb29nbGUu",
-            "cHJvdG9idWYuVGltZXN0YW1wEi8KC2NvbW1pdF90aW1lGAYgASgLMhouZ29v",
-            "Z2xlLnByb3RvYnVmLlRpbWVzdGFtcBIQCghvcmRlcl9pZBgHIAEoAxIcCgVt",
-            "YWtlchgIIAEoCzINLmFlbGYuQWRkcmVzczoEoLsYASKsAQoQTGltaXRPcmRl",
-            "ckZpbGxlZBIQCghvcmRlcl9pZBgBIAEoAxItCglmaWxsX3RpbWUYAiABKAsy",
-            "Gi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEhgKEGFtb3VudF9pbl9maWxs",
-            "ZWQYAyABKAMSGQoRYW1vdW50X291dF9maWxsZWQYBCABKAMSHAoFdGFrZXIY",
-            "BSABKAsyDS5hZWxmLkFkZHJlc3M6BKC7GAEiXgoTTGltaXRPcmRlckNhbmNl",
-            "bGxlZBIQCghvcmRlcl9pZBgBIAEoAxIvCgtjYW5jZWxfdGltZRgCIAEoCzIa",
-            "Lmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXA6BKC7GAEifgoRTGltaXRPcmRl",
-            "clJlbW92ZWQSEAoIb3JkZXJfaWQYASABKAMSLwoLcmVtb3ZlX3RpbWUYAiAB",
-            "KAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEiAKC3JlYXNvbl90eXBl",
-            "GAMgASgOMgsuUmVhc29uVHlwZToEoLsYASpLCgpSZWFzb25UeXBlEgsKB0V4",
-            "cGlyZWQQABIYChRBbGxvd2FuY2VfTm90X0Vub3VnaBABEhYKEkJhbGFuY2Vf",
-            "Tm90X0Vub3VnaBACMrcLChNBd2FrZW5PcmRlckNvbnRyYWN0EjgKCkluaXRp",
-            "YWxpemUSEC5Jbml0aWFsaXplSW5wdXQaFi5nb29nbGUucHJvdG9idWYuRW1w",
-            "dHkiABIzCghTZXRBZG1pbhINLmFlbGYuQWRkcmVzcxoWLmdvb2dsZS5wcm90",
-            "b2J1Zi5FbXB0eSIAEjsKEFNldEhvb2tzQ29udHJhY3QSDS5hZWxmLkFkZHJl",
-            "c3MaFi5nb29nbGUucHJvdG9idWYuRW1wdHkiABJIChJTZXRPcmRlckJvb2tD",
-            "b25maWcSGC5TZXRPcmRlckJvb2tDb25maWdJbnB1dBoWLmdvb2dsZS5wcm90",
-            "b2J1Zi5FbXB0eSIAEkAKFUFkZEZpbGxPcmRlcldoaXRlTGlzdBINLmFlbGYu",
-            "QWRkcmVzcxoWLmdvb2dsZS5wcm90b2J1Zi5FbXB0eSIAEkMKGFJlbW92ZUZp",
-            "bGxPcmRlcldoaXRlTGlzdBINLmFlbGYuQWRkcmVzcxoWLmdvb2dsZS5wcm90",
-            "b2J1Zi5FbXB0eSIAEkQKEENvbW1pdExpbWl0T3JkZXISFi5Db21taXRMaW1p",
-            "dE9yZGVySW5wdXQaFi5nb29nbGUucHJvdG9idWYuRW1wdHkiABJEChBDYW5j",
-            "ZWxMaW1pdE9yZGVyEhYuQ2FuY2VsTGltaXRPcmRlcklucHV0GhYuZ29vZ2xl",
-            "LnByb3RvYnVmLkVtcHR5IgASQAoORmlsbExpbWl0T3JkZXISFC5GaWxsTGlt",
-            "aXRPcmRlcklucHV0GhYuZ29vZ2xlLnByb3RvYnVmLkVtcHR5IgASQQoNR2V0",
-            "RmlsbFJlc3VsdBITLkdldEZpbGxSZXN1bHRJbnB1dBoULkdldEZpbGxSZXN1",
-            "bHRPdXRwdXQiBYiJ9wEBEkoKEEdldEJlc3RTZWxsUHJpY2USFi5HZXRCZXN0",
-            "U2VsbFByaWNlSW5wdXQaFy5HZXRCZXN0U2VsbFByaWNlT3V0cHV0IgWIifcB",
-            "ARI4CghHZXRBZG1pbhIWLmdvb2dsZS5wcm90b2J1Zi5FbXB0eRoNLmFlbGYu",
-            "QWRkcmVzcyIFiIn3AQESQgoVR2V0RmlsbE9yZGVyV2hpdGVMaXN0EhYuZ29v",
-            "Z2xlLnByb3RvYnVmLkVtcHR5GgouV2hpdGVMaXN0IgWIifcBARJAChBHZXRI",
-            "b29rc0NvbnRyYWN0EhYuZ29vZ2xlLnByb3RvYnVmLkVtcHR5Gg0uYWVsZi5B",
-            "ZGRyZXNzIgWIifcBARJOChJHZXRPcmRlckJvb2tDb25maWcSFi5nb29nbGUu",
-            "cHJvdG9idWYuRW1wdHkaGS5HZXRPcmRlckJvb2tDb25maWdPdXRwdXQiBYiJ",
-            "9wEBEj4KDEdldFByaWNlQm9vaxIbLmdvb2dsZS5wcm90b2J1Zi5JbnQ2NFZh",
-            "bHVlGgouUHJpY2VCb29rIgWIifcBARI+CgxHZXRPcmRlckJvb2sSGy5nb29n",
-            "bGUucHJvdG9idWYuSW50NjRWYWx1ZRoKLk9yZGVyQm9vayIFiIn3AQESSAoR",
-            "R2V0VXNlckxpbWl0T3JkZXISGy5nb29nbGUucHJvdG9idWYuSW50NjRWYWx1",
-            "ZRoPLlVzZXJMaW1pdE9yZGVyIgWIifcBARJaChdHZXRPcmRlckJvb2tJZEJ5",
-            "T3JkZXJJZBIbLmdvb2dsZS5wcm90b2J1Zi5JbnQ2NFZhbHVlGhsuZ29vZ2xl",
-            "LnByb3RvYnVmLkludDY0VmFsdWUiBYiJ9wEBEkoKDkNhbGN1bGF0ZVByaWNl",
-            "EhQuQ2FsY3VsYXRlUHJpY2VJbnB1dBobLmdvb2dsZS5wcm90b2J1Zi5JbnQ2",
-            "NFZhbHVlIgWIifcBARpEssz2AS9Bd2FrZW4uQ29udHJhY3RzLk9yZGVyLkF3",
-            "YWtlbk9yZGVyQ29udHJhY3RTdGF0ZcrK9gELYWNzMTIucHJvdG9CGaoCFkF3",
-            "YWtlbi5Db250cmFjdHMuT3JkZXJiBnByb3RvMw=="));
+            "BSABKAMSHwoXbWluX29yZGVyX3ZhbHVlX2luX3VzZHQYBiABKAMSIgoabWF4",
+            "X29yZGVyX2Jvb2tzX2VhY2hfcHJpY2UYByABKAMSJwofbWF4X3ByaWNlX2Jv",
+            "b2tzX2VhY2hfdHJhZGVfcGFpchgIIAEoAyIpCglXaGl0ZUxpc3QSHAoFdmFs",
+            "dWUYASADKAsyDS5hZWxmLkFkZHJlc3MikwEKFUNvbW1pdExpbWl0T3JkZXJJ",
+            "bnB1dBIRCglhbW91bnRfaW4YASABKAMSEQoJc3ltYm9sX2luGAIgASgJEhIK",
+            "CmFtb3VudF9vdXQYAyABKAMSEgoKc3ltYm9sX291dBgEIAEoCRIsCghkZWFk",
+            "bGluZRgFIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXAiKQoVQ2Fu",
+            "Y2VsTGltaXRPcmRlcklucHV0EhAKCG9yZGVyX2lkGAEgASgDIosBChNGaWxs",
+            "TGltaXRPcmRlcklucHV0EhEKCWFtb3VudF9pbhgBIAEoAxIRCglzeW1ib2xf",
+            "aW4YAiABKAkSHwoXbWF4X29wZW5faW50ZXJ2YWxfcHJpY2UYAyABKAMSEgoK",
+            "c3ltYm9sX291dBgEIAEoCRIZCgJ0bxgFIAEoCzINLmFlbGYuQWRkcmVzcyJf",
+            "ChVHZXRCZXN0U2VsbFByaWNlSW5wdXQSEQoJc3ltYm9sX2luGAEgASgJEhIK",
+            "CnN5bWJvbF9vdXQYAiABKAkSHwoXbWluX29wZW5faW50ZXJ2YWxfcHJpY2UY",
+            "AyABKAMiJwoWR2V0QmVzdFNlbGxQcmljZU91dHB1dBINCgVwcmljZRgBIAEo",
+            "AyLDAQoSR2V0RmlsbFJlc3VsdElucHV0EhEKCWFtb3VudF9pbhgBIAEoAxIS",
+            "CgphbW91bnRfb3V0GAIgASgDEhEKCXN5bWJvbF9pbhgDIAEoCRISCgpzeW1i",
+            "b2xfb3V0GAQgASgJEiAKGG1pbl9jbG9zZV9pbnRlcnZhbF9wcmljZRgFIAEo",
+            "AxIfChdtYXhfb3Blbl9pbnRlcnZhbF9wcmljZRgGIAEoAxIcChRtYXhfZmls",
+            "bF9vcmRlcl9jb3VudBgHIAEoBSKAAQoTR2V0RmlsbFJlc3VsdE91dHB1dBIY",
+            "ChBhbW91bnRfaW5fZmlsbGVkGAEgASgDEhgKEG1heF9wcmljZV9maWxsZWQY",
+            "AiABKAMSGQoRYW1vdW50X291dF9maWxsZWQYAyABKAMSGgoSb3JkZXJfZmls",
+            "bGVkX2NvdW50GAQgASgFImMKE0NhbGN1bGF0ZVByaWNlSW5wdXQSEQoJc3lt",
+            "Ym9sX2luGAEgASgJEhIKCnN5bWJvbF9vdXQYAiABKAkSEQoJYW1vdW50X2lu",
+            "GAMgASgDEhIKCmFtb3VudF9vdXQYBCABKAMilgEKCU9yZGVyQm9vaxIfChdu",
+            "ZXh0X3BhZ2Vfb3JkZXJfYm9va19pZBgBIAEoAxIqChF1c2VyX2xpbWl0X29y",
+            "ZGVycxgCIAMoCzIPLlVzZXJMaW1pdE9yZGVyEhUKDW9yZGVyX2Jvb2tfaWQY",
+            "AyABKAMSEQoJc3ltYm9sX2luGAQgASgJEhIKCnN5bWJvbF9vdXQYBSABKAki",
+            "qgIKDlVzZXJMaW1pdE9yZGVyEhEKCWFtb3VudF9pbhgBIAEoAxISCgphbW91",
+            "bnRfb3V0GAIgASgDEi8KC2NvbW1pdF90aW1lGAMgASgLMhouZ29vZ2xlLnBy",
+            "b3RvYnVmLlRpbWVzdGFtcBIsCghkZWFkbGluZRgEIAEoCzIaLmdvb2dsZS5w",
+            "cm90b2J1Zi5UaW1lc3RhbXASLQoJZmlsbF90aW1lGAUgASgLMhouZ29vZ2xl",
+            "LnByb3RvYnVmLlRpbWVzdGFtcBIcCgVtYWtlchgGIAEoCzINLmFlbGYuQWRk",
+            "cmVzcxIYChBhbW91bnRfaW5fZmlsbGVkGAcgASgDEhAKCG9yZGVyX2lkGAgg",
+            "ASgDEhkKEWFtb3VudF9vdXRfZmlsbGVkGAkgASgDImIKCVByaWNlQm9vaxIf",
+            "ChduZXh0X3BhZ2VfcHJpY2VfYm9va19pZBgBIAEoAxIdCglwcmljZUxpc3QY",
+            "AiABKAsyCi5QcmljZUxpc3QSFQoNcHJpY2VfYm9va19pZBgDIAEoAyIbCglQ",
+            "cmljZUxpc3QSDgoGcHJpY2VzGAEgAygDIvYBChFMaW1pdE9yZGVyQ3JlYXRl",
+            "ZBIRCglhbW91bnRfaW4YASABKAMSEQoJc3ltYm9sX2luGAIgASgJEhIKCmFt",
+            "b3VudF9vdXQYAyABKAMSEgoKc3ltYm9sX291dBgEIAEoCRIsCghkZWFkbGlu",
+            "ZRgFIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXASLwoLY29tbWl0",
+            "X3RpbWUYBiABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEhAKCG9y",
+            "ZGVyX2lkGAcgASgDEhwKBW1ha2VyGAggASgLMg0uYWVsZi5BZGRyZXNzOgSg",
+            "uxgBIr8BChBMaW1pdE9yZGVyRmlsbGVkEhAKCG9yZGVyX2lkGAEgASgDEi0K",
+            "CWZpbGxfdGltZRgCIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXAS",
+            "GAoQYW1vdW50X2luX2ZpbGxlZBgDIAEoAxIZChFhbW91bnRfb3V0X2ZpbGxl",
+            "ZBgEIAEoAxIcCgV0YWtlchgFIAEoCzINLmFlbGYuQWRkcmVzcxIRCgl0b3Rh",
+            "bF9mZWUYBiABKAM6BKC7GAEiXgoTTGltaXRPcmRlckNhbmNlbGxlZBIQCghv",
+            "cmRlcl9pZBgBIAEoAxIvCgtjYW5jZWxfdGltZRgCIAEoCzIaLmdvb2dsZS5w",
+            "cm90b2J1Zi5UaW1lc3RhbXA6BKC7GAEifgoRTGltaXRPcmRlclJlbW92ZWQS",
+            "EAoIb3JkZXJfaWQYASABKAMSLwoLcmVtb3ZlX3RpbWUYAiABKAsyGi5nb29n",
+            "bGUucHJvdG9idWYuVGltZXN0YW1wEiAKC3JlYXNvbl90eXBlGAMgASgOMgsu",
+            "UmVhc29uVHlwZToEoLsYASpLCgpSZWFzb25UeXBlEgsKB0V4cGlyZWQQABIY",
+            "ChRBbGxvd2FuY2VfTm90X0Vub3VnaBABEhYKEkJhbGFuY2VfTm90X0Vub3Vn",
+            "aBACMrcLChNBd2FrZW5PcmRlckNvbnRyYWN0EjgKCkluaXRpYWxpemUSEC5J",
+            "bml0aWFsaXplSW5wdXQaFi5nb29nbGUucHJvdG9idWYuRW1wdHkiABIzCghT",
+            "ZXRBZG1pbhINLmFlbGYuQWRkcmVzcxoWLmdvb2dsZS5wcm90b2J1Zi5FbXB0",
+            "eSIAEjsKEFNldEhvb2tzQ29udHJhY3QSDS5hZWxmLkFkZHJlc3MaFi5nb29n",
+            "bGUucHJvdG9idWYuRW1wdHkiABJIChJTZXRPcmRlckJvb2tDb25maWcSGC5T",
+            "ZXRPcmRlckJvb2tDb25maWdJbnB1dBoWLmdvb2dsZS5wcm90b2J1Zi5FbXB0",
+            "eSIAEkAKFUFkZEZpbGxPcmRlcldoaXRlTGlzdBINLmFlbGYuQWRkcmVzcxoW",
+            "Lmdvb2dsZS5wcm90b2J1Zi5FbXB0eSIAEkMKGFJlbW92ZUZpbGxPcmRlcldo",
+            "aXRlTGlzdBINLmFlbGYuQWRkcmVzcxoWLmdvb2dsZS5wcm90b2J1Zi5FbXB0",
+            "eSIAEkQKEENvbW1pdExpbWl0T3JkZXISFi5Db21taXRMaW1pdE9yZGVySW5w",
+            "dXQaFi5nb29nbGUucHJvdG9idWYuRW1wdHkiABJEChBDYW5jZWxMaW1pdE9y",
+            "ZGVyEhYuQ2FuY2VsTGltaXRPcmRlcklucHV0GhYuZ29vZ2xlLnByb3RvYnVm",
+            "LkVtcHR5IgASQAoORmlsbExpbWl0T3JkZXISFC5GaWxsTGltaXRPcmRlcklu",
+            "cHV0GhYuZ29vZ2xlLnByb3RvYnVmLkVtcHR5IgASQQoNR2V0RmlsbFJlc3Vs",
+            "dBITLkdldEZpbGxSZXN1bHRJbnB1dBoULkdldEZpbGxSZXN1bHRPdXRwdXQi",
+            "BYiJ9wEBEkoKEEdldEJlc3RTZWxsUHJpY2USFi5HZXRCZXN0U2VsbFByaWNl",
+            "SW5wdXQaFy5HZXRCZXN0U2VsbFByaWNlT3V0cHV0IgWIifcBARI4CghHZXRB",
+            "ZG1pbhIWLmdvb2dsZS5wcm90b2J1Zi5FbXB0eRoNLmFlbGYuQWRkcmVzcyIF",
+            "iIn3AQESQgoVR2V0RmlsbE9yZGVyV2hpdGVMaXN0EhYuZ29vZ2xlLnByb3Rv",
+            "YnVmLkVtcHR5GgouV2hpdGVMaXN0IgWIifcBARJAChBHZXRIb29rc0NvbnRy",
+            "YWN0EhYuZ29vZ2xlLnByb3RvYnVmLkVtcHR5Gg0uYWVsZi5BZGRyZXNzIgWI",
+            "ifcBARJOChJHZXRPcmRlckJvb2tDb25maWcSFi5nb29nbGUucHJvdG9idWYu",
+            "RW1wdHkaGS5HZXRPcmRlckJvb2tDb25maWdPdXRwdXQiBYiJ9wEBEj4KDEdl",
+            "dFByaWNlQm9vaxIbLmdvb2dsZS5wcm90b2J1Zi5JbnQ2NFZhbHVlGgouUHJp",
+            "Y2VCb29rIgWIifcBARI+CgxHZXRPcmRlckJvb2sSGy5nb29nbGUucHJvdG9i",
+            "dWYuSW50NjRWYWx1ZRoKLk9yZGVyQm9vayIFiIn3AQESSAoRR2V0VXNlckxp",
+            "bWl0T3JkZXISGy5nb29nbGUucHJvdG9idWYuSW50NjRWYWx1ZRoPLlVzZXJM",
+            "aW1pdE9yZGVyIgWIifcBARJaChdHZXRPcmRlckJvb2tJZEJ5T3JkZXJJZBIb",
+            "Lmdvb2dsZS5wcm90b2J1Zi5JbnQ2NFZhbHVlGhsuZ29vZ2xlLnByb3RvYnVm",
+            "LkludDY0VmFsdWUiBYiJ9wEBEkoKDkNhbGN1bGF0ZVByaWNlEhQuQ2FsY3Vs",
+            "YXRlUHJpY2VJbnB1dBobLmdvb2dsZS5wcm90b2J1Zi5JbnQ2NFZhbHVlIgWI",
+            "ifcBARpEssz2AS9Bd2FrZW4uQ29udHJhY3RzLk9yZGVyLkF3YWtlbk9yZGVy",
+            "Q29udHJhY3RTdGF0ZcrK9gELYWNzMTIucHJvdG9CGaoCFkF3YWtlbi5Db250",
+            "cmFjdHMuT3JkZXJiBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::AElf.Types.CoreReflection.Descriptor, global::AElf.OptionsReflection.Descriptor, global::Google.Protobuf.WellKnownTypes.EmptyReflection.Descriptor, global::Google.Protobuf.WellKnownTypes.WrappersReflection.Descriptor, global::Google.Protobuf.WellKnownTypes.TimestampReflection.Descriptor, global::AElf.Standards.ACS12.Acs12Reflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Awaken.Contracts.Order.ReasonType), }, null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::Awaken.Contracts.Order.InitializeInput), global::Awaken.Contracts.Order.InitializeInput.Parser, new[]{ "HooksContractAddress", "Admin" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Awaken.Contracts.Order.SetOrderBookConfigInput), global::Awaken.Contracts.Order.SetOrderBookConfigInput.Parser, new[]{ "OrderBookConfig" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Awaken.Contracts.Order.GetOrderBookConfigOutput), global::Awaken.Contracts.Order.GetOrderBookConfigOutput.Parser, new[]{ "OrderBookConfig" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Awaken.Contracts.Order.OrderBookConfig), global::Awaken.Contracts.Order.OrderBookConfig.Parser, new[]{ "MaxOrdersEachOrderBook", "MaxPricesEachPriceBook", "MaxFillOrderCount", "PriceMultiple", "ErasePriceMultiple", "MinOrderValueInUsdt" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Awaken.Contracts.Order.OrderBookConfig), global::Awaken.Contracts.Order.OrderBookConfig.Parser, new[]{ "MaxOrdersEachOrderBook", "MaxPricesEachPriceBook", "MaxFillOrderCount", "PriceMultiple", "ErasePriceMultiple", "MinOrderValueInUsdt", "MaxOrderBooksEachPrice", "MaxPriceBooksEachTradePair" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Awaken.Contracts.Order.WhiteList), global::Awaken.Contracts.Order.WhiteList.Parser, new[]{ "Value" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Awaken.Contracts.Order.CommitLimitOrderInput), global::Awaken.Contracts.Order.CommitLimitOrderInput.Parser, new[]{ "AmountIn", "SymbolIn", "AmountOut", "SymbolOut", "Deadline" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Awaken.Contracts.Order.CancelLimitOrderInput), global::Awaken.Contracts.Order.CancelLimitOrderInput.Parser, new[]{ "OrderId" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Awaken.Contracts.Order.FillLimitOrderInput), global::Awaken.Contracts.Order.FillLimitOrderInput.Parser, new[]{ "AmountIn", "SymbolIn", "MaxOpenIntervalPrice", "SymbolOut", "To" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Awaken.Contracts.Order.GetBestSellPriceInput), global::Awaken.Contracts.Order.GetBestSellPriceInput.Parser, new[]{ "SymbolIn", "SymbolOut", "MinOpenIntervalPrice" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Awaken.Contracts.Order.GetBestSellPriceOutput), global::Awaken.Contracts.Order.GetBestSellPriceOutput.Parser, new[]{ "Price" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Awaken.Contracts.Order.GetFillResultInput), global::Awaken.Contracts.Order.GetFillResultInput.Parser, new[]{ "AmountIn", "AmountOut", "SymbolIn", "SymbolOut", "MinCloseIntervalPrice", "MaxOpenIntervalPrice" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Awaken.Contracts.Order.GetFillResultInput), global::Awaken.Contracts.Order.GetFillResultInput.Parser, new[]{ "AmountIn", "AmountOut", "SymbolIn", "SymbolOut", "MinCloseIntervalPrice", "MaxOpenIntervalPrice", "MaxFillOrderCount" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Awaken.Contracts.Order.GetFillResultOutput), global::Awaken.Contracts.Order.GetFillResultOutput.Parser, new[]{ "AmountInFilled", "MaxPriceFilled", "AmountOutFilled", "OrderFilledCount" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Awaken.Contracts.Order.CalculatePriceInput), global::Awaken.Contracts.Order.CalculatePriceInput.Parser, new[]{ "SymbolIn", "SymbolOut", "AmountIn", "AmountOut" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Awaken.Contracts.Order.OrderBook), global::Awaken.Contracts.Order.OrderBook.Parser, new[]{ "NextPageOrderBookId", "UserLimitOrders", "OrderBookId", "SymbolIn", "SymbolOut" }, null, null, null, null),
@@ -142,7 +145,7 @@ namespace Awaken.Contracts.Order {
             new pbr::GeneratedClrTypeInfo(typeof(global::Awaken.Contracts.Order.PriceBook), global::Awaken.Contracts.Order.PriceBook.Parser, new[]{ "NextPagePriceBookId", "PriceList", "PriceBookId" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Awaken.Contracts.Order.PriceList), global::Awaken.Contracts.Order.PriceList.Parser, new[]{ "Prices" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Awaken.Contracts.Order.LimitOrderCreated), global::Awaken.Contracts.Order.LimitOrderCreated.Parser, new[]{ "AmountIn", "SymbolIn", "AmountOut", "SymbolOut", "Deadline", "CommitTime", "OrderId", "Maker" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Awaken.Contracts.Order.LimitOrderFilled), global::Awaken.Contracts.Order.LimitOrderFilled.Parser, new[]{ "OrderId", "FillTime", "AmountInFilled", "AmountOutFilled", "Taker" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Awaken.Contracts.Order.LimitOrderFilled), global::Awaken.Contracts.Order.LimitOrderFilled.Parser, new[]{ "OrderId", "FillTime", "AmountInFilled", "AmountOutFilled", "Taker", "TotalFee" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Awaken.Contracts.Order.LimitOrderCancelled), global::Awaken.Contracts.Order.LimitOrderCancelled.Parser, new[]{ "OrderId", "CancelTime" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Awaken.Contracts.Order.LimitOrderRemoved), global::Awaken.Contracts.Order.LimitOrderRemoved.Parser, new[]{ "OrderId", "RemoveTime", "ReasonType" }, null, null, null, null)
           }));
@@ -843,6 +846,8 @@ namespace Awaken.Contracts.Order {
       priceMultiple_ = other.priceMultiple_;
       erasePriceMultiple_ = other.erasePriceMultiple_;
       minOrderValueInUsdt_ = other.minOrderValueInUsdt_;
+      maxOrderBooksEachPrice_ = other.maxOrderBooksEachPrice_;
+      maxPriceBooksEachTradePair_ = other.maxPriceBooksEachTradePair_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -924,6 +929,30 @@ namespace Awaken.Contracts.Order {
       }
     }
 
+    /// <summary>Field number for the "max_order_books_each_price" field.</summary>
+    public const int MaxOrderBooksEachPriceFieldNumber = 7;
+    private long maxOrderBooksEachPrice_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public long MaxOrderBooksEachPrice {
+      get { return maxOrderBooksEachPrice_; }
+      set {
+        maxOrderBooksEachPrice_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "max_price_books_each_trade_pair" field.</summary>
+    public const int MaxPriceBooksEachTradePairFieldNumber = 8;
+    private long maxPriceBooksEachTradePair_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public long MaxPriceBooksEachTradePair {
+      get { return maxPriceBooksEachTradePair_; }
+      set {
+        maxPriceBooksEachTradePair_ = value;
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
@@ -945,6 +974,8 @@ namespace Awaken.Contracts.Order {
       if (PriceMultiple != other.PriceMultiple) return false;
       if (ErasePriceMultiple != other.ErasePriceMultiple) return false;
       if (MinOrderValueInUsdt != other.MinOrderValueInUsdt) return false;
+      if (MaxOrderBooksEachPrice != other.MaxOrderBooksEachPrice) return false;
+      if (MaxPriceBooksEachTradePair != other.MaxPriceBooksEachTradePair) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -958,6 +989,8 @@ namespace Awaken.Contracts.Order {
       if (PriceMultiple != 0L) hash ^= PriceMultiple.GetHashCode();
       if (ErasePriceMultiple != 0L) hash ^= ErasePriceMultiple.GetHashCode();
       if (MinOrderValueInUsdt != 0L) hash ^= MinOrderValueInUsdt.GetHashCode();
+      if (MaxOrderBooksEachPrice != 0L) hash ^= MaxOrderBooksEachPrice.GetHashCode();
+      if (MaxPriceBooksEachTradePair != 0L) hash ^= MaxPriceBooksEachTradePair.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -1000,6 +1033,14 @@ namespace Awaken.Contracts.Order {
         output.WriteRawTag(48);
         output.WriteInt64(MinOrderValueInUsdt);
       }
+      if (MaxOrderBooksEachPrice != 0L) {
+        output.WriteRawTag(56);
+        output.WriteInt64(MaxOrderBooksEachPrice);
+      }
+      if (MaxPriceBooksEachTradePair != 0L) {
+        output.WriteRawTag(64);
+        output.WriteInt64(MaxPriceBooksEachTradePair);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -1034,6 +1075,14 @@ namespace Awaken.Contracts.Order {
         output.WriteRawTag(48);
         output.WriteInt64(MinOrderValueInUsdt);
       }
+      if (MaxOrderBooksEachPrice != 0L) {
+        output.WriteRawTag(56);
+        output.WriteInt64(MaxOrderBooksEachPrice);
+      }
+      if (MaxPriceBooksEachTradePair != 0L) {
+        output.WriteRawTag(64);
+        output.WriteInt64(MaxPriceBooksEachTradePair);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -1061,6 +1110,12 @@ namespace Awaken.Contracts.Order {
       }
       if (MinOrderValueInUsdt != 0L) {
         size += 1 + pb::CodedOutputStream.ComputeInt64Size(MinOrderValueInUsdt);
+      }
+      if (MaxOrderBooksEachPrice != 0L) {
+        size += 1 + pb::CodedOutputStream.ComputeInt64Size(MaxOrderBooksEachPrice);
+      }
+      if (MaxPriceBooksEachTradePair != 0L) {
+        size += 1 + pb::CodedOutputStream.ComputeInt64Size(MaxPriceBooksEachTradePair);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -1091,6 +1146,12 @@ namespace Awaken.Contracts.Order {
       }
       if (other.MinOrderValueInUsdt != 0L) {
         MinOrderValueInUsdt = other.MinOrderValueInUsdt;
+      }
+      if (other.MaxOrderBooksEachPrice != 0L) {
+        MaxOrderBooksEachPrice = other.MaxOrderBooksEachPrice;
+      }
+      if (other.MaxPriceBooksEachTradePair != 0L) {
+        MaxPriceBooksEachTradePair = other.MaxPriceBooksEachTradePair;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -1131,6 +1192,14 @@ namespace Awaken.Contracts.Order {
             MinOrderValueInUsdt = input.ReadInt64();
             break;
           }
+          case 56: {
+            MaxOrderBooksEachPrice = input.ReadInt64();
+            break;
+          }
+          case 64: {
+            MaxPriceBooksEachTradePair = input.ReadInt64();
+            break;
+          }
         }
       }
     #endif
@@ -1168,6 +1237,14 @@ namespace Awaken.Contracts.Order {
           }
           case 48: {
             MinOrderValueInUsdt = input.ReadInt64();
+            break;
+          }
+          case 56: {
+            MaxOrderBooksEachPrice = input.ReadInt64();
+            break;
+          }
+          case 64: {
+            MaxPriceBooksEachTradePair = input.ReadInt64();
             break;
           }
         }
@@ -2728,6 +2805,7 @@ namespace Awaken.Contracts.Order {
       symbolOut_ = other.symbolOut_;
       minCloseIntervalPrice_ = other.minCloseIntervalPrice_;
       maxOpenIntervalPrice_ = other.maxOpenIntervalPrice_;
+      maxFillOrderCount_ = other.maxFillOrderCount_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -2812,6 +2890,18 @@ namespace Awaken.Contracts.Order {
       }
     }
 
+    /// <summary>Field number for the "max_fill_order_count" field.</summary>
+    public const int MaxFillOrderCountFieldNumber = 7;
+    private int maxFillOrderCount_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int MaxFillOrderCount {
+      get { return maxFillOrderCount_; }
+      set {
+        maxFillOrderCount_ = value;
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
@@ -2833,6 +2923,7 @@ namespace Awaken.Contracts.Order {
       if (SymbolOut != other.SymbolOut) return false;
       if (MinCloseIntervalPrice != other.MinCloseIntervalPrice) return false;
       if (MaxOpenIntervalPrice != other.MaxOpenIntervalPrice) return false;
+      if (MaxFillOrderCount != other.MaxFillOrderCount) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -2846,6 +2937,7 @@ namespace Awaken.Contracts.Order {
       if (SymbolOut.Length != 0) hash ^= SymbolOut.GetHashCode();
       if (MinCloseIntervalPrice != 0L) hash ^= MinCloseIntervalPrice.GetHashCode();
       if (MaxOpenIntervalPrice != 0L) hash ^= MaxOpenIntervalPrice.GetHashCode();
+      if (MaxFillOrderCount != 0) hash ^= MaxFillOrderCount.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -2888,6 +2980,10 @@ namespace Awaken.Contracts.Order {
         output.WriteRawTag(48);
         output.WriteInt64(MaxOpenIntervalPrice);
       }
+      if (MaxFillOrderCount != 0) {
+        output.WriteRawTag(56);
+        output.WriteInt32(MaxFillOrderCount);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -2922,6 +3018,10 @@ namespace Awaken.Contracts.Order {
         output.WriteRawTag(48);
         output.WriteInt64(MaxOpenIntervalPrice);
       }
+      if (MaxFillOrderCount != 0) {
+        output.WriteRawTag(56);
+        output.WriteInt32(MaxFillOrderCount);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -2949,6 +3049,9 @@ namespace Awaken.Contracts.Order {
       }
       if (MaxOpenIntervalPrice != 0L) {
         size += 1 + pb::CodedOutputStream.ComputeInt64Size(MaxOpenIntervalPrice);
+      }
+      if (MaxFillOrderCount != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(MaxFillOrderCount);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -2979,6 +3082,9 @@ namespace Awaken.Contracts.Order {
       }
       if (other.MaxOpenIntervalPrice != 0L) {
         MaxOpenIntervalPrice = other.MaxOpenIntervalPrice;
+      }
+      if (other.MaxFillOrderCount != 0) {
+        MaxFillOrderCount = other.MaxFillOrderCount;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -3019,6 +3125,10 @@ namespace Awaken.Contracts.Order {
             MaxOpenIntervalPrice = input.ReadInt64();
             break;
           }
+          case 56: {
+            MaxFillOrderCount = input.ReadInt32();
+            break;
+          }
         }
       }
     #endif
@@ -3056,6 +3166,10 @@ namespace Awaken.Contracts.Order {
           }
           case 48: {
             MaxOpenIntervalPrice = input.ReadInt64();
+            break;
+          }
+          case 56: {
+            MaxFillOrderCount = input.ReadInt32();
             break;
           }
         }
@@ -5481,6 +5595,7 @@ namespace Awaken.Contracts.Order {
       amountInFilled_ = other.amountInFilled_;
       amountOutFilled_ = other.amountOutFilled_;
       taker_ = other.taker_ != null ? other.taker_.Clone() : null;
+      totalFee_ = other.totalFee_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -5550,6 +5665,18 @@ namespace Awaken.Contracts.Order {
       }
     }
 
+    /// <summary>Field number for the "total_fee" field.</summary>
+    public const int TotalFeeFieldNumber = 6;
+    private long totalFee_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public long TotalFee {
+      get { return totalFee_; }
+      set {
+        totalFee_ = value;
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
@@ -5570,6 +5697,7 @@ namespace Awaken.Contracts.Order {
       if (AmountInFilled != other.AmountInFilled) return false;
       if (AmountOutFilled != other.AmountOutFilled) return false;
       if (!object.Equals(Taker, other.Taker)) return false;
+      if (TotalFee != other.TotalFee) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -5582,6 +5710,7 @@ namespace Awaken.Contracts.Order {
       if (AmountInFilled != 0L) hash ^= AmountInFilled.GetHashCode();
       if (AmountOutFilled != 0L) hash ^= AmountOutFilled.GetHashCode();
       if (taker_ != null) hash ^= Taker.GetHashCode();
+      if (TotalFee != 0L) hash ^= TotalFee.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -5620,6 +5749,10 @@ namespace Awaken.Contracts.Order {
         output.WriteRawTag(42);
         output.WriteMessage(Taker);
       }
+      if (TotalFee != 0L) {
+        output.WriteRawTag(48);
+        output.WriteInt64(TotalFee);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -5650,6 +5783,10 @@ namespace Awaken.Contracts.Order {
         output.WriteRawTag(42);
         output.WriteMessage(Taker);
       }
+      if (TotalFee != 0L) {
+        output.WriteRawTag(48);
+        output.WriteInt64(TotalFee);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -5674,6 +5811,9 @@ namespace Awaken.Contracts.Order {
       }
       if (taker_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(Taker);
+      }
+      if (TotalFee != 0L) {
+        size += 1 + pb::CodedOutputStream.ComputeInt64Size(TotalFee);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -5707,6 +5847,9 @@ namespace Awaken.Contracts.Order {
           Taker = new global::AElf.Types.Address();
         }
         Taker.MergeFrom(other.Taker);
+      }
+      if (other.TotalFee != 0L) {
+        TotalFee = other.TotalFee;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -5749,6 +5892,10 @@ namespace Awaken.Contracts.Order {
             input.ReadMessage(Taker);
             break;
           }
+          case 48: {
+            TotalFee = input.ReadInt64();
+            break;
+          }
         }
       }
     #endif
@@ -5788,6 +5935,10 @@ namespace Awaken.Contracts.Order {
               Taker = new global::AElf.Types.Address();
             }
             input.ReadMessage(Taker);
+            break;
+          }
+          case 48: {
+            TotalFee = input.ReadInt64();
             break;
           }
         }

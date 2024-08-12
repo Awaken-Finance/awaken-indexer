@@ -12,6 +12,7 @@ public interface IAElfDataProvider
     Task<long> GetBalanceAsync(string chainId, string symbol, Address owner);
 
     Task<long> GetDecimaleAsync(string chainId, string symbol);
+    Task<long> GetTransactionFeeAsync(string chainId, string txnId);
 }
 
 public class AElfDataProvider : IAElfDataProvider
@@ -69,5 +70,25 @@ public class AElfDataProvider : IAElfDataProvider
         
         return TokenInfo.Parser.ParseFrom(
             ByteArrayHelper.HexStringToByteArray(transactionGetTokenResult)).Decimals;
+    }
+
+    public async Task<long> GetTransactionFeeAsync(string chainId, string transactionId)
+    {
+        try
+        {
+            var client = _aElfClientProvider.GetClient(chainId);
+            var result = await client.GetTransactionResultAsync(transactionId);
+            if (result == null)
+            {
+                return 0;
+            }
+            var transactionFeeCharged = TransactionFeeCharged.Parser.
+                ParseFrom(ByteString.FromBase64(result.Logs.First(l => l.Name == nameof(TransactionFeeCharged)).NonIndexed));
+            return transactionFeeCharged.Amount;
+        }
+        catch (Exception e)
+        {
+            return 0;
+        }
     }
 }

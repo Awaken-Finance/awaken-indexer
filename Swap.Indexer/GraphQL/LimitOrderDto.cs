@@ -16,6 +16,7 @@ public class LimitOrderDto
     public string SymbolIn { get; set; }
     public string SymbolOut { get; set; }
     public string TransactionHash { get; set; }
+    public long TransactionFee { get; set; }
     public long AmountIn { get; set; }
     public long AmountOut { get; set; }
     public long AmountInFilled { get; set; }
