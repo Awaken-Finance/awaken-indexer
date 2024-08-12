@@ -56,5 +56,29 @@ public abstract class TokenProcessorBase<TEvent> : AElfLogEventProcessorBase<TEv
         _logger.Info("SwapUserTokenIndex:" + index);
         await _repository.AddOrUpdateAsync(index);
     }
+    
+    protected async Task HandleTokenIssueEventAsync(UserTokenDto dto, LogEventContext context)
+    {
+        var id = IdGenerateHelper.GetId(context.ChainId, dto.Address, dto.Symbol);
+        var index = await _repository.GetFromBlockStateSetAsync(id, context.ChainId);
+        index ??= new SwapUserTokenIndex()
+        {
+            Id = id,
+            Address = dto.Address,
+            Symbol = dto.Symbol
+        };
+        _objectMapper.Map(context, index);
+        index.Balance = await _aElfDataProvider.GetBalanceAsync(context.ChainId, dto.Symbol, Address.FromBase58(dto.Address));
+        try
+        {
+            index.ImageUri = await _aElfDataProvider.GetTokenUriAsync(context.ChainId, dto.Symbol);
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, $"Get token uri faild. chain: {context.ChainId}, symbol: {dto.Symbol}");
+        }
+        _logger.Info("SwapUserTokenIndex:" + index);
+        await _repository.AddOrUpdateAsync(index);
+    }
 }
 
