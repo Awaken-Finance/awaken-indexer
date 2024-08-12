@@ -45,6 +45,6 @@ public enum LimitOrderStatus
     PartiallyFilling = 2,
     FullFilled = 3,
     Cancelled = 4,
-    Epired = 5,
+    Expired = 5,
     Revoked = 6
 }

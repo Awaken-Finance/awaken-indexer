@@ -779,7 +779,7 @@ public class Query
         if (dto.LimitOrderStatus > 0)
         {
             mustQuery.Add(q => q.Term(i
-                => i.Field(f => f.LimitOrderStatus).Value(dto.LimitOrderStatus)));
+                => i.Field(f => f.LimitOrderStatus).Value((LimitOrderStatus)dto.LimitOrderStatus)));
         }
 
         if (!string.IsNullOrEmpty(dto.MakerAddress))
@@ -797,6 +797,30 @@ public class Query
                     w.Field(f => f.SymbolOut).Value($"*{dto.TokenSymbol.ToUpper()}*")))));
         }
         
+        QueryContainer Filter(QueryContainerDescriptor<LimitOrderIndex> f) =>
+            f.Bool(b => b.Must(mustQuery));
+        var result = await repository.GetSortListAsync(Filter,
+            sortFunc: s => s.Descending(t => t.Deadline),
+            skip: dto.SkipCount,
+            limit: dto.MaxResultCount);
+        var dataList = objectMapper.Map<List<LimitOrderIndex>, List<LimitOrderDto>>(result.Item2);
+        var count = await repository.CountAsync(Filter);
+        return new LimitOrderPageResultDto()
+        {
+            Data = dataList,
+            TotalCount = count.Count
+        };
+    }
+    
+    [Name("limitOrderDetails")]
+    public static async Task<LimitOrderPageResultDto> LimitOrderDetailAsync(
+        [FromServices] IAElfIndexerClientEntityRepository<LimitOrderIndex, LogEventInfo> repository,
+        [FromServices] IObjectMapper objectMapper,
+        GetLimitOrderDetailDto dto
+    )
+    {
+        var mustQuery = new List<Func<QueryContainerDescriptor<LimitOrderIndex>, QueryContainer>>();
+        
         if (dto.OrderId > 0)
         {
             mustQuery.Add(q => q.Term(i
@@ -805,10 +829,7 @@ public class Query
 
         QueryContainer Filter(QueryContainerDescriptor<LimitOrderIndex> f) =>
             f.Bool(b => b.Must(mustQuery));
-        var result = await repository.GetSortListAsync(Filter,
-            sortFunc: s => s.Descending(t => t.Deadline),
-            skip: dto.SkipCount,
-            limit: dto.MaxResultCount);
+        var result = await repository.GetListAsync(Filter);
         var dataList = objectMapper.Map<List<LimitOrderIndex>, List<LimitOrderDto>>(result.Item2);
         var count = await repository.CountAsync(Filter);
         return new LimitOrderPageResultDto()

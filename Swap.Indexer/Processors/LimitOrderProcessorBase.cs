@@ -35,6 +35,6 @@ public abstract class LimitOrderProcessorBase<TEvent> : AElfLogEventProcessorBas
 
     public override string GetContractAddress(string chainId)
     {
-        return ContractInfoOptions.ContractInfos.First(o => o.ChainId == chainId && o.Level == 1 && !string.IsNullOrEmpty(o.LimitOrderContractAddress)).LimitOrderContractAddress;
+        return ContractInfoOptions.ContractInfos.First(o => o.ChainId == chainId && o.Level == 1).LimitOrderContractAddress;
     }
 }

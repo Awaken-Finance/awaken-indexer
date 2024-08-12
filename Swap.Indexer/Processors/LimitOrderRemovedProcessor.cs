@@ -37,7 +37,7 @@ public class LimitOrderRemovedProcessor : LimitOrderProcessorBase<LimitOrderRemo
         recordIndex.RemoveTime = DateTimeHelper.ToUnixTimeMilliseconds(eventValue.RemoveTime.ToDateTime());
         recordIndex.LastUpdateTime = recordIndex.RemoveTime;
         recordIndex.LimitOrderStatus = eventValue.ReasonType == ReasonType.Expired
-            ? LimitOrderStatus.Epired
+            ? LimitOrderStatus.Expired
             : LimitOrderStatus.Revoked;
         
         recordIndex.FillRecords.Add(new FillRecord()

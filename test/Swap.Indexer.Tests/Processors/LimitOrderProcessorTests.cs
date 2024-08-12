@@ -437,7 +437,7 @@ public sealed class LimitOrderProcessorTests : SwapIndexerTests
         {
             SkipCount = 0,
             MaxResultCount = 100,
-            LimitOrderStatus = LimitOrderStatus.Cancelled
+            LimitOrderStatus = (int)LimitOrderStatus.Cancelled
         });
         result.Data.Count.ShouldBe(1);
         result.Data[0].OrderId.ShouldBe(1);
@@ -528,7 +528,7 @@ public sealed class LimitOrderProcessorTests : SwapIndexerTests
         limitOrderIndexData.RemoveTime.ShouldBe(DateTimeHelper.ToUnixTimeMilliseconds(removedTime.ToDateTime()));
         limitOrderIndexData.SymbolIn.ShouldBe("ELF");
         limitOrderIndexData.SymbolOut.ShouldBe("BTC");
-        limitOrderIndexData.LimitOrderStatus.ShouldBe(LimitOrderStatus.Epired);
+        limitOrderIndexData.LimitOrderStatus.ShouldBe(LimitOrderStatus.Expired);
         limitOrderIndexData.AmountInFilled.ShouldBe(100);
         limitOrderIndexData.AmountOutFilled.ShouldBe(10);
         limitOrderIndexData.FillRecords.Count.ShouldBe(2);
@@ -537,7 +537,7 @@ public sealed class LimitOrderProcessorTests : SwapIndexerTests
         {
             SkipCount = 0,
             MaxResultCount = 100,
-            LimitOrderStatus = LimitOrderStatus.Epired
+            LimitOrderStatus = (int)LimitOrderStatus.Expired
         });
         result.Data.Count.ShouldBe(1);
         result.Data[0].OrderId.ShouldBe(1);
@@ -580,16 +580,14 @@ public sealed class LimitOrderProcessorTests : SwapIndexerTests
             SkipCount = 0,
             MaxResultCount = 100,
             MakerAddress = Address.FromPublicKey("AAA".HexToByteArray()).ToBase58(),
-            LimitOrderStatus = LimitOrderStatus.FullFilled
+            LimitOrderStatus = (int)LimitOrderStatus.FullFilled
         });
         result.Data.Count.ShouldBe(1);
         result.Data[0].OrderId.ShouldBe(1);
         
         // by order id
-        result = await Query.LimitOrderAsync(_recordRepository, _objectMapper, new GetLimitOrderDto()
+        result = await Query.LimitOrderDetailAsync(_recordRepository, _objectMapper, new GetLimitOrderDetailDto()
         {
-            SkipCount = 0,
-            MaxResultCount = 100,
             OrderId = 1
         });
         result.Data.Count.ShouldBe(1);
