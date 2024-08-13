@@ -1,4 +1,6 @@
 using System.Linq.Expressions;
+using AElf.CSharp.Core;
+using AElf.Types;
 using AElfIndexer.Client;
 using AElfIndexer.Client.Providers;
 using AElfIndexer.Grains;
@@ -865,6 +867,11 @@ public class Query
             mustQuery.Add(q => q.Term(i
                 => i.Field(f => f.SymbolIn).Value(dto.TokenSymbol)));
         }
+        
+        mustQuery.Add(q => q.Terms(t => t
+            .Field(f => f.LimitOrderStatus)
+            .Terms(new[] { LimitOrderStatus.Committed, LimitOrderStatus.PartiallyFilling })
+        ));
 
         QueryContainer Filter(QueryContainerDescriptor<LimitOrderIndex> f) =>
             f.Bool(b => b.Must(mustQuery));
@@ -874,23 +881,23 @@ public class Query
             limit: 10000);
         var dataList = objectMapper.Map<List<LimitOrderIndex>, List<LimitOrderDto>>(result.Item2);
 
-        var tokenDecimal = await aelfDataProvider.GetDecimaleAsync(dto.ChainId, dto.TokenSymbol);
-        var amountIn = 0d;
-        var filledAmountIn = 0d;
+        var amountIn = new BigIntValue(0);
+        var filledAmountIn = new BigIntValue(0);
         foreach (var limitOrderDto in dataList)
         {
-            amountIn += limitOrderDto.AmountIn / Math.Pow(10, tokenDecimal);
-            filledAmountIn += limitOrderDto.AmountInFilled / Math.Pow(10, tokenDecimal);
+            amountIn = amountIn.Add(limitOrderDto.AmountIn);
+            filledAmountIn = filledAmountIn.Add(limitOrderDto.AmountInFilled);
             logger.LogInformation($"[LimitOrderRemainingUnfilled] amountIn: {amountIn} filledAmountIn: {filledAmountIn}");
         }
 
-        var remainingUnfilled = amountIn - filledAmountIn;
+        var remainingUnfilled = amountIn.Sub(filledAmountIn);
         
         logger.LogInformation($"[LimitOrderRemainingUnfilled] remainingUnfilled: {remainingUnfilled}");
         
         return new LimitOrderRemainingUnfilledResultDto()
         {
-            Value = remainingUnfilled.ToString()
+            OrderCount = dataList.Count,
+            Value = remainingUnfilled.Value
         };
     }
     

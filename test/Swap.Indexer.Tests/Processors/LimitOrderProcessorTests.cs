@@ -607,7 +607,8 @@ public sealed class LimitOrderProcessorTests : SwapIndexerTests
             ChainId = "AELF"
         });
         
-        result.Value.ShouldBe("9E-06");
+        result.Value.ShouldBe("900");
+        result.OrderCount.ShouldBe(1);
     }
     
     [Fact]
@@ -623,5 +624,6 @@ public sealed class LimitOrderProcessorTests : SwapIndexerTests
         });
         
         result.Value.ShouldBe("0");
+        result.OrderCount.ShouldBe(0);
     }
 }
