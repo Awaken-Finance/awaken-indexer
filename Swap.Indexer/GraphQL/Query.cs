@@ -750,6 +750,37 @@ public class Query
         var taskResultList = await tasks.WhenAll();
         return taskResultList.Where(t => t != null).ToList();
     }
+    
+    [Name("pairReserve")]
+    public static async Task<PairReserveDto> PairReserveAsync(
+        [FromServices] IAElfIndexerClientEntityRepository<SyncRecordIndex, LogEventInfo> repository,
+        [FromServices] IAElfIndexerClientEntityRepository<TradePairInfoIndex, LogEventInfo> tradePairRepository,
+        [FromServices] IObjectMapper objectMapper, GetPairReserveDto dto
+    )
+    {
+        
+        var pairInfos =
+                await GetPairAddressesAsync(dto.SymbolA, dto.SymbolB, objectMapper, tradePairRepository);
+        
+        var tasks = pairInfos.Select(x=>x.Address).Distinct().Select(t => GetLatestSyncRecordIndexAsync(t, objectMapper, repository));
+        var taskResultList = await tasks.WhenAll();
+        var syncRecords = taskResultList.Where(t => t != null).ToList();
+        var totalReserveA = 0L;
+        var totalReserveB = 0L;
+        foreach (var syncRecord in syncRecords)
+        {
+            totalReserveA += syncRecord.SymbolA == dto.SymbolA ? syncRecord.ReserveA : syncRecord.ReserveB;
+            totalReserveB += syncRecord.SymbolB == dto.SymbolB ? syncRecord.ReserveB : syncRecord.ReserveA;
+        }
+
+        return new PairReserveDto()
+        {
+            TradePairs = pairInfos,
+            SyncRecords = syncRecords,
+            TotalReserveA = totalReserveA,
+            TotalReserveB = totalReserveB
+        };
+    }
 
     private static async Task<SyncRecordDto> GetLatestSyncRecordIndexAsync(string pairAddress, IObjectMapper objectMapper,
         IAElfIndexerClientEntityRepository<SyncRecordIndex, LogEventInfo> repository)
@@ -764,6 +795,42 @@ public class Query
         if (recentSyncRecord.Item1 > 0)
         {
             return objectMapper.Map<SyncRecordIndex, SyncRecordDto>(recentSyncRecord.Item2[0]);
+        }
+        return null;
+    }
+    
+    private static async Task<List<TradePairInfoDto>> GetPairAddressesAsync(string tokenA, string tokenB, IObjectMapper objectMapper,
+        IAElfIndexerClientEntityRepository<TradePairInfoIndex, LogEventInfo> repository)
+    {
+        var query = new List<Func<QueryContainerDescriptor<TradePairInfoIndex>, QueryContainer>>
+        {
+            q => q.Bool(b => b
+                    .Should(
+                        s => s.Bool(bb => bb
+                            .Must(
+                                m => m.Term(t => t.Field(f => f.Token0Symbol).Value(tokenA)),
+                                m => m.Term(t => t.Field(f => f.Token1Symbol).Value(tokenB))
+                            )
+                        ),
+                        s => s.Bool(bb => bb
+                            .Must(
+                                m => m.Term(t => t.Field(f => f.Token0Symbol).Value(tokenB)),
+                                m => m.Term(t => t.Field(f => f.Token1Symbol).Value(tokenA))
+                            )
+                        )
+                    )
+                    .MinimumShouldMatch(1)
+            )
+        };
+
+        QueryContainer tradePairFilter(QueryContainerDescriptor<TradePairInfoIndex> f) =>
+            f.Bool(b => b.Must(query));
+
+        var tradePairRecord = await repository.GetListAsync(tradePairFilter, sortExp: k => k.BlockHeight, sortType: SortOrder.Descending,
+            skip:0, limit:100);
+        if (tradePairRecord.Item1 > 0)
+        {
+            return objectMapper.Map<List<TradePairInfoIndex>, List<TradePairInfoDto>>(tradePairRecord.Item2);
         }
         return null;
     }

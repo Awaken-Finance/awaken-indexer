@@ -27,125 +27,149 @@ namespace Awaken.Contracts.Order {
             "Chthd2FrZW5fb3JkZXJfY29udHJhY3QucHJvdG8aD2FlbGYvY29yZS5wcm90",
             "bxoSYWVsZi9vcHRpb25zLnByb3RvGhtnb29nbGUvcHJvdG9idWYvZW1wdHku",
             "cHJvdG8aHmdvb2dsZS9wcm90b2J1Zi93cmFwcGVycy5wcm90bxofZ29vZ2xl",
-            "L3Byb3RvYnVmL3RpbWVzdGFtcC5wcm90bxoLYWNzMTIucHJvdG8iXgoPSW5p",
-            "dGlhbGl6ZUlucHV0Ei0KFmhvb2tzX2NvbnRyYWN0X2FkZHJlc3MYASABKAsy",
-            "DS5hZWxmLkFkZHJlc3MSHAoFYWRtaW4YAiABKAsyDS5hZWxmLkFkZHJlc3Mi",
-            "RgoXU2V0T3JkZXJCb29rQ29uZmlnSW5wdXQSKwoRb3JkZXJfYm9va19jb25m",
-            "aWcYASABKAsyEC5PcmRlckJvb2tDb25maWciRwoYR2V0T3JkZXJCb29rQ29u",
-            "ZmlnT3V0cHV0EisKEW9yZGVyX2Jvb2tfY29uZmlnGAEgASgLMhAuT3JkZXJC",
-            "b29rQ29uZmlnIpsCCg9PcmRlckJvb2tDb25maWcSIgoabWF4X29yZGVyc19l",
-            "YWNoX29yZGVyX2Jvb2sYASABKAUSIgoabWF4X3ByaWNlc19lYWNoX3ByaWNl",
-            "X2Jvb2sYAiABKAUSHAoUbWF4X2ZpbGxfb3JkZXJfY291bnQYAyABKAUSFgoO",
-            "cHJpY2VfbXVsdGlwbGUYBCABKAMSHAoUZXJhc2VfcHJpY2VfbXVsdGlwbGUY",
-            "BSABKAMSHwoXbWluX29yZGVyX3ZhbHVlX2luX3VzZHQYBiABKAMSIgoabWF4",
-            "X29yZGVyX2Jvb2tzX2VhY2hfcHJpY2UYByABKAMSJwofbWF4X3ByaWNlX2Jv",
-            "b2tzX2VhY2hfdHJhZGVfcGFpchgIIAEoAyIpCglXaGl0ZUxpc3QSHAoFdmFs",
-            "dWUYASADKAsyDS5hZWxmLkFkZHJlc3MikwEKFUNvbW1pdExpbWl0T3JkZXJJ",
-            "bnB1dBIRCglhbW91bnRfaW4YASABKAMSEQoJc3ltYm9sX2luGAIgASgJEhIK",
-            "CmFtb3VudF9vdXQYAyABKAMSEgoKc3ltYm9sX291dBgEIAEoCRIsCghkZWFk",
-            "bGluZRgFIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXAiKQoVQ2Fu",
-            "Y2VsTGltaXRPcmRlcklucHV0EhAKCG9yZGVyX2lkGAEgASgDIosBChNGaWxs",
-            "TGltaXRPcmRlcklucHV0EhEKCWFtb3VudF9pbhgBIAEoAxIRCglzeW1ib2xf",
-            "aW4YAiABKAkSHwoXbWF4X29wZW5faW50ZXJ2YWxfcHJpY2UYAyABKAMSEgoK",
-            "c3ltYm9sX291dBgEIAEoCRIZCgJ0bxgFIAEoCzINLmFlbGYuQWRkcmVzcyJf",
-            "ChVHZXRCZXN0U2VsbFByaWNlSW5wdXQSEQoJc3ltYm9sX2luGAEgASgJEhIK",
-            "CnN5bWJvbF9vdXQYAiABKAkSHwoXbWluX29wZW5faW50ZXJ2YWxfcHJpY2UY",
-            "AyABKAMiJwoWR2V0QmVzdFNlbGxQcmljZU91dHB1dBINCgVwcmljZRgBIAEo",
-            "AyLDAQoSR2V0RmlsbFJlc3VsdElucHV0EhEKCWFtb3VudF9pbhgBIAEoAxIS",
-            "CgphbW91bnRfb3V0GAIgASgDEhEKCXN5bWJvbF9pbhgDIAEoCRISCgpzeW1i",
-            "b2xfb3V0GAQgASgJEiAKGG1pbl9jbG9zZV9pbnRlcnZhbF9wcmljZRgFIAEo",
-            "AxIfChdtYXhfb3Blbl9pbnRlcnZhbF9wcmljZRgGIAEoAxIcChRtYXhfZmls",
-            "bF9vcmRlcl9jb3VudBgHIAEoBSKAAQoTR2V0RmlsbFJlc3VsdE91dHB1dBIY",
-            "ChBhbW91bnRfaW5fZmlsbGVkGAEgASgDEhgKEG1heF9wcmljZV9maWxsZWQY",
-            "AiABKAMSGQoRYW1vdW50X291dF9maWxsZWQYAyABKAMSGgoSb3JkZXJfZmls",
-            "bGVkX2NvdW50GAQgASgFImMKE0NhbGN1bGF0ZVByaWNlSW5wdXQSEQoJc3lt",
-            "Ym9sX2luGAEgASgJEhIKCnN5bWJvbF9vdXQYAiABKAkSEQoJYW1vdW50X2lu",
-            "GAMgASgDEhIKCmFtb3VudF9vdXQYBCABKAMilgEKCU9yZGVyQm9vaxIfChdu",
-            "ZXh0X3BhZ2Vfb3JkZXJfYm9va19pZBgBIAEoAxIqChF1c2VyX2xpbWl0X29y",
-            "ZGVycxgCIAMoCzIPLlVzZXJMaW1pdE9yZGVyEhUKDW9yZGVyX2Jvb2tfaWQY",
-            "AyABKAMSEQoJc3ltYm9sX2luGAQgASgJEhIKCnN5bWJvbF9vdXQYBSABKAki",
-            "qgIKDlVzZXJMaW1pdE9yZGVyEhEKCWFtb3VudF9pbhgBIAEoAxISCgphbW91",
-            "bnRfb3V0GAIgASgDEi8KC2NvbW1pdF90aW1lGAMgASgLMhouZ29vZ2xlLnBy",
-            "b3RvYnVmLlRpbWVzdGFtcBIsCghkZWFkbGluZRgEIAEoCzIaLmdvb2dsZS5w",
-            "cm90b2J1Zi5UaW1lc3RhbXASLQoJZmlsbF90aW1lGAUgASgLMhouZ29vZ2xl",
-            "LnByb3RvYnVmLlRpbWVzdGFtcBIcCgVtYWtlchgGIAEoCzINLmFlbGYuQWRk",
-            "cmVzcxIYChBhbW91bnRfaW5fZmlsbGVkGAcgASgDEhAKCG9yZGVyX2lkGAgg",
-            "ASgDEhkKEWFtb3VudF9vdXRfZmlsbGVkGAkgASgDImIKCVByaWNlQm9vaxIf",
-            "ChduZXh0X3BhZ2VfcHJpY2VfYm9va19pZBgBIAEoAxIdCglwcmljZUxpc3QY",
-            "AiABKAsyCi5QcmljZUxpc3QSFQoNcHJpY2VfYm9va19pZBgDIAEoAyIbCglQ",
-            "cmljZUxpc3QSDgoGcHJpY2VzGAEgAygDIvYBChFMaW1pdE9yZGVyQ3JlYXRl",
-            "ZBIRCglhbW91bnRfaW4YASABKAMSEQoJc3ltYm9sX2luGAIgASgJEhIKCmFt",
-            "b3VudF9vdXQYAyABKAMSEgoKc3ltYm9sX291dBgEIAEoCRIsCghkZWFkbGlu",
-            "ZRgFIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXASLwoLY29tbWl0",
-            "X3RpbWUYBiABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEhAKCG9y",
-            "ZGVyX2lkGAcgASgDEhwKBW1ha2VyGAggASgLMg0uYWVsZi5BZGRyZXNzOgSg",
-            "uxgBIr8BChBMaW1pdE9yZGVyRmlsbGVkEhAKCG9yZGVyX2lkGAEgASgDEi0K",
-            "CWZpbGxfdGltZRgCIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXAS",
-            "GAoQYW1vdW50X2luX2ZpbGxlZBgDIAEoAxIZChFhbW91bnRfb3V0X2ZpbGxl",
-            "ZBgEIAEoAxIcCgV0YWtlchgFIAEoCzINLmFlbGYuQWRkcmVzcxIRCgl0b3Rh",
-            "bF9mZWUYBiABKAM6BKC7GAEiXgoTTGltaXRPcmRlckNhbmNlbGxlZBIQCghv",
-            "cmRlcl9pZBgBIAEoAxIvCgtjYW5jZWxfdGltZRgCIAEoCzIaLmdvb2dsZS5w",
-            "cm90b2J1Zi5UaW1lc3RhbXA6BKC7GAEifgoRTGltaXRPcmRlclJlbW92ZWQS",
-            "EAoIb3JkZXJfaWQYASABKAMSLwoLcmVtb3ZlX3RpbWUYAiABKAsyGi5nb29n",
-            "bGUucHJvdG9idWYuVGltZXN0YW1wEiAKC3JlYXNvbl90eXBlGAMgASgOMgsu",
-            "UmVhc29uVHlwZToEoLsYASpLCgpSZWFzb25UeXBlEgsKB0V4cGlyZWQQABIY",
-            "ChRBbGxvd2FuY2VfTm90X0Vub3VnaBABEhYKEkJhbGFuY2VfTm90X0Vub3Vn",
-            "aBACMrcLChNBd2FrZW5PcmRlckNvbnRyYWN0EjgKCkluaXRpYWxpemUSEC5J",
-            "bml0aWFsaXplSW5wdXQaFi5nb29nbGUucHJvdG9idWYuRW1wdHkiABIzCghT",
-            "ZXRBZG1pbhINLmFlbGYuQWRkcmVzcxoWLmdvb2dsZS5wcm90b2J1Zi5FbXB0",
-            "eSIAEjsKEFNldEhvb2tzQ29udHJhY3QSDS5hZWxmLkFkZHJlc3MaFi5nb29n",
-            "bGUucHJvdG9idWYuRW1wdHkiABJIChJTZXRPcmRlckJvb2tDb25maWcSGC5T",
-            "ZXRPcmRlckJvb2tDb25maWdJbnB1dBoWLmdvb2dsZS5wcm90b2J1Zi5FbXB0",
-            "eSIAEkAKFUFkZEZpbGxPcmRlcldoaXRlTGlzdBINLmFlbGYuQWRkcmVzcxoW",
-            "Lmdvb2dsZS5wcm90b2J1Zi5FbXB0eSIAEkMKGFJlbW92ZUZpbGxPcmRlcldo",
-            "aXRlTGlzdBINLmFlbGYuQWRkcmVzcxoWLmdvb2dsZS5wcm90b2J1Zi5FbXB0",
-            "eSIAEkQKEENvbW1pdExpbWl0T3JkZXISFi5Db21taXRMaW1pdE9yZGVySW5w",
-            "dXQaFi5nb29nbGUucHJvdG9idWYuRW1wdHkiABJEChBDYW5jZWxMaW1pdE9y",
-            "ZGVyEhYuQ2FuY2VsTGltaXRPcmRlcklucHV0GhYuZ29vZ2xlLnByb3RvYnVm",
-            "LkVtcHR5IgASQAoORmlsbExpbWl0T3JkZXISFC5GaWxsTGltaXRPcmRlcklu",
-            "cHV0GhYuZ29vZ2xlLnByb3RvYnVmLkVtcHR5IgASQQoNR2V0RmlsbFJlc3Vs",
-            "dBITLkdldEZpbGxSZXN1bHRJbnB1dBoULkdldEZpbGxSZXN1bHRPdXRwdXQi",
-            "BYiJ9wEBEkoKEEdldEJlc3RTZWxsUHJpY2USFi5HZXRCZXN0U2VsbFByaWNl",
-            "SW5wdXQaFy5HZXRCZXN0U2VsbFByaWNlT3V0cHV0IgWIifcBARI4CghHZXRB",
-            "ZG1pbhIWLmdvb2dsZS5wcm90b2J1Zi5FbXB0eRoNLmFlbGYuQWRkcmVzcyIF",
-            "iIn3AQESQgoVR2V0RmlsbE9yZGVyV2hpdGVMaXN0EhYuZ29vZ2xlLnByb3Rv",
-            "YnVmLkVtcHR5GgouV2hpdGVMaXN0IgWIifcBARJAChBHZXRIb29rc0NvbnRy",
-            "YWN0EhYuZ29vZ2xlLnByb3RvYnVmLkVtcHR5Gg0uYWVsZi5BZGRyZXNzIgWI",
-            "ifcBARJOChJHZXRPcmRlckJvb2tDb25maWcSFi5nb29nbGUucHJvdG9idWYu",
-            "RW1wdHkaGS5HZXRPcmRlckJvb2tDb25maWdPdXRwdXQiBYiJ9wEBEj4KDEdl",
-            "dFByaWNlQm9vaxIbLmdvb2dsZS5wcm90b2J1Zi5JbnQ2NFZhbHVlGgouUHJp",
-            "Y2VCb29rIgWIifcBARI+CgxHZXRPcmRlckJvb2sSGy5nb29nbGUucHJvdG9i",
-            "dWYuSW50NjRWYWx1ZRoKLk9yZGVyQm9vayIFiIn3AQESSAoRR2V0VXNlckxp",
-            "bWl0T3JkZXISGy5nb29nbGUucHJvdG9idWYuSW50NjRWYWx1ZRoPLlVzZXJM",
-            "aW1pdE9yZGVyIgWIifcBARJaChdHZXRPcmRlckJvb2tJZEJ5T3JkZXJJZBIb",
-            "Lmdvb2dsZS5wcm90b2J1Zi5JbnQ2NFZhbHVlGhsuZ29vZ2xlLnByb3RvYnVm",
-            "LkludDY0VmFsdWUiBYiJ9wEBEkoKDkNhbGN1bGF0ZVByaWNlEhQuQ2FsY3Vs",
-            "YXRlUHJpY2VJbnB1dBobLmdvb2dsZS5wcm90b2J1Zi5JbnQ2NFZhbHVlIgWI",
-            "ifcBARpEssz2AS9Bd2FrZW4uQ29udHJhY3RzLk9yZGVyLkF3YWtlbk9yZGVy",
-            "Q29udHJhY3RTdGF0ZcrK9gELYWNzMTIucHJvdG9CGaoCFkF3YWtlbi5Db250",
-            "cmFjdHMuT3JkZXJiBnByb3RvMw=="));
+            "L3Byb3RvYnVmL3RpbWVzdGFtcC5wcm90bxoLYWNzMTIucHJvdG8ipgEKD0lu",
+            "aXRpYWxpemVJbnB1dBItChZob29rc19jb250cmFjdF9hZGRyZXNzGAEgASgL",
+            "Mg0uYWVsZi5BZGRyZXNzEhwKBWFkbWluGAIgASgLMg0uYWVsZi5BZGRyZXNz",
+            "EiIKGmNoZWNrX2NvbW1pdF9wcmljZV9lbmFibGVkGAMgASgIEiIKGmNvbW1p",
+            "dF9wcmljZV9pbmNyZWFzZV9yYXRlGAQgASgFIkYKF1NldE9yZGVyQm9va0Nv",
+            "bmZpZ0lucHV0EisKEW9yZGVyX2Jvb2tfY29uZmlnGAEgASgLMhAuT3JkZXJC",
+            "b29rQ29uZmlnIkcKGEdldE9yZGVyQm9va0NvbmZpZ091dHB1dBIrChFvcmRl",
+            "cl9ib29rX2NvbmZpZxgBIAEoCzIQLk9yZGVyQm9va0NvbmZpZyKdAgoPT3Jk",
+            "ZXJCb29rQ29uZmlnEiIKGm1heF9vcmRlcnNfZWFjaF9vcmRlcl9ib29rGAEg",
+            "ASgFEiIKGm1heF9wcmljZXNfZWFjaF9wcmljZV9ib29rGAIgASgFEhwKFG1h",
+            "eF9maWxsX29yZGVyX2NvdW50GAMgASgFEhYKDnByaWNlX211bHRpcGxlGAQg",
+            "ASgDEhwKFGVyYXNlX3ByaWNlX211bHRpcGxlGAUgASgDEiIKGm1heF9vcmRl",
+            "cl9ib29rc19lYWNoX3ByaWNlGAYgASgDEicKH21heF9wcmljZV9ib29rc19l",
+            "YWNoX3RyYWRlX3BhaXIYByABKAMSIQoZdXNlcl9wZW5kaW5nX29yZGVyc19s",
+            "aW1pdBgIIAEoBSJkChpHZXRDb21taXRQcmljZUNvbmZpZ091dHB1dBIiChpj",
+            "aGVja19jb21taXRfcHJpY2VfZW5hYmxlZBgBIAEoCBIiChpjb21taXRfcHJp",
+            "Y2VfaW5jcmVhc2VfcmF0ZRgCIAEoBSJjChlTZXRDb21taXRQcmljZUNvbmZp",
+            "Z0lucHV0EiIKGmNoZWNrX2NvbW1pdF9wcmljZV9lbmFibGVkGAEgASgIEiIK",
+            "GmNvbW1pdF9wcmljZV9pbmNyZWFzZV9yYXRlGAIgASgFIikKCVdoaXRlTGlz",
+            "dBIcCgV2YWx1ZRgBIAMoCzINLmFlbGYuQWRkcmVzcyIrChBMaW1pdE9yZGVy",
+            "SWRMaXN0EhcKD2xpbWl0X29yZGVyX2lkcxgBIAMoAyKTAQoVQ29tbWl0TGlt",
+            "aXRPcmRlcklucHV0EhEKCWFtb3VudF9pbhgBIAEoAxIRCglzeW1ib2xfaW4Y",
+            "AiABKAkSEgoKYW1vdW50X291dBgDIAEoAxISCgpzeW1ib2xfb3V0GAQgASgJ",
+            "EiwKCGRlYWRsaW5lGAUgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFt",
+            "cCIpChVDYW5jZWxMaW1pdE9yZGVySW5wdXQSEAoIb3JkZXJfaWQYASABKAMi",
+            "oAEKE0ZpbGxMaW1pdE9yZGVySW5wdXQSEQoJYW1vdW50X2luGAEgASgDEhEK",
+            "CXN5bWJvbF9pbhgCIAEoCRIgChhtYXhfY2xvc2VfaW50ZXJ2YWxfcHJpY2UY",
+            "AyABKAMSEgoKYW1vdW50X291dBgEIAEoAxISCgpzeW1ib2xfb3V0GAUgASgJ",
+            "EhkKAnRvGAYgASgLMg0uYWVsZi5BZGRyZXNzIl8KFUdldEJlc3RTZWxsUHJp",
+            "Y2VJbnB1dBIRCglzeW1ib2xfaW4YASABKAkSEgoKc3ltYm9sX291dBgCIAEo",
+            "CRIfChdtaW5fb3Blbl9pbnRlcnZhbF9wcmljZRgDIAEoAyInChZHZXRCZXN0",
+            "U2VsbFByaWNlT3V0cHV0Eg0KBXByaWNlGAEgASgDIsMBChJHZXRGaWxsUmVz",
+            "dWx0SW5wdXQSEQoJYW1vdW50X2luGAEgASgDEhIKCmFtb3VudF9vdXQYAiAB",
+            "KAMSEQoJc3ltYm9sX2luGAMgASgJEhIKCnN5bWJvbF9vdXQYBCABKAkSIAoY",
+            "bWluX2Nsb3NlX2ludGVydmFsX3ByaWNlGAUgASgDEh8KF21heF9vcGVuX2lu",
+            "dGVydmFsX3ByaWNlGAYgASgDEhwKFG1heF9maWxsX29yZGVyX2NvdW50GAcg",
+            "ASgFIqMBChNHZXRGaWxsUmVzdWx0T3V0cHV0EhgKEGFtb3VudF9pbl9maWxs",
+            "ZWQYASABKAMSGAoQbWF4X3ByaWNlX2ZpbGxlZBgCIAEoAxIZChFhbW91bnRf",
+            "b3V0X2ZpbGxlZBgDIAEoAxIaChJvcmRlcl9maWxsZWRfY291bnQYBCABKAUS",
+            "IQoMZmlsbF9kZXRhaWxzGAUgAygLMgsuRmlsbERldGFpbCJeCgpGaWxsRGV0",
+            "YWlsEg0KBXByaWNlGAEgASgDEhEKCWFtb3VudF9pbhgCIAEoAxISCgphbW91",
+            "bnRfb3V0GAMgASgDEhoKEm9yZGVyX2ZpbGxlZF9jb3VudBgEIAEoBSJjChND",
+            "YWxjdWxhdGVQcmljZUlucHV0EhEKCXN5bWJvbF9pbhgBIAEoCRISCgpzeW1i",
+            "b2xfb3V0GAIgASgJEhEKCWFtb3VudF9pbhgDIAEoAxISCgphbW91bnRfb3V0",
+            "GAQgASgDIpYBCglPcmRlckJvb2sSHwoXbmV4dF9wYWdlX29yZGVyX2Jvb2tf",
+            "aWQYASABKAMSKgoRdXNlcl9saW1pdF9vcmRlcnMYAiADKAsyDy5Vc2VyTGlt",
+            "aXRPcmRlchIVCg1vcmRlcl9ib29rX2lkGAMgASgDEhEKCXN5bWJvbF9pbhgE",
+            "IAEoCRISCgpzeW1ib2xfb3V0GAUgASgJIqoCCg5Vc2VyTGltaXRPcmRlchIR",
+            "CglhbW91bnRfaW4YASABKAMSEgoKYW1vdW50X291dBgCIAEoAxIvCgtjb21t",
+            "aXRfdGltZRgDIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXASLAoI",
+            "ZGVhZGxpbmUYBCABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEi0K",
+            "CWZpbGxfdGltZRgFIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXAS",
+            "HAoFbWFrZXIYBiABKAsyDS5hZWxmLkFkZHJlc3MSGAoQYW1vdW50X2luX2Zp",
+            "bGxlZBgHIAEoAxIQCghvcmRlcl9pZBgIIAEoAxIZChFhbW91bnRfb3V0X2Zp",
+            "bGxlZBgJIAEoAyJiCglQcmljZUJvb2sSHwoXbmV4dF9wYWdlX3ByaWNlX2Jv",
+            "b2tfaWQYASABKAMSHQoJcHJpY2VMaXN0GAIgASgLMgouUHJpY2VMaXN0EhUK",
+            "DXByaWNlX2Jvb2tfaWQYAyABKAMiGwoJUHJpY2VMaXN0Eg4KBnByaWNlcxgB",
+            "IAMoAyL2AQoRTGltaXRPcmRlckNyZWF0ZWQSEQoJYW1vdW50X2luGAEgASgD",
+            "EhEKCXN5bWJvbF9pbhgCIAEoCRISCgphbW91bnRfb3V0GAMgASgDEhIKCnN5",
+            "bWJvbF9vdXQYBCABKAkSLAoIZGVhZGxpbmUYBSABKAsyGi5nb29nbGUucHJv",
+            "dG9idWYuVGltZXN0YW1wEi8KC2NvbW1pdF90aW1lGAYgASgLMhouZ29vZ2xl",
+            "LnByb3RvYnVmLlRpbWVzdGFtcBIQCghvcmRlcl9pZBgHIAEoAxIcCgVtYWtl",
+            "chgIIAEoCzINLmFlbGYuQWRkcmVzczoEoLsYASLmAQoQTGltaXRPcmRlckZp",
+            "bGxlZBIQCghvcmRlcl9pZBgBIAEoAxItCglmaWxsX3RpbWUYAiABKAsyGi5n",
+            "b29nbGUucHJvdG9idWYuVGltZXN0YW1wEhgKEGFtb3VudF9pbl9maWxsZWQY",
+            "AyABKAMSGQoRYW1vdW50X291dF9maWxsZWQYBCABKAMSHAoFdGFrZXIYBSAB",
+            "KAsyDS5hZWxmLkFkZHJlc3MSEQoJdG90YWxfZmVlGAYgASgDEhEKCXN5bWJv",
+            "bF9pbhgHIAEoCRISCgpzeW1ib2xfb3V0GAggASgJOgSguxgBIrMBChVMaW1p",
+            "dE9yZGVyVG90YWxGaWxsZWQSEQoJc3ltYm9sX2luGAEgASgJEhIKCnN5bWJv",
+            "bF9vdXQYAiABKAkSGAoQYW1vdW50X2luX2ZpbGxlZBgDIAEoAxIZChFhbW91",
+            "bnRfb3V0X2ZpbGxlZBgEIAEoAxIdCgZzZW5kZXIYBSABKAsyDS5hZWxmLkFk",
+            "ZHJlc3MSGQoCdG8YBiABKAsyDS5hZWxmLkFkZHJlc3M6BKC7GAEiXgoTTGlt",
+            "aXRPcmRlckNhbmNlbGxlZBIQCghvcmRlcl9pZBgBIAEoAxIvCgtjYW5jZWxf",
+            "dGltZRgCIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXA6BKC7GAEi",
+            "fgoRTGltaXRPcmRlclJlbW92ZWQSEAoIb3JkZXJfaWQYASABKAMSLwoLcmVt",
+            "b3ZlX3RpbWUYAiABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEiAK",
+            "C3JlYXNvbl90eXBlGAMgASgOMgsuUmVhc29uVHlwZToEoLsYASpLCgpSZWFz",
+            "b25UeXBlEgsKB0V4cGlyZWQQABIYChRBbGxvd2FuY2VfTm90X0Vub3VnaBAB",
+            "EhYKEkJhbGFuY2VfTm90X0Vub3VnaBACMtkMChNBd2FrZW5PcmRlckNvbnRy",
+            "YWN0EjgKCkluaXRpYWxpemUSEC5Jbml0aWFsaXplSW5wdXQaFi5nb29nbGUu",
+            "cHJvdG9idWYuRW1wdHkiABIzCghTZXRBZG1pbhINLmFlbGYuQWRkcmVzcxoW",
+            "Lmdvb2dsZS5wcm90b2J1Zi5FbXB0eSIAEjsKEFNldEhvb2tzQ29udHJhY3QS",
+            "DS5hZWxmLkFkZHJlc3MaFi5nb29nbGUucHJvdG9idWYuRW1wdHkiABJIChJT",
+            "ZXRPcmRlckJvb2tDb25maWcSGC5TZXRPcmRlckJvb2tDb25maWdJbnB1dBoW",
+            "Lmdvb2dsZS5wcm90b2J1Zi5FbXB0eSIAEkwKFFNldENvbW1pdFByaWNlQ29u",
+            "ZmlnEhouU2V0Q29tbWl0UHJpY2VDb25maWdJbnB1dBoWLmdvb2dsZS5wcm90",
+            "b2J1Zi5FbXB0eSIAEkAKFUFkZEZpbGxPcmRlcldoaXRlTGlzdBINLmFlbGYu",
+            "QWRkcmVzcxoWLmdvb2dsZS5wcm90b2J1Zi5FbXB0eSIAEkMKGFJlbW92ZUZp",
+            "bGxPcmRlcldoaXRlTGlzdBINLmFlbGYuQWRkcmVzcxoWLmdvb2dsZS5wcm90",
+            "b2J1Zi5FbXB0eSIAEkQKEENvbW1pdExpbWl0T3JkZXISFi5Db21taXRMaW1p",
+            "dE9yZGVySW5wdXQaFi5nb29nbGUucHJvdG9idWYuRW1wdHkiABJEChBDYW5j",
+            "ZWxMaW1pdE9yZGVyEhYuQ2FuY2VsTGltaXRPcmRlcklucHV0GhYuZ29vZ2xl",
+            "LnByb3RvYnVmLkVtcHR5IgASQAoORmlsbExpbWl0T3JkZXISFC5GaWxsTGlt",
+            "aXRPcmRlcklucHV0GhYuZ29vZ2xlLnByb3RvYnVmLkVtcHR5IgASQQoNR2V0",
+            "RmlsbFJlc3VsdBITLkdldEZpbGxSZXN1bHRJbnB1dBoULkdldEZpbGxSZXN1",
+            "bHRPdXRwdXQiBYiJ9wEBEkoKEEdldEJlc3RTZWxsUHJpY2USFi5HZXRCZXN0",
+            "U2VsbFByaWNlSW5wdXQaFy5HZXRCZXN0U2VsbFByaWNlT3V0cHV0IgWIifcB",
+            "ARI4CghHZXRBZG1pbhIWLmdvb2dsZS5wcm90b2J1Zi5FbXB0eRoNLmFlbGYu",
+            "QWRkcmVzcyIFiIn3AQESQgoVR2V0RmlsbE9yZGVyV2hpdGVMaXN0EhYuZ29v",
+            "Z2xlLnByb3RvYnVmLkVtcHR5GgouV2hpdGVMaXN0IgWIifcBARJAChBHZXRI",
+            "b29rc0NvbnRyYWN0EhYuZ29vZ2xlLnByb3RvYnVmLkVtcHR5Gg0uYWVsZi5B",
+            "ZGRyZXNzIgWIifcBARJOChJHZXRPcmRlckJvb2tDb25maWcSFi5nb29nbGUu",
+            "cHJvdG9idWYuRW1wdHkaGS5HZXRPcmRlckJvb2tDb25maWdPdXRwdXQiBYiJ",
+            "9wEBElIKFEdldENvbW1pdFByaWNlQ29uZmlnEhYuZ29vZ2xlLnByb3RvYnVm",
+            "LkVtcHR5GhsuR2V0Q29tbWl0UHJpY2VDb25maWdPdXRwdXQiBYiJ9wEBEj4K",
+            "DEdldFByaWNlQm9vaxIbLmdvb2dsZS5wcm90b2J1Zi5JbnQ2NFZhbHVlGgou",
+            "UHJpY2VCb29rIgWIifcBARI+CgxHZXRPcmRlckJvb2sSGy5nb29nbGUucHJv",
+            "dG9idWYuSW50NjRWYWx1ZRoKLk9yZGVyQm9vayIFiIn3AQESSAoRR2V0VXNl",
+            "ckxpbWl0T3JkZXISGy5nb29nbGUucHJvdG9idWYuSW50NjRWYWx1ZRoPLlVz",
+            "ZXJMaW1pdE9yZGVyIgWIifcBARJaChdHZXRPcmRlckJvb2tJZEJ5T3JkZXJJ",
+            "ZBIbLmdvb2dsZS5wcm90b2J1Zi5JbnQ2NFZhbHVlGhsuZ29vZ2xlLnByb3Rv",
+            "YnVmLkludDY0VmFsdWUiBYiJ9wEBEkoKDkNhbGN1bGF0ZVByaWNlEhQuQ2Fs",
+            "Y3VsYXRlUHJpY2VJbnB1dBobLmdvb2dsZS5wcm90b2J1Zi5JbnQ2NFZhbHVl",
+            "IgWIifcBARpEssz2AS9Bd2FrZW4uQ29udHJhY3RzLk9yZGVyLkF3YWtlbk9y",
+            "ZGVyQ29udHJhY3RTdGF0ZcrK9gELYWNzMTIucHJvdG9CGaoCFkF3YWtlbi5D",
+            "b250cmFjdHMuT3JkZXJiBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::AElf.Types.CoreReflection.Descriptor, global::AElf.OptionsReflection.Descriptor, global::Google.Protobuf.WellKnownTypes.EmptyReflection.Descriptor, global::Google.Protobuf.WellKnownTypes.WrappersReflection.Descriptor, global::Google.Protobuf.WellKnownTypes.TimestampReflection.Descriptor, global::AElf.Standards.ACS12.Acs12Reflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Awaken.Contracts.Order.ReasonType), }, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Awaken.Contracts.Order.InitializeInput), global::Awaken.Contracts.Order.InitializeInput.Parser, new[]{ "HooksContractAddress", "Admin" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Awaken.Contracts.Order.InitializeInput), global::Awaken.Contracts.Order.InitializeInput.Parser, new[]{ "HooksContractAddress", "Admin", "CheckCommitPriceEnabled", "CommitPriceIncreaseRate" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Awaken.Contracts.Order.SetOrderBookConfigInput), global::Awaken.Contracts.Order.SetOrderBookConfigInput.Parser, new[]{ "OrderBookConfig" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Awaken.Contracts.Order.GetOrderBookConfigOutput), global::Awaken.Contracts.Order.GetOrderBookConfigOutput.Parser, new[]{ "OrderBookConfig" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Awaken.Contracts.Order.OrderBookConfig), global::Awaken.Contracts.Order.OrderBookConfig.Parser, new[]{ "MaxOrdersEachOrderBook", "MaxPricesEachPriceBook", "MaxFillOrderCount", "PriceMultiple", "ErasePriceMultiple", "MinOrderValueInUsdt", "MaxOrderBooksEachPrice", "MaxPriceBooksEachTradePair" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Awaken.Contracts.Order.OrderBookConfig), global::Awaken.Contracts.Order.OrderBookConfig.Parser, new[]{ "MaxOrdersEachOrderBook", "MaxPricesEachPriceBook", "MaxFillOrderCount", "PriceMultiple", "ErasePriceMultiple", "MaxOrderBooksEachPrice", "MaxPriceBooksEachTradePair", "UserPendingOrdersLimit" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Awaken.Contracts.Order.GetCommitPriceConfigOutput), global::Awaken.Contracts.Order.GetCommitPriceConfigOutput.Parser, new[]{ "CheckCommitPriceEnabled", "CommitPriceIncreaseRate" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Awaken.Contracts.Order.SetCommitPriceConfigInput), global::Awaken.Contracts.Order.SetCommitPriceConfigInput.Parser, new[]{ "CheckCommitPriceEnabled", "CommitPriceIncreaseRate" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Awaken.Contracts.Order.WhiteList), global::Awaken.Contracts.Order.WhiteList.Parser, new[]{ "Value" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Awaken.Contracts.Order.LimitOrderIdList), global::Awaken.Contracts.Order.LimitOrderIdList.Parser, new[]{ "LimitOrderIds" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Awaken.Contracts.Order.CommitLimitOrderInput), global::Awaken.Contracts.Order.CommitLimitOrderInput.Parser, new[]{ "AmountIn", "SymbolIn", "AmountOut", "SymbolOut", "Deadline" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Awaken.Contracts.Order.CancelLimitOrderInput), global::Awaken.Contracts.Order.CancelLimitOrderInput.Parser, new[]{ "OrderId" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Awaken.Contracts.Order.FillLimitOrderInput), global::Awaken.Contracts.Order.FillLimitOrderInput.Parser, new[]{ "AmountIn", "SymbolIn", "MaxOpenIntervalPrice", "SymbolOut", "To" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Awaken.Contracts.Order.FillLimitOrderInput), global::Awaken.Contracts.Order.FillLimitOrderInput.Parser, new[]{ "AmountIn", "SymbolIn", "MaxCloseIntervalPrice", "AmountOut", "SymbolOut", "To" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Awaken.Contracts.Order.GetBestSellPriceInput), global::Awaken.Contracts.Order.GetBestSellPriceInput.Parser, new[]{ "SymbolIn", "SymbolOut", "MinOpenIntervalPrice" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Awaken.Contracts.Order.GetBestSellPriceOutput), global::Awaken.Contracts.Order.GetBestSellPriceOutput.Parser, new[]{ "Price" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Awaken.Contracts.Order.GetFillResultInput), global::Awaken.Contracts.Order.GetFillResultInput.Parser, new[]{ "AmountIn", "AmountOut", "SymbolIn", "SymbolOut", "MinCloseIntervalPrice", "MaxOpenIntervalPrice", "MaxFillOrderCount" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Awaken.Contracts.Order.GetFillResultOutput), global::Awaken.Contracts.Order.GetFillResultOutput.Parser, new[]{ "AmountInFilled", "MaxPriceFilled", "AmountOutFilled", "OrderFilledCount" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Awaken.Contracts.Order.GetFillResultOutput), global::Awaken.Contracts.Order.GetFillResultOutput.Parser, new[]{ "AmountInFilled", "MaxPriceFilled", "AmountOutFilled", "OrderFilledCount", "FillDetails" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Awaken.Contracts.Order.FillDetail), global::Awaken.Contracts.Order.FillDetail.Parser, new[]{ "Price", "AmountIn", "AmountOut", "OrderFilledCount" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Awaken.Contracts.Order.CalculatePriceInput), global::Awaken.Contracts.Order.CalculatePriceInput.Parser, new[]{ "SymbolIn", "SymbolOut", "AmountIn", "AmountOut" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Awaken.Contracts.Order.OrderBook), global::Awaken.Contracts.Order.OrderBook.Parser, new[]{ "NextPageOrderBookId", "UserLimitOrders", "OrderBookId", "SymbolIn", "SymbolOut" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Awaken.Contracts.Order.UserLimitOrder), global::Awaken.Contracts.Order.UserLimitOrder.Parser, new[]{ "AmountIn", "AmountOut", "CommitTime", "Deadline", "FillTime", "Maker", "AmountInFilled", "OrderId", "AmountOutFilled" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Awaken.Contracts.Order.PriceBook), global::Awaken.Contracts.Order.PriceBook.Parser, new[]{ "NextPagePriceBookId", "PriceList", "PriceBookId" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Awaken.Contracts.Order.PriceList), global::Awaken.Contracts.Order.PriceList.Parser, new[]{ "Prices" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Awaken.Contracts.Order.LimitOrderCreated), global::Awaken.Contracts.Order.LimitOrderCreated.Parser, new[]{ "AmountIn", "SymbolIn", "AmountOut", "SymbolOut", "Deadline", "CommitTime", "OrderId", "Maker" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Awaken.Contracts.Order.LimitOrderFilled), global::Awaken.Contracts.Order.LimitOrderFilled.Parser, new[]{ "OrderId", "FillTime", "AmountInFilled", "AmountOutFilled", "Taker", "TotalFee" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Awaken.Contracts.Order.LimitOrderFilled), global::Awaken.Contracts.Order.LimitOrderFilled.Parser, new[]{ "OrderId", "FillTime", "AmountInFilled", "AmountOutFilled", "Taker", "TotalFee", "SymbolIn", "SymbolOut" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Awaken.Contracts.Order.LimitOrderTotalFilled), global::Awaken.Contracts.Order.LimitOrderTotalFilled.Parser, new[]{ "SymbolIn", "SymbolOut", "AmountInFilled", "AmountOutFilled", "Sender", "To" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Awaken.Contracts.Order.LimitOrderCancelled), global::Awaken.Contracts.Order.LimitOrderCancelled.Parser, new[]{ "OrderId", "CancelTime" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Awaken.Contracts.Order.LimitOrderRemoved), global::Awaken.Contracts.Order.LimitOrderRemoved.Parser, new[]{ "OrderId", "RemoveTime", "ReasonType" }, null, null, null, null)
           }));
@@ -202,6 +226,8 @@ namespace Awaken.Contracts.Order {
     public InitializeInput(InitializeInput other) : this() {
       hooksContractAddress_ = other.hooksContractAddress_ != null ? other.hooksContractAddress_.Clone() : null;
       admin_ = other.admin_ != null ? other.admin_.Clone() : null;
+      checkCommitPriceEnabled_ = other.checkCommitPriceEnabled_;
+      commitPriceIncreaseRate_ = other.commitPriceIncreaseRate_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -235,6 +261,30 @@ namespace Awaken.Contracts.Order {
       }
     }
 
+    /// <summary>Field number for the "check_commit_price_enabled" field.</summary>
+    public const int CheckCommitPriceEnabledFieldNumber = 3;
+    private bool checkCommitPriceEnabled_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool CheckCommitPriceEnabled {
+      get { return checkCommitPriceEnabled_; }
+      set {
+        checkCommitPriceEnabled_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "commit_price_increase_rate" field.</summary>
+    public const int CommitPriceIncreaseRateFieldNumber = 4;
+    private int commitPriceIncreaseRate_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int CommitPriceIncreaseRate {
+      get { return commitPriceIncreaseRate_; }
+      set {
+        commitPriceIncreaseRate_ = value;
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
@@ -252,6 +302,8 @@ namespace Awaken.Contracts.Order {
       }
       if (!object.Equals(HooksContractAddress, other.HooksContractAddress)) return false;
       if (!object.Equals(Admin, other.Admin)) return false;
+      if (CheckCommitPriceEnabled != other.CheckCommitPriceEnabled) return false;
+      if (CommitPriceIncreaseRate != other.CommitPriceIncreaseRate) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -261,6 +313,8 @@ namespace Awaken.Contracts.Order {
       int hash = 1;
       if (hooksContractAddress_ != null) hash ^= HooksContractAddress.GetHashCode();
       if (admin_ != null) hash ^= Admin.GetHashCode();
+      if (CheckCommitPriceEnabled != false) hash ^= CheckCommitPriceEnabled.GetHashCode();
+      if (CommitPriceIncreaseRate != 0) hash ^= CommitPriceIncreaseRate.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -287,6 +341,14 @@ namespace Awaken.Contracts.Order {
         output.WriteRawTag(18);
         output.WriteMessage(Admin);
       }
+      if (CheckCommitPriceEnabled != false) {
+        output.WriteRawTag(24);
+        output.WriteBool(CheckCommitPriceEnabled);
+      }
+      if (CommitPriceIncreaseRate != 0) {
+        output.WriteRawTag(32);
+        output.WriteInt32(CommitPriceIncreaseRate);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -305,6 +367,14 @@ namespace Awaken.Contracts.Order {
         output.WriteRawTag(18);
         output.WriteMessage(Admin);
       }
+      if (CheckCommitPriceEnabled != false) {
+        output.WriteRawTag(24);
+        output.WriteBool(CheckCommitPriceEnabled);
+      }
+      if (CommitPriceIncreaseRate != 0) {
+        output.WriteRawTag(32);
+        output.WriteInt32(CommitPriceIncreaseRate);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -320,6 +390,12 @@ namespace Awaken.Contracts.Order {
       }
       if (admin_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(Admin);
+      }
+      if (CheckCommitPriceEnabled != false) {
+        size += 1 + 1;
+      }
+      if (CommitPriceIncreaseRate != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(CommitPriceIncreaseRate);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -344,6 +420,12 @@ namespace Awaken.Contracts.Order {
           Admin = new global::AElf.Types.Address();
         }
         Admin.MergeFrom(other.Admin);
+      }
+      if (other.CheckCommitPriceEnabled != false) {
+        CheckCommitPriceEnabled = other.CheckCommitPriceEnabled;
+      }
+      if (other.CommitPriceIncreaseRate != 0) {
+        CommitPriceIncreaseRate = other.CommitPriceIncreaseRate;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -374,6 +456,14 @@ namespace Awaken.Contracts.Order {
             input.ReadMessage(Admin);
             break;
           }
+          case 24: {
+            CheckCommitPriceEnabled = input.ReadBool();
+            break;
+          }
+          case 32: {
+            CommitPriceIncreaseRate = input.ReadInt32();
+            break;
+          }
         }
       }
     #endif
@@ -401,6 +491,14 @@ namespace Awaken.Contracts.Order {
               Admin = new global::AElf.Types.Address();
             }
             input.ReadMessage(Admin);
+            break;
+          }
+          case 24: {
+            CheckCommitPriceEnabled = input.ReadBool();
+            break;
+          }
+          case 32: {
+            CommitPriceIncreaseRate = input.ReadInt32();
             break;
           }
         }
@@ -845,9 +943,9 @@ namespace Awaken.Contracts.Order {
       maxFillOrderCount_ = other.maxFillOrderCount_;
       priceMultiple_ = other.priceMultiple_;
       erasePriceMultiple_ = other.erasePriceMultiple_;
-      minOrderValueInUsdt_ = other.minOrderValueInUsdt_;
       maxOrderBooksEachPrice_ = other.maxOrderBooksEachPrice_;
       maxPriceBooksEachTradePair_ = other.maxPriceBooksEachTradePair_;
+      userPendingOrdersLimit_ = other.userPendingOrdersLimit_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -917,20 +1015,8 @@ namespace Awaken.Contracts.Order {
       }
     }
 
-    /// <summary>Field number for the "min_order_value_in_usdt" field.</summary>
-    public const int MinOrderValueInUsdtFieldNumber = 6;
-    private long minOrderValueInUsdt_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public long MinOrderValueInUsdt {
-      get { return minOrderValueInUsdt_; }
-      set {
-        minOrderValueInUsdt_ = value;
-      }
-    }
-
     /// <summary>Field number for the "max_order_books_each_price" field.</summary>
-    public const int MaxOrderBooksEachPriceFieldNumber = 7;
+    public const int MaxOrderBooksEachPriceFieldNumber = 6;
     private long maxOrderBooksEachPrice_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -942,7 +1028,7 @@ namespace Awaken.Contracts.Order {
     }
 
     /// <summary>Field number for the "max_price_books_each_trade_pair" field.</summary>
-    public const int MaxPriceBooksEachTradePairFieldNumber = 8;
+    public const int MaxPriceBooksEachTradePairFieldNumber = 7;
     private long maxPriceBooksEachTradePair_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -950,6 +1036,18 @@ namespace Awaken.Contracts.Order {
       get { return maxPriceBooksEachTradePair_; }
       set {
         maxPriceBooksEachTradePair_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "user_pending_orders_limit" field.</summary>
+    public const int UserPendingOrdersLimitFieldNumber = 8;
+    private int userPendingOrdersLimit_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int UserPendingOrdersLimit {
+      get { return userPendingOrdersLimit_; }
+      set {
+        userPendingOrdersLimit_ = value;
       }
     }
 
@@ -973,9 +1071,9 @@ namespace Awaken.Contracts.Order {
       if (MaxFillOrderCount != other.MaxFillOrderCount) return false;
       if (PriceMultiple != other.PriceMultiple) return false;
       if (ErasePriceMultiple != other.ErasePriceMultiple) return false;
-      if (MinOrderValueInUsdt != other.MinOrderValueInUsdt) return false;
       if (MaxOrderBooksEachPrice != other.MaxOrderBooksEachPrice) return false;
       if (MaxPriceBooksEachTradePair != other.MaxPriceBooksEachTradePair) return false;
+      if (UserPendingOrdersLimit != other.UserPendingOrdersLimit) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -988,9 +1086,9 @@ namespace Awaken.Contracts.Order {
       if (MaxFillOrderCount != 0) hash ^= MaxFillOrderCount.GetHashCode();
       if (PriceMultiple != 0L) hash ^= PriceMultiple.GetHashCode();
       if (ErasePriceMultiple != 0L) hash ^= ErasePriceMultiple.GetHashCode();
-      if (MinOrderValueInUsdt != 0L) hash ^= MinOrderValueInUsdt.GetHashCode();
       if (MaxOrderBooksEachPrice != 0L) hash ^= MaxOrderBooksEachPrice.GetHashCode();
       if (MaxPriceBooksEachTradePair != 0L) hash ^= MaxPriceBooksEachTradePair.GetHashCode();
+      if (UserPendingOrdersLimit != 0) hash ^= UserPendingOrdersLimit.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -1029,17 +1127,17 @@ namespace Awaken.Contracts.Order {
         output.WriteRawTag(40);
         output.WriteInt64(ErasePriceMultiple);
       }
-      if (MinOrderValueInUsdt != 0L) {
-        output.WriteRawTag(48);
-        output.WriteInt64(MinOrderValueInUsdt);
-      }
       if (MaxOrderBooksEachPrice != 0L) {
-        output.WriteRawTag(56);
+        output.WriteRawTag(48);
         output.WriteInt64(MaxOrderBooksEachPrice);
       }
       if (MaxPriceBooksEachTradePair != 0L) {
-        output.WriteRawTag(64);
+        output.WriteRawTag(56);
         output.WriteInt64(MaxPriceBooksEachTradePair);
+      }
+      if (UserPendingOrdersLimit != 0) {
+        output.WriteRawTag(64);
+        output.WriteInt32(UserPendingOrdersLimit);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
@@ -1071,17 +1169,17 @@ namespace Awaken.Contracts.Order {
         output.WriteRawTag(40);
         output.WriteInt64(ErasePriceMultiple);
       }
-      if (MinOrderValueInUsdt != 0L) {
-        output.WriteRawTag(48);
-        output.WriteInt64(MinOrderValueInUsdt);
-      }
       if (MaxOrderBooksEachPrice != 0L) {
-        output.WriteRawTag(56);
+        output.WriteRawTag(48);
         output.WriteInt64(MaxOrderBooksEachPrice);
       }
       if (MaxPriceBooksEachTradePair != 0L) {
-        output.WriteRawTag(64);
+        output.WriteRawTag(56);
         output.WriteInt64(MaxPriceBooksEachTradePair);
+      }
+      if (UserPendingOrdersLimit != 0) {
+        output.WriteRawTag(64);
+        output.WriteInt32(UserPendingOrdersLimit);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
@@ -1108,14 +1206,14 @@ namespace Awaken.Contracts.Order {
       if (ErasePriceMultiple != 0L) {
         size += 1 + pb::CodedOutputStream.ComputeInt64Size(ErasePriceMultiple);
       }
-      if (MinOrderValueInUsdt != 0L) {
-        size += 1 + pb::CodedOutputStream.ComputeInt64Size(MinOrderValueInUsdt);
-      }
       if (MaxOrderBooksEachPrice != 0L) {
         size += 1 + pb::CodedOutputStream.ComputeInt64Size(MaxOrderBooksEachPrice);
       }
       if (MaxPriceBooksEachTradePair != 0L) {
         size += 1 + pb::CodedOutputStream.ComputeInt64Size(MaxPriceBooksEachTradePair);
+      }
+      if (UserPendingOrdersLimit != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(UserPendingOrdersLimit);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -1144,14 +1242,14 @@ namespace Awaken.Contracts.Order {
       if (other.ErasePriceMultiple != 0L) {
         ErasePriceMultiple = other.ErasePriceMultiple;
       }
-      if (other.MinOrderValueInUsdt != 0L) {
-        MinOrderValueInUsdt = other.MinOrderValueInUsdt;
-      }
       if (other.MaxOrderBooksEachPrice != 0L) {
         MaxOrderBooksEachPrice = other.MaxOrderBooksEachPrice;
       }
       if (other.MaxPriceBooksEachTradePair != 0L) {
         MaxPriceBooksEachTradePair = other.MaxPriceBooksEachTradePair;
+      }
+      if (other.UserPendingOrdersLimit != 0) {
+        UserPendingOrdersLimit = other.UserPendingOrdersLimit;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -1189,15 +1287,15 @@ namespace Awaken.Contracts.Order {
             break;
           }
           case 48: {
-            MinOrderValueInUsdt = input.ReadInt64();
-            break;
-          }
-          case 56: {
             MaxOrderBooksEachPrice = input.ReadInt64();
             break;
           }
-          case 64: {
+          case 56: {
             MaxPriceBooksEachTradePair = input.ReadInt64();
+            break;
+          }
+          case 64: {
+            UserPendingOrdersLimit = input.ReadInt32();
             break;
           }
         }
@@ -1236,15 +1334,467 @@ namespace Awaken.Contracts.Order {
             break;
           }
           case 48: {
-            MinOrderValueInUsdt = input.ReadInt64();
-            break;
-          }
-          case 56: {
             MaxOrderBooksEachPrice = input.ReadInt64();
             break;
           }
-          case 64: {
+          case 56: {
             MaxPriceBooksEachTradePair = input.ReadInt64();
+            break;
+          }
+          case 64: {
+            UserPendingOrdersLimit = input.ReadInt32();
+            break;
+          }
+        }
+      }
+    }
+    #endif
+
+  }
+
+  public sealed partial class GetCommitPriceConfigOutput : pb::IMessage<GetCommitPriceConfigOutput>
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      , pb::IBufferMessage
+  #endif
+  {
+    private static readonly pb::MessageParser<GetCommitPriceConfigOutput> _parser = new pb::MessageParser<GetCommitPriceConfigOutput>(() => new GetCommitPriceConfigOutput());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pb::MessageParser<GetCommitPriceConfigOutput> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Awaken.Contracts.Order.AwakenOrderContractReflection.Descriptor.MessageTypes[4]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public GetCommitPriceConfigOutput() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public GetCommitPriceConfigOutput(GetCommitPriceConfigOutput other) : this() {
+      checkCommitPriceEnabled_ = other.checkCommitPriceEnabled_;
+      commitPriceIncreaseRate_ = other.commitPriceIncreaseRate_;
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public GetCommitPriceConfigOutput Clone() {
+      return new GetCommitPriceConfigOutput(this);
+    }
+
+    /// <summary>Field number for the "check_commit_price_enabled" field.</summary>
+    public const int CheckCommitPriceEnabledFieldNumber = 1;
+    private bool checkCommitPriceEnabled_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool CheckCommitPriceEnabled {
+      get { return checkCommitPriceEnabled_; }
+      set {
+        checkCommitPriceEnabled_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "commit_price_increase_rate" field.</summary>
+    public const int CommitPriceIncreaseRateFieldNumber = 2;
+    private int commitPriceIncreaseRate_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int CommitPriceIncreaseRate {
+      get { return commitPriceIncreaseRate_; }
+      set {
+        commitPriceIncreaseRate_ = value;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override bool Equals(object other) {
+      return Equals(other as GetCommitPriceConfigOutput);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool Equals(GetCommitPriceConfigOutput other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (CheckCommitPriceEnabled != other.CheckCommitPriceEnabled) return false;
+      if (CommitPriceIncreaseRate != other.CommitPriceIncreaseRate) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (CheckCommitPriceEnabled != false) hash ^= CheckCommitPriceEnabled.GetHashCode();
+      if (CommitPriceIncreaseRate != 0) hash ^= CommitPriceIncreaseRate.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void WriteTo(pb::CodedOutputStream output) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      output.WriteRawMessage(this);
+    #else
+      if (CheckCommitPriceEnabled != false) {
+        output.WriteRawTag(8);
+        output.WriteBool(CheckCommitPriceEnabled);
+      }
+      if (CommitPriceIncreaseRate != 0) {
+        output.WriteRawTag(16);
+        output.WriteInt32(CommitPriceIncreaseRate);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+      if (CheckCommitPriceEnabled != false) {
+        output.WriteRawTag(8);
+        output.WriteBool(CheckCommitPriceEnabled);
+      }
+      if (CommitPriceIncreaseRate != 0) {
+        output.WriteRawTag(16);
+        output.WriteInt32(CommitPriceIncreaseRate);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(ref output);
+      }
+    }
+    #endif
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int CalculateSize() {
+      int size = 0;
+      if (CheckCommitPriceEnabled != false) {
+        size += 1 + 1;
+      }
+      if (CommitPriceIncreaseRate != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(CommitPriceIncreaseRate);
+      }
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(GetCommitPriceConfigOutput other) {
+      if (other == null) {
+        return;
+      }
+      if (other.CheckCommitPriceEnabled != false) {
+        CheckCommitPriceEnabled = other.CheckCommitPriceEnabled;
+      }
+      if (other.CommitPriceIncreaseRate != 0) {
+        CommitPriceIncreaseRate = other.CommitPriceIncreaseRate;
+      }
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(pb::CodedInputStream input) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      input.ReadRawMessage(this);
+    #else
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 8: {
+            CheckCommitPriceEnabled = input.ReadBool();
+            break;
+          }
+          case 16: {
+            CommitPriceIncreaseRate = input.ReadInt32();
+            break;
+          }
+        }
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+            break;
+          case 8: {
+            CheckCommitPriceEnabled = input.ReadBool();
+            break;
+          }
+          case 16: {
+            CommitPriceIncreaseRate = input.ReadInt32();
+            break;
+          }
+        }
+      }
+    }
+    #endif
+
+  }
+
+  public sealed partial class SetCommitPriceConfigInput : pb::IMessage<SetCommitPriceConfigInput>
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      , pb::IBufferMessage
+  #endif
+  {
+    private static readonly pb::MessageParser<SetCommitPriceConfigInput> _parser = new pb::MessageParser<SetCommitPriceConfigInput>(() => new SetCommitPriceConfigInput());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pb::MessageParser<SetCommitPriceConfigInput> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Awaken.Contracts.Order.AwakenOrderContractReflection.Descriptor.MessageTypes[5]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public SetCommitPriceConfigInput() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public SetCommitPriceConfigInput(SetCommitPriceConfigInput other) : this() {
+      checkCommitPriceEnabled_ = other.checkCommitPriceEnabled_;
+      commitPriceIncreaseRate_ = other.commitPriceIncreaseRate_;
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public SetCommitPriceConfigInput Clone() {
+      return new SetCommitPriceConfigInput(this);
+    }
+
+    /// <summary>Field number for the "check_commit_price_enabled" field.</summary>
+    public const int CheckCommitPriceEnabledFieldNumber = 1;
+    private bool checkCommitPriceEnabled_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool CheckCommitPriceEnabled {
+      get { return checkCommitPriceEnabled_; }
+      set {
+        checkCommitPriceEnabled_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "commit_price_increase_rate" field.</summary>
+    public const int CommitPriceIncreaseRateFieldNumber = 2;
+    private int commitPriceIncreaseRate_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int CommitPriceIncreaseRate {
+      get { return commitPriceIncreaseRate_; }
+      set {
+        commitPriceIncreaseRate_ = value;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override bool Equals(object other) {
+      return Equals(other as SetCommitPriceConfigInput);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool Equals(SetCommitPriceConfigInput other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (CheckCommitPriceEnabled != other.CheckCommitPriceEnabled) return false;
+      if (CommitPriceIncreaseRate != other.CommitPriceIncreaseRate) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (CheckCommitPriceEnabled != false) hash ^= CheckCommitPriceEnabled.GetHashCode();
+      if (CommitPriceIncreaseRate != 0) hash ^= CommitPriceIncreaseRate.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void WriteTo(pb::CodedOutputStream output) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      output.WriteRawMessage(this);
+    #else
+      if (CheckCommitPriceEnabled != false) {
+        output.WriteRawTag(8);
+        output.WriteBool(CheckCommitPriceEnabled);
+      }
+      if (CommitPriceIncreaseRate != 0) {
+        output.WriteRawTag(16);
+        output.WriteInt32(CommitPriceIncreaseRate);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+      if (CheckCommitPriceEnabled != false) {
+        output.WriteRawTag(8);
+        output.WriteBool(CheckCommitPriceEnabled);
+      }
+      if (CommitPriceIncreaseRate != 0) {
+        output.WriteRawTag(16);
+        output.WriteInt32(CommitPriceIncreaseRate);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(ref output);
+      }
+    }
+    #endif
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int CalculateSize() {
+      int size = 0;
+      if (CheckCommitPriceEnabled != false) {
+        size += 1 + 1;
+      }
+      if (CommitPriceIncreaseRate != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(CommitPriceIncreaseRate);
+      }
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(SetCommitPriceConfigInput other) {
+      if (other == null) {
+        return;
+      }
+      if (other.CheckCommitPriceEnabled != false) {
+        CheckCommitPriceEnabled = other.CheckCommitPriceEnabled;
+      }
+      if (other.CommitPriceIncreaseRate != 0) {
+        CommitPriceIncreaseRate = other.CommitPriceIncreaseRate;
+      }
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(pb::CodedInputStream input) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      input.ReadRawMessage(this);
+    #else
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 8: {
+            CheckCommitPriceEnabled = input.ReadBool();
+            break;
+          }
+          case 16: {
+            CommitPriceIncreaseRate = input.ReadInt32();
+            break;
+          }
+        }
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+            break;
+          case 8: {
+            CheckCommitPriceEnabled = input.ReadBool();
+            break;
+          }
+          case 16: {
+            CommitPriceIncreaseRate = input.ReadInt32();
             break;
           }
         }
@@ -1268,7 +1818,7 @@ namespace Awaken.Contracts.Order {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Awaken.Contracts.Order.AwakenOrderContractReflection.Descriptor.MessageTypes[4]; }
+      get { return global::Awaken.Contracts.Order.AwakenOrderContractReflection.Descriptor.MessageTypes[6]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1432,6 +1982,186 @@ namespace Awaken.Contracts.Order {
 
   }
 
+  public sealed partial class LimitOrderIdList : pb::IMessage<LimitOrderIdList>
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      , pb::IBufferMessage
+  #endif
+  {
+    private static readonly pb::MessageParser<LimitOrderIdList> _parser = new pb::MessageParser<LimitOrderIdList>(() => new LimitOrderIdList());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pb::MessageParser<LimitOrderIdList> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Awaken.Contracts.Order.AwakenOrderContractReflection.Descriptor.MessageTypes[7]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public LimitOrderIdList() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public LimitOrderIdList(LimitOrderIdList other) : this() {
+      limitOrderIds_ = other.limitOrderIds_.Clone();
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public LimitOrderIdList Clone() {
+      return new LimitOrderIdList(this);
+    }
+
+    /// <summary>Field number for the "limit_order_ids" field.</summary>
+    public const int LimitOrderIdsFieldNumber = 1;
+    private static readonly pb::FieldCodec<long> _repeated_limitOrderIds_codec
+        = pb::FieldCodec.ForInt64(10);
+    private readonly pbc::RepeatedField<long> limitOrderIds_ = new pbc::RepeatedField<long>();
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public pbc::RepeatedField<long> LimitOrderIds {
+      get { return limitOrderIds_; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override bool Equals(object other) {
+      return Equals(other as LimitOrderIdList);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool Equals(LimitOrderIdList other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if(!limitOrderIds_.Equals(other.limitOrderIds_)) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override int GetHashCode() {
+      int hash = 1;
+      hash ^= limitOrderIds_.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void WriteTo(pb::CodedOutputStream output) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      output.WriteRawMessage(this);
+    #else
+      limitOrderIds_.WriteTo(output, _repeated_limitOrderIds_codec);
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+      limitOrderIds_.WriteTo(ref output, _repeated_limitOrderIds_codec);
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(ref output);
+      }
+    }
+    #endif
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int CalculateSize() {
+      int size = 0;
+      size += limitOrderIds_.CalculateSize(_repeated_limitOrderIds_codec);
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(LimitOrderIdList other) {
+      if (other == null) {
+        return;
+      }
+      limitOrderIds_.Add(other.limitOrderIds_);
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(pb::CodedInputStream input) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      input.ReadRawMessage(this);
+    #else
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 10:
+          case 8: {
+            limitOrderIds_.AddEntriesFrom(input, _repeated_limitOrderIds_codec);
+            break;
+          }
+        }
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+            break;
+          case 10:
+          case 8: {
+            limitOrderIds_.AddEntriesFrom(ref input, _repeated_limitOrderIds_codec);
+            break;
+          }
+        }
+      }
+    }
+    #endif
+
+  }
+
   public sealed partial class CommitLimitOrderInput : pb::IMessage<CommitLimitOrderInput>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -1446,7 +2176,7 @@ namespace Awaken.Contracts.Order {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Awaken.Contracts.Order.AwakenOrderContractReflection.Descriptor.MessageTypes[5]; }
+      get { return global::Awaken.Contracts.Order.AwakenOrderContractReflection.Descriptor.MessageTypes[8]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1792,7 +2522,7 @@ namespace Awaken.Contracts.Order {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Awaken.Contracts.Order.AwakenOrderContractReflection.Descriptor.MessageTypes[6]; }
+      get { return global::Awaken.Contracts.Order.AwakenOrderContractReflection.Descriptor.MessageTypes[9]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1981,7 +2711,7 @@ namespace Awaken.Contracts.Order {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Awaken.Contracts.Order.AwakenOrderContractReflection.Descriptor.MessageTypes[7]; }
+      get { return global::Awaken.Contracts.Order.AwakenOrderContractReflection.Descriptor.MessageTypes[10]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2003,7 +2733,8 @@ namespace Awaken.Contracts.Order {
     public FillLimitOrderInput(FillLimitOrderInput other) : this() {
       amountIn_ = other.amountIn_;
       symbolIn_ = other.symbolIn_;
-      maxOpenIntervalPrice_ = other.maxOpenIntervalPrice_;
+      maxCloseIntervalPrice_ = other.maxCloseIntervalPrice_;
+      amountOut_ = other.amountOut_;
       symbolOut_ = other.symbolOut_;
       to_ = other.to_ != null ? other.to_.Clone() : null;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
@@ -2039,20 +2770,32 @@ namespace Awaken.Contracts.Order {
       }
     }
 
-    /// <summary>Field number for the "max_open_interval_price" field.</summary>
-    public const int MaxOpenIntervalPriceFieldNumber = 3;
-    private long maxOpenIntervalPrice_;
+    /// <summary>Field number for the "max_close_interval_price" field.</summary>
+    public const int MaxCloseIntervalPriceFieldNumber = 3;
+    private long maxCloseIntervalPrice_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public long MaxOpenIntervalPrice {
-      get { return maxOpenIntervalPrice_; }
+    public long MaxCloseIntervalPrice {
+      get { return maxCloseIntervalPrice_; }
       set {
-        maxOpenIntervalPrice_ = value;
+        maxCloseIntervalPrice_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "amount_out" field.</summary>
+    public const int AmountOutFieldNumber = 4;
+    private long amountOut_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public long AmountOut {
+      get { return amountOut_; }
+      set {
+        amountOut_ = value;
       }
     }
 
     /// <summary>Field number for the "symbol_out" field.</summary>
-    public const int SymbolOutFieldNumber = 4;
+    public const int SymbolOutFieldNumber = 5;
     private string symbolOut_ = "";
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -2064,7 +2807,7 @@ namespace Awaken.Contracts.Order {
     }
 
     /// <summary>Field number for the "to" field.</summary>
-    public const int ToFieldNumber = 5;
+    public const int ToFieldNumber = 6;
     private global::AElf.Types.Address to_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -2092,7 +2835,8 @@ namespace Awaken.Contracts.Order {
       }
       if (AmountIn != other.AmountIn) return false;
       if (SymbolIn != other.SymbolIn) return false;
-      if (MaxOpenIntervalPrice != other.MaxOpenIntervalPrice) return false;
+      if (MaxCloseIntervalPrice != other.MaxCloseIntervalPrice) return false;
+      if (AmountOut != other.AmountOut) return false;
       if (SymbolOut != other.SymbolOut) return false;
       if (!object.Equals(To, other.To)) return false;
       return Equals(_unknownFields, other._unknownFields);
@@ -2104,7 +2848,8 @@ namespace Awaken.Contracts.Order {
       int hash = 1;
       if (AmountIn != 0L) hash ^= AmountIn.GetHashCode();
       if (SymbolIn.Length != 0) hash ^= SymbolIn.GetHashCode();
-      if (MaxOpenIntervalPrice != 0L) hash ^= MaxOpenIntervalPrice.GetHashCode();
+      if (MaxCloseIntervalPrice != 0L) hash ^= MaxCloseIntervalPrice.GetHashCode();
+      if (AmountOut != 0L) hash ^= AmountOut.GetHashCode();
       if (SymbolOut.Length != 0) hash ^= SymbolOut.GetHashCode();
       if (to_ != null) hash ^= To.GetHashCode();
       if (_unknownFields != null) {
@@ -2133,16 +2878,20 @@ namespace Awaken.Contracts.Order {
         output.WriteRawTag(18);
         output.WriteString(SymbolIn);
       }
-      if (MaxOpenIntervalPrice != 0L) {
+      if (MaxCloseIntervalPrice != 0L) {
         output.WriteRawTag(24);
-        output.WriteInt64(MaxOpenIntervalPrice);
+        output.WriteInt64(MaxCloseIntervalPrice);
+      }
+      if (AmountOut != 0L) {
+        output.WriteRawTag(32);
+        output.WriteInt64(AmountOut);
       }
       if (SymbolOut.Length != 0) {
-        output.WriteRawTag(34);
+        output.WriteRawTag(42);
         output.WriteString(SymbolOut);
       }
       if (to_ != null) {
-        output.WriteRawTag(42);
+        output.WriteRawTag(50);
         output.WriteMessage(To);
       }
       if (_unknownFields != null) {
@@ -2163,16 +2912,20 @@ namespace Awaken.Contracts.Order {
         output.WriteRawTag(18);
         output.WriteString(SymbolIn);
       }
-      if (MaxOpenIntervalPrice != 0L) {
+      if (MaxCloseIntervalPrice != 0L) {
         output.WriteRawTag(24);
-        output.WriteInt64(MaxOpenIntervalPrice);
+        output.WriteInt64(MaxCloseIntervalPrice);
+      }
+      if (AmountOut != 0L) {
+        output.WriteRawTag(32);
+        output.WriteInt64(AmountOut);
       }
       if (SymbolOut.Length != 0) {
-        output.WriteRawTag(34);
+        output.WriteRawTag(42);
         output.WriteString(SymbolOut);
       }
       if (to_ != null) {
-        output.WriteRawTag(42);
+        output.WriteRawTag(50);
         output.WriteMessage(To);
       }
       if (_unknownFields != null) {
@@ -2191,8 +2944,11 @@ namespace Awaken.Contracts.Order {
       if (SymbolIn.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(SymbolIn);
       }
-      if (MaxOpenIntervalPrice != 0L) {
-        size += 1 + pb::CodedOutputStream.ComputeInt64Size(MaxOpenIntervalPrice);
+      if (MaxCloseIntervalPrice != 0L) {
+        size += 1 + pb::CodedOutputStream.ComputeInt64Size(MaxCloseIntervalPrice);
+      }
+      if (AmountOut != 0L) {
+        size += 1 + pb::CodedOutputStream.ComputeInt64Size(AmountOut);
       }
       if (SymbolOut.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(SymbolOut);
@@ -2218,8 +2974,11 @@ namespace Awaken.Contracts.Order {
       if (other.SymbolIn.Length != 0) {
         SymbolIn = other.SymbolIn;
       }
-      if (other.MaxOpenIntervalPrice != 0L) {
-        MaxOpenIntervalPrice = other.MaxOpenIntervalPrice;
+      if (other.MaxCloseIntervalPrice != 0L) {
+        MaxCloseIntervalPrice = other.MaxCloseIntervalPrice;
+      }
+      if (other.AmountOut != 0L) {
+        AmountOut = other.AmountOut;
       }
       if (other.SymbolOut.Length != 0) {
         SymbolOut = other.SymbolOut;
@@ -2254,14 +3013,18 @@ namespace Awaken.Contracts.Order {
             break;
           }
           case 24: {
-            MaxOpenIntervalPrice = input.ReadInt64();
+            MaxCloseIntervalPrice = input.ReadInt64();
             break;
           }
-          case 34: {
-            SymbolOut = input.ReadString();
+          case 32: {
+            AmountOut = input.ReadInt64();
             break;
           }
           case 42: {
+            SymbolOut = input.ReadString();
+            break;
+          }
+          case 50: {
             if (to_ == null) {
               To = new global::AElf.Types.Address();
             }
@@ -2292,14 +3055,18 @@ namespace Awaken.Contracts.Order {
             break;
           }
           case 24: {
-            MaxOpenIntervalPrice = input.ReadInt64();
+            MaxCloseIntervalPrice = input.ReadInt64();
             break;
           }
-          case 34: {
-            SymbolOut = input.ReadString();
+          case 32: {
+            AmountOut = input.ReadInt64();
             break;
           }
           case 42: {
+            SymbolOut = input.ReadString();
+            break;
+          }
+          case 50: {
             if (to_ == null) {
               To = new global::AElf.Types.Address();
             }
@@ -2327,7 +3094,7 @@ namespace Awaken.Contracts.Order {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Awaken.Contracts.Order.AwakenOrderContractReflection.Descriptor.MessageTypes[8]; }
+      get { return global::Awaken.Contracts.Order.AwakenOrderContractReflection.Descriptor.MessageTypes[11]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2590,7 +3357,7 @@ namespace Awaken.Contracts.Order {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Awaken.Contracts.Order.AwakenOrderContractReflection.Descriptor.MessageTypes[9]; }
+      get { return global::Awaken.Contracts.Order.AwakenOrderContractReflection.Descriptor.MessageTypes[12]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2779,7 +3546,7 @@ namespace Awaken.Contracts.Order {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Awaken.Contracts.Order.AwakenOrderContractReflection.Descriptor.MessageTypes[10]; }
+      get { return global::Awaken.Contracts.Order.AwakenOrderContractReflection.Descriptor.MessageTypes[13]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -3193,7 +3960,7 @@ namespace Awaken.Contracts.Order {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Awaken.Contracts.Order.AwakenOrderContractReflection.Descriptor.MessageTypes[11]; }
+      get { return global::Awaken.Contracts.Order.AwakenOrderContractReflection.Descriptor.MessageTypes[14]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -3217,6 +3984,7 @@ namespace Awaken.Contracts.Order {
       maxPriceFilled_ = other.maxPriceFilled_;
       amountOutFilled_ = other.amountOutFilled_;
       orderFilledCount_ = other.orderFilledCount_;
+      fillDetails_ = other.fillDetails_.Clone();
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -3274,6 +4042,17 @@ namespace Awaken.Contracts.Order {
       }
     }
 
+    /// <summary>Field number for the "fill_details" field.</summary>
+    public const int FillDetailsFieldNumber = 5;
+    private static readonly pb::FieldCodec<global::Awaken.Contracts.Order.FillDetail> _repeated_fillDetails_codec
+        = pb::FieldCodec.ForMessage(42, global::Awaken.Contracts.Order.FillDetail.Parser);
+    private readonly pbc::RepeatedField<global::Awaken.Contracts.Order.FillDetail> fillDetails_ = new pbc::RepeatedField<global::Awaken.Contracts.Order.FillDetail>();
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public pbc::RepeatedField<global::Awaken.Contracts.Order.FillDetail> FillDetails {
+      get { return fillDetails_; }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
@@ -3293,6 +4072,7 @@ namespace Awaken.Contracts.Order {
       if (MaxPriceFilled != other.MaxPriceFilled) return false;
       if (AmountOutFilled != other.AmountOutFilled) return false;
       if (OrderFilledCount != other.OrderFilledCount) return false;
+      if(!fillDetails_.Equals(other.fillDetails_)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -3304,6 +4084,7 @@ namespace Awaken.Contracts.Order {
       if (MaxPriceFilled != 0L) hash ^= MaxPriceFilled.GetHashCode();
       if (AmountOutFilled != 0L) hash ^= AmountOutFilled.GetHashCode();
       if (OrderFilledCount != 0) hash ^= OrderFilledCount.GetHashCode();
+      hash ^= fillDetails_.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -3338,6 +4119,7 @@ namespace Awaken.Contracts.Order {
         output.WriteRawTag(32);
         output.WriteInt32(OrderFilledCount);
       }
+      fillDetails_.WriteTo(output, _repeated_fillDetails_codec);
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -3364,6 +4146,7 @@ namespace Awaken.Contracts.Order {
         output.WriteRawTag(32);
         output.WriteInt32(OrderFilledCount);
       }
+      fillDetails_.WriteTo(ref output, _repeated_fillDetails_codec);
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -3386,6 +4169,7 @@ namespace Awaken.Contracts.Order {
       if (OrderFilledCount != 0) {
         size += 1 + pb::CodedOutputStream.ComputeInt32Size(OrderFilledCount);
       }
+      size += fillDetails_.CalculateSize(_repeated_fillDetails_codec);
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
       }
@@ -3410,6 +4194,7 @@ namespace Awaken.Contracts.Order {
       if (other.OrderFilledCount != 0) {
         OrderFilledCount = other.OrderFilledCount;
       }
+      fillDetails_.Add(other.fillDetails_);
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
 
@@ -3439,6 +4224,10 @@ namespace Awaken.Contracts.Order {
           }
           case 32: {
             OrderFilledCount = input.ReadInt32();
+            break;
+          }
+          case 42: {
+            fillDetails_.AddEntriesFrom(input, _repeated_fillDetails_codec);
             break;
           }
         }
@@ -3472,6 +4261,310 @@ namespace Awaken.Contracts.Order {
             OrderFilledCount = input.ReadInt32();
             break;
           }
+          case 42: {
+            fillDetails_.AddEntriesFrom(ref input, _repeated_fillDetails_codec);
+            break;
+          }
+        }
+      }
+    }
+    #endif
+
+  }
+
+  public sealed partial class FillDetail : pb::IMessage<FillDetail>
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      , pb::IBufferMessage
+  #endif
+  {
+    private static readonly pb::MessageParser<FillDetail> _parser = new pb::MessageParser<FillDetail>(() => new FillDetail());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pb::MessageParser<FillDetail> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Awaken.Contracts.Order.AwakenOrderContractReflection.Descriptor.MessageTypes[15]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public FillDetail() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public FillDetail(FillDetail other) : this() {
+      price_ = other.price_;
+      amountIn_ = other.amountIn_;
+      amountOut_ = other.amountOut_;
+      orderFilledCount_ = other.orderFilledCount_;
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public FillDetail Clone() {
+      return new FillDetail(this);
+    }
+
+    /// <summary>Field number for the "price" field.</summary>
+    public const int PriceFieldNumber = 1;
+    private long price_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public long Price {
+      get { return price_; }
+      set {
+        price_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "amount_in" field.</summary>
+    public const int AmountInFieldNumber = 2;
+    private long amountIn_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public long AmountIn {
+      get { return amountIn_; }
+      set {
+        amountIn_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "amount_out" field.</summary>
+    public const int AmountOutFieldNumber = 3;
+    private long amountOut_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public long AmountOut {
+      get { return amountOut_; }
+      set {
+        amountOut_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "order_filled_count" field.</summary>
+    public const int OrderFilledCountFieldNumber = 4;
+    private int orderFilledCount_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int OrderFilledCount {
+      get { return orderFilledCount_; }
+      set {
+        orderFilledCount_ = value;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override bool Equals(object other) {
+      return Equals(other as FillDetail);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool Equals(FillDetail other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (Price != other.Price) return false;
+      if (AmountIn != other.AmountIn) return false;
+      if (AmountOut != other.AmountOut) return false;
+      if (OrderFilledCount != other.OrderFilledCount) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (Price != 0L) hash ^= Price.GetHashCode();
+      if (AmountIn != 0L) hash ^= AmountIn.GetHashCode();
+      if (AmountOut != 0L) hash ^= AmountOut.GetHashCode();
+      if (OrderFilledCount != 0) hash ^= OrderFilledCount.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void WriteTo(pb::CodedOutputStream output) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      output.WriteRawMessage(this);
+    #else
+      if (Price != 0L) {
+        output.WriteRawTag(8);
+        output.WriteInt64(Price);
+      }
+      if (AmountIn != 0L) {
+        output.WriteRawTag(16);
+        output.WriteInt64(AmountIn);
+      }
+      if (AmountOut != 0L) {
+        output.WriteRawTag(24);
+        output.WriteInt64(AmountOut);
+      }
+      if (OrderFilledCount != 0) {
+        output.WriteRawTag(32);
+        output.WriteInt32(OrderFilledCount);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+      if (Price != 0L) {
+        output.WriteRawTag(8);
+        output.WriteInt64(Price);
+      }
+      if (AmountIn != 0L) {
+        output.WriteRawTag(16);
+        output.WriteInt64(AmountIn);
+      }
+      if (AmountOut != 0L) {
+        output.WriteRawTag(24);
+        output.WriteInt64(AmountOut);
+      }
+      if (OrderFilledCount != 0) {
+        output.WriteRawTag(32);
+        output.WriteInt32(OrderFilledCount);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(ref output);
+      }
+    }
+    #endif
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int CalculateSize() {
+      int size = 0;
+      if (Price != 0L) {
+        size += 1 + pb::CodedOutputStream.ComputeInt64Size(Price);
+      }
+      if (AmountIn != 0L) {
+        size += 1 + pb::CodedOutputStream.ComputeInt64Size(AmountIn);
+      }
+      if (AmountOut != 0L) {
+        size += 1 + pb::CodedOutputStream.ComputeInt64Size(AmountOut);
+      }
+      if (OrderFilledCount != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(OrderFilledCount);
+      }
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(FillDetail other) {
+      if (other == null) {
+        return;
+      }
+      if (other.Price != 0L) {
+        Price = other.Price;
+      }
+      if (other.AmountIn != 0L) {
+        AmountIn = other.AmountIn;
+      }
+      if (other.AmountOut != 0L) {
+        AmountOut = other.AmountOut;
+      }
+      if (other.OrderFilledCount != 0) {
+        OrderFilledCount = other.OrderFilledCount;
+      }
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(pb::CodedInputStream input) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      input.ReadRawMessage(this);
+    #else
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 8: {
+            Price = input.ReadInt64();
+            break;
+          }
+          case 16: {
+            AmountIn = input.ReadInt64();
+            break;
+          }
+          case 24: {
+            AmountOut = input.ReadInt64();
+            break;
+          }
+          case 32: {
+            OrderFilledCount = input.ReadInt32();
+            break;
+          }
+        }
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+            break;
+          case 8: {
+            Price = input.ReadInt64();
+            break;
+          }
+          case 16: {
+            AmountIn = input.ReadInt64();
+            break;
+          }
+          case 24: {
+            AmountOut = input.ReadInt64();
+            break;
+          }
+          case 32: {
+            OrderFilledCount = input.ReadInt32();
+            break;
+          }
         }
       }
     }
@@ -3493,7 +4586,7 @@ namespace Awaken.Contracts.Order {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Awaken.Contracts.Order.AwakenOrderContractReflection.Descriptor.MessageTypes[12]; }
+      get { return global::Awaken.Contracts.Order.AwakenOrderContractReflection.Descriptor.MessageTypes[16]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -3793,7 +4886,7 @@ namespace Awaken.Contracts.Order {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Awaken.Contracts.Order.AwakenOrderContractReflection.Descriptor.MessageTypes[13]; }
+      get { return global::Awaken.Contracts.Order.AwakenOrderContractReflection.Descriptor.MessageTypes[17]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -4122,7 +5215,7 @@ namespace Awaken.Contracts.Order {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Awaken.Contracts.Order.AwakenOrderContractReflection.Descriptor.MessageTypes[14]; }
+      get { return global::Awaken.Contracts.Order.AwakenOrderContractReflection.Descriptor.MessageTypes[18]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -4643,7 +5736,7 @@ namespace Awaken.Contracts.Order {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Awaken.Contracts.Order.AwakenOrderContractReflection.Descriptor.MessageTypes[15]; }
+      get { return global::Awaken.Contracts.Order.AwakenOrderContractReflection.Descriptor.MessageTypes[19]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -4915,7 +6008,7 @@ namespace Awaken.Contracts.Order {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Awaken.Contracts.Order.AwakenOrderContractReflection.Descriptor.MessageTypes[16]; }
+      get { return global::Awaken.Contracts.Order.AwakenOrderContractReflection.Descriptor.MessageTypes[20]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -5095,7 +6188,7 @@ namespace Awaken.Contracts.Order {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Awaken.Contracts.Order.AwakenOrderContractReflection.Descriptor.MessageTypes[17]; }
+      get { return global::Awaken.Contracts.Order.AwakenOrderContractReflection.Descriptor.MessageTypes[21]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -5570,7 +6663,7 @@ namespace Awaken.Contracts.Order {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Awaken.Contracts.Order.AwakenOrderContractReflection.Descriptor.MessageTypes[18]; }
+      get { return global::Awaken.Contracts.Order.AwakenOrderContractReflection.Descriptor.MessageTypes[22]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -5596,6 +6689,8 @@ namespace Awaken.Contracts.Order {
       amountOutFilled_ = other.amountOutFilled_;
       taker_ = other.taker_ != null ? other.taker_.Clone() : null;
       totalFee_ = other.totalFee_;
+      symbolIn_ = other.symbolIn_;
+      symbolOut_ = other.symbolOut_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -5677,6 +6772,30 @@ namespace Awaken.Contracts.Order {
       }
     }
 
+    /// <summary>Field number for the "symbol_in" field.</summary>
+    public const int SymbolInFieldNumber = 7;
+    private string symbolIn_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public string SymbolIn {
+      get { return symbolIn_; }
+      set {
+        symbolIn_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "symbol_out" field.</summary>
+    public const int SymbolOutFieldNumber = 8;
+    private string symbolOut_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public string SymbolOut {
+      get { return symbolOut_; }
+      set {
+        symbolOut_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
@@ -5698,6 +6817,8 @@ namespace Awaken.Contracts.Order {
       if (AmountOutFilled != other.AmountOutFilled) return false;
       if (!object.Equals(Taker, other.Taker)) return false;
       if (TotalFee != other.TotalFee) return false;
+      if (SymbolIn != other.SymbolIn) return false;
+      if (SymbolOut != other.SymbolOut) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -5711,6 +6832,8 @@ namespace Awaken.Contracts.Order {
       if (AmountOutFilled != 0L) hash ^= AmountOutFilled.GetHashCode();
       if (taker_ != null) hash ^= Taker.GetHashCode();
       if (TotalFee != 0L) hash ^= TotalFee.GetHashCode();
+      if (SymbolIn.Length != 0) hash ^= SymbolIn.GetHashCode();
+      if (SymbolOut.Length != 0) hash ^= SymbolOut.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -5753,6 +6876,14 @@ namespace Awaken.Contracts.Order {
         output.WriteRawTag(48);
         output.WriteInt64(TotalFee);
       }
+      if (SymbolIn.Length != 0) {
+        output.WriteRawTag(58);
+        output.WriteString(SymbolIn);
+      }
+      if (SymbolOut.Length != 0) {
+        output.WriteRawTag(66);
+        output.WriteString(SymbolOut);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -5787,6 +6918,14 @@ namespace Awaken.Contracts.Order {
         output.WriteRawTag(48);
         output.WriteInt64(TotalFee);
       }
+      if (SymbolIn.Length != 0) {
+        output.WriteRawTag(58);
+        output.WriteString(SymbolIn);
+      }
+      if (SymbolOut.Length != 0) {
+        output.WriteRawTag(66);
+        output.WriteString(SymbolOut);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -5814,6 +6953,12 @@ namespace Awaken.Contracts.Order {
       }
       if (TotalFee != 0L) {
         size += 1 + pb::CodedOutputStream.ComputeInt64Size(TotalFee);
+      }
+      if (SymbolIn.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(SymbolIn);
+      }
+      if (SymbolOut.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(SymbolOut);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -5850,6 +6995,12 @@ namespace Awaken.Contracts.Order {
       }
       if (other.TotalFee != 0L) {
         TotalFee = other.TotalFee;
+      }
+      if (other.SymbolIn.Length != 0) {
+        SymbolIn = other.SymbolIn;
+      }
+      if (other.SymbolOut.Length != 0) {
+        SymbolOut = other.SymbolOut;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -5894,6 +7045,14 @@ namespace Awaken.Contracts.Order {
           }
           case 48: {
             TotalFee = input.ReadInt64();
+            break;
+          }
+          case 58: {
+            SymbolIn = input.ReadString();
+            break;
+          }
+          case 66: {
+            SymbolOut = input.ReadString();
             break;
           }
         }
@@ -5941,6 +7100,406 @@ namespace Awaken.Contracts.Order {
             TotalFee = input.ReadInt64();
             break;
           }
+          case 58: {
+            SymbolIn = input.ReadString();
+            break;
+          }
+          case 66: {
+            SymbolOut = input.ReadString();
+            break;
+          }
+        }
+      }
+    }
+    #endif
+
+  }
+
+  public sealed partial class LimitOrderTotalFilled : pb::IMessage<LimitOrderTotalFilled>
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      , pb::IBufferMessage
+  #endif
+  {
+    private static readonly pb::MessageParser<LimitOrderTotalFilled> _parser = new pb::MessageParser<LimitOrderTotalFilled>(() => new LimitOrderTotalFilled());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pb::MessageParser<LimitOrderTotalFilled> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Awaken.Contracts.Order.AwakenOrderContractReflection.Descriptor.MessageTypes[23]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public LimitOrderTotalFilled() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public LimitOrderTotalFilled(LimitOrderTotalFilled other) : this() {
+      symbolIn_ = other.symbolIn_;
+      symbolOut_ = other.symbolOut_;
+      amountInFilled_ = other.amountInFilled_;
+      amountOutFilled_ = other.amountOutFilled_;
+      sender_ = other.sender_ != null ? other.sender_.Clone() : null;
+      to_ = other.to_ != null ? other.to_.Clone() : null;
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public LimitOrderTotalFilled Clone() {
+      return new LimitOrderTotalFilled(this);
+    }
+
+    /// <summary>Field number for the "symbol_in" field.</summary>
+    public const int SymbolInFieldNumber = 1;
+    private string symbolIn_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public string SymbolIn {
+      get { return symbolIn_; }
+      set {
+        symbolIn_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "symbol_out" field.</summary>
+    public const int SymbolOutFieldNumber = 2;
+    private string symbolOut_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public string SymbolOut {
+      get { return symbolOut_; }
+      set {
+        symbolOut_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "amount_in_filled" field.</summary>
+    public const int AmountInFilledFieldNumber = 3;
+    private long amountInFilled_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public long AmountInFilled {
+      get { return amountInFilled_; }
+      set {
+        amountInFilled_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "amount_out_filled" field.</summary>
+    public const int AmountOutFilledFieldNumber = 4;
+    private long amountOutFilled_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public long AmountOutFilled {
+      get { return amountOutFilled_; }
+      set {
+        amountOutFilled_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "sender" field.</summary>
+    public const int SenderFieldNumber = 5;
+    private global::AElf.Types.Address sender_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::AElf.Types.Address Sender {
+      get { return sender_; }
+      set {
+        sender_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "to" field.</summary>
+    public const int ToFieldNumber = 6;
+    private global::AElf.Types.Address to_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::AElf.Types.Address To {
+      get { return to_; }
+      set {
+        to_ = value;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override bool Equals(object other) {
+      return Equals(other as LimitOrderTotalFilled);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool Equals(LimitOrderTotalFilled other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (SymbolIn != other.SymbolIn) return false;
+      if (SymbolOut != other.SymbolOut) return false;
+      if (AmountInFilled != other.AmountInFilled) return false;
+      if (AmountOutFilled != other.AmountOutFilled) return false;
+      if (!object.Equals(Sender, other.Sender)) return false;
+      if (!object.Equals(To, other.To)) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (SymbolIn.Length != 0) hash ^= SymbolIn.GetHashCode();
+      if (SymbolOut.Length != 0) hash ^= SymbolOut.GetHashCode();
+      if (AmountInFilled != 0L) hash ^= AmountInFilled.GetHashCode();
+      if (AmountOutFilled != 0L) hash ^= AmountOutFilled.GetHashCode();
+      if (sender_ != null) hash ^= Sender.GetHashCode();
+      if (to_ != null) hash ^= To.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void WriteTo(pb::CodedOutputStream output) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      output.WriteRawMessage(this);
+    #else
+      if (SymbolIn.Length != 0) {
+        output.WriteRawTag(10);
+        output.WriteString(SymbolIn);
+      }
+      if (SymbolOut.Length != 0) {
+        output.WriteRawTag(18);
+        output.WriteString(SymbolOut);
+      }
+      if (AmountInFilled != 0L) {
+        output.WriteRawTag(24);
+        output.WriteInt64(AmountInFilled);
+      }
+      if (AmountOutFilled != 0L) {
+        output.WriteRawTag(32);
+        output.WriteInt64(AmountOutFilled);
+      }
+      if (sender_ != null) {
+        output.WriteRawTag(42);
+        output.WriteMessage(Sender);
+      }
+      if (to_ != null) {
+        output.WriteRawTag(50);
+        output.WriteMessage(To);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+      if (SymbolIn.Length != 0) {
+        output.WriteRawTag(10);
+        output.WriteString(SymbolIn);
+      }
+      if (SymbolOut.Length != 0) {
+        output.WriteRawTag(18);
+        output.WriteString(SymbolOut);
+      }
+      if (AmountInFilled != 0L) {
+        output.WriteRawTag(24);
+        output.WriteInt64(AmountInFilled);
+      }
+      if (AmountOutFilled != 0L) {
+        output.WriteRawTag(32);
+        output.WriteInt64(AmountOutFilled);
+      }
+      if (sender_ != null) {
+        output.WriteRawTag(42);
+        output.WriteMessage(Sender);
+      }
+      if (to_ != null) {
+        output.WriteRawTag(50);
+        output.WriteMessage(To);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(ref output);
+      }
+    }
+    #endif
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int CalculateSize() {
+      int size = 0;
+      if (SymbolIn.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(SymbolIn);
+      }
+      if (SymbolOut.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(SymbolOut);
+      }
+      if (AmountInFilled != 0L) {
+        size += 1 + pb::CodedOutputStream.ComputeInt64Size(AmountInFilled);
+      }
+      if (AmountOutFilled != 0L) {
+        size += 1 + pb::CodedOutputStream.ComputeInt64Size(AmountOutFilled);
+      }
+      if (sender_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Sender);
+      }
+      if (to_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(To);
+      }
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(LimitOrderTotalFilled other) {
+      if (other == null) {
+        return;
+      }
+      if (other.SymbolIn.Length != 0) {
+        SymbolIn = other.SymbolIn;
+      }
+      if (other.SymbolOut.Length != 0) {
+        SymbolOut = other.SymbolOut;
+      }
+      if (other.AmountInFilled != 0L) {
+        AmountInFilled = other.AmountInFilled;
+      }
+      if (other.AmountOutFilled != 0L) {
+        AmountOutFilled = other.AmountOutFilled;
+      }
+      if (other.sender_ != null) {
+        if (sender_ == null) {
+          Sender = new global::AElf.Types.Address();
+        }
+        Sender.MergeFrom(other.Sender);
+      }
+      if (other.to_ != null) {
+        if (to_ == null) {
+          To = new global::AElf.Types.Address();
+        }
+        To.MergeFrom(other.To);
+      }
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(pb::CodedInputStream input) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      input.ReadRawMessage(this);
+    #else
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 10: {
+            SymbolIn = input.ReadString();
+            break;
+          }
+          case 18: {
+            SymbolOut = input.ReadString();
+            break;
+          }
+          case 24: {
+            AmountInFilled = input.ReadInt64();
+            break;
+          }
+          case 32: {
+            AmountOutFilled = input.ReadInt64();
+            break;
+          }
+          case 42: {
+            if (sender_ == null) {
+              Sender = new global::AElf.Types.Address();
+            }
+            input.ReadMessage(Sender);
+            break;
+          }
+          case 50: {
+            if (to_ == null) {
+              To = new global::AElf.Types.Address();
+            }
+            input.ReadMessage(To);
+            break;
+          }
+        }
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+            break;
+          case 10: {
+            SymbolIn = input.ReadString();
+            break;
+          }
+          case 18: {
+            SymbolOut = input.ReadString();
+            break;
+          }
+          case 24: {
+            AmountInFilled = input.ReadInt64();
+            break;
+          }
+          case 32: {
+            AmountOutFilled = input.ReadInt64();
+            break;
+          }
+          case 42: {
+            if (sender_ == null) {
+              Sender = new global::AElf.Types.Address();
+            }
+            input.ReadMessage(Sender);
+            break;
+          }
+          case 50: {
+            if (to_ == null) {
+              To = new global::AElf.Types.Address();
+            }
+            input.ReadMessage(To);
+            break;
+          }
         }
       }
     }
@@ -5962,7 +7521,7 @@ namespace Awaken.Contracts.Order {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Awaken.Contracts.Order.AwakenOrderContractReflection.Descriptor.MessageTypes[19]; }
+      get { return global::Awaken.Contracts.Order.AwakenOrderContractReflection.Descriptor.MessageTypes[24]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -6197,7 +7756,7 @@ namespace Awaken.Contracts.Order {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Awaken.Contracts.Order.AwakenOrderContractReflection.Descriptor.MessageTypes[20]; }
+      get { return global::Awaken.Contracts.Order.AwakenOrderContractReflection.Descriptor.MessageTypes[25]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]

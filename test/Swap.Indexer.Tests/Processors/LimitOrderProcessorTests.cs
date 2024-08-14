@@ -9,6 +9,7 @@ using AElfIndexer.Grains.State.Client;
 using Awaken.Contracts.Hooks;
 using Awaken.Contracts.Order;
 using Awaken.Contracts.Swap;
+using Google.Protobuf;
 using Google.Protobuf.WellKnownTypes;
 using Microsoft.Extensions.Logging;
 using Nethereum.Hex.HexConvertors.Extensions;

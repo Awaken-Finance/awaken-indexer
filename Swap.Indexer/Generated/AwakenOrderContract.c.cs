@@ -55,6 +55,31 @@ namespace Awaken.Contracts.Order {
         AmountOutFilled = AmountOutFilled,
         Taker = Taker,
         TotalFee = TotalFee,
+        SymbolIn = SymbolIn,
+        SymbolOut = SymbolOut,
+      };
+    }
+  }
+
+  public partial class LimitOrderTotalFilled : aelf::IEvent<LimitOrderTotalFilled>
+  {
+    public global::System.Collections.Generic.IEnumerable<LimitOrderTotalFilled> GetIndexed()
+    {
+      return new List<LimitOrderTotalFilled>
+      {
+      };
+    }
+
+    public LimitOrderTotalFilled GetNonIndexed()
+    {
+      return new LimitOrderTotalFilled
+      {
+        SymbolIn = SymbolIn,
+        SymbolOut = SymbolOut,
+        AmountInFilled = AmountInFilled,
+        AmountOutFilled = AmountOutFilled,
+        Sender = Sender,
+        To = To,
       };
     }
   }
@@ -108,6 +133,7 @@ namespace Awaken.Contracts.Order {
     static readonly aelf::Marshaller<global::Google.Protobuf.WellKnownTypes.Empty> __Marshaller_google_protobuf_Empty = aelf::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Google.Protobuf.WellKnownTypes.Empty.Parser.ParseFrom);
     static readonly aelf::Marshaller<global::AElf.Types.Address> __Marshaller_aelf_Address = aelf::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::AElf.Types.Address.Parser.ParseFrom);
     static readonly aelf::Marshaller<global::Awaken.Contracts.Order.SetOrderBookConfigInput> __Marshaller_SetOrderBookConfigInput = aelf::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Awaken.Contracts.Order.SetOrderBookConfigInput.Parser.ParseFrom);
+    static readonly aelf::Marshaller<global::Awaken.Contracts.Order.SetCommitPriceConfigInput> __Marshaller_SetCommitPriceConfigInput = aelf::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Awaken.Contracts.Order.SetCommitPriceConfigInput.Parser.ParseFrom);
     static readonly aelf::Marshaller<global::Awaken.Contracts.Order.CommitLimitOrderInput> __Marshaller_CommitLimitOrderInput = aelf::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Awaken.Contracts.Order.CommitLimitOrderInput.Parser.ParseFrom);
     static readonly aelf::Marshaller<global::Awaken.Contracts.Order.CancelLimitOrderInput> __Marshaller_CancelLimitOrderInput = aelf::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Awaken.Contracts.Order.CancelLimitOrderInput.Parser.ParseFrom);
     static readonly aelf::Marshaller<global::Awaken.Contracts.Order.FillLimitOrderInput> __Marshaller_FillLimitOrderInput = aelf::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Awaken.Contracts.Order.FillLimitOrderInput.Parser.ParseFrom);
@@ -117,6 +143,7 @@ namespace Awaken.Contracts.Order {
     static readonly aelf::Marshaller<global::Awaken.Contracts.Order.GetBestSellPriceOutput> __Marshaller_GetBestSellPriceOutput = aelf::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Awaken.Contracts.Order.GetBestSellPriceOutput.Parser.ParseFrom);
     static readonly aelf::Marshaller<global::Awaken.Contracts.Order.WhiteList> __Marshaller_WhiteList = aelf::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Awaken.Contracts.Order.WhiteList.Parser.ParseFrom);
     static readonly aelf::Marshaller<global::Awaken.Contracts.Order.GetOrderBookConfigOutput> __Marshaller_GetOrderBookConfigOutput = aelf::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Awaken.Contracts.Order.GetOrderBookConfigOutput.Parser.ParseFrom);
+    static readonly aelf::Marshaller<global::Awaken.Contracts.Order.GetCommitPriceConfigOutput> __Marshaller_GetCommitPriceConfigOutput = aelf::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Awaken.Contracts.Order.GetCommitPriceConfigOutput.Parser.ParseFrom);
     static readonly aelf::Marshaller<global::Google.Protobuf.WellKnownTypes.Int64Value> __Marshaller_google_protobuf_Int64Value = aelf::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Google.Protobuf.WellKnownTypes.Int64Value.Parser.ParseFrom);
     static readonly aelf::Marshaller<global::Awaken.Contracts.Order.PriceBook> __Marshaller_PriceBook = aelf::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Awaken.Contracts.Order.PriceBook.Parser.ParseFrom);
     static readonly aelf::Marshaller<global::Awaken.Contracts.Order.OrderBook> __Marshaller_OrderBook = aelf::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Awaken.Contracts.Order.OrderBook.Parser.ParseFrom);
@@ -151,6 +178,13 @@ namespace Awaken.Contracts.Order {
         __ServiceName,
         "SetOrderBookConfig",
         __Marshaller_SetOrderBookConfigInput,
+        __Marshaller_google_protobuf_Empty);
+
+    static readonly aelf::Method<global::Awaken.Contracts.Order.SetCommitPriceConfigInput, global::Google.Protobuf.WellKnownTypes.Empty> __Method_SetCommitPriceConfig = new aelf::Method<global::Awaken.Contracts.Order.SetCommitPriceConfigInput, global::Google.Protobuf.WellKnownTypes.Empty>(
+        aelf::MethodType.Action,
+        __ServiceName,
+        "SetCommitPriceConfig",
+        __Marshaller_SetCommitPriceConfigInput,
         __Marshaller_google_protobuf_Empty);
 
     static readonly aelf::Method<global::AElf.Types.Address, global::Google.Protobuf.WellKnownTypes.Empty> __Method_AddFillOrderWhiteList = new aelf::Method<global::AElf.Types.Address, global::Google.Protobuf.WellKnownTypes.Empty>(
@@ -229,6 +263,13 @@ namespace Awaken.Contracts.Order {
         "GetOrderBookConfig",
         __Marshaller_google_protobuf_Empty,
         __Marshaller_GetOrderBookConfigOutput);
+
+    static readonly aelf::Method<global::Google.Protobuf.WellKnownTypes.Empty, global::Awaken.Contracts.Order.GetCommitPriceConfigOutput> __Method_GetCommitPriceConfig = new aelf::Method<global::Google.Protobuf.WellKnownTypes.Empty, global::Awaken.Contracts.Order.GetCommitPriceConfigOutput>(
+        aelf::MethodType.View,
+        __ServiceName,
+        "GetCommitPriceConfig",
+        __Marshaller_google_protobuf_Empty,
+        __Marshaller_GetCommitPriceConfigOutput);
 
     static readonly aelf::Method<global::Google.Protobuf.WellKnownTypes.Int64Value, global::Awaken.Contracts.Order.PriceBook> __Method_GetPriceBook = new aelf::Method<global::Google.Protobuf.WellKnownTypes.Int64Value, global::Awaken.Contracts.Order.PriceBook>(
         aelf::MethodType.View,
@@ -309,6 +350,11 @@ namespace Awaken.Contracts.Order {
     //     throw new global::System.NotImplementedException();
     //   }
     //
+    //   public virtual global::Google.Protobuf.WellKnownTypes.Empty SetCommitPriceConfig(global::Awaken.Contracts.Order.SetCommitPriceConfigInput input)
+    //   {
+    //     throw new global::System.NotImplementedException();
+    //   }
+    //
     //   public virtual global::Google.Protobuf.WellKnownTypes.Empty AddFillOrderWhiteList(global::AElf.Types.Address input)
     //   {
     //     throw new global::System.NotImplementedException();
@@ -364,6 +410,11 @@ namespace Awaken.Contracts.Order {
     //     throw new global::System.NotImplementedException();
     //   }
     //
+    //   public virtual global::Awaken.Contracts.Order.GetCommitPriceConfigOutput GetCommitPriceConfig(global::Google.Protobuf.WellKnownTypes.Empty input)
+    //   {
+    //     throw new global::System.NotImplementedException();
+    //   }
+    //
     //   public virtual global::Awaken.Contracts.Order.PriceBook GetPriceBook(global::Google.Protobuf.WellKnownTypes.Int64Value input)
     //   {
     //     throw new global::System.NotImplementedException();
@@ -399,6 +450,7 @@ namespace Awaken.Contracts.Order {
     //       .AddMethod(__Method_SetAdmin, serviceImpl.SetAdmin)
     //       .AddMethod(__Method_SetHooksContract, serviceImpl.SetHooksContract)
     //       .AddMethod(__Method_SetOrderBookConfig, serviceImpl.SetOrderBookConfig)
+    //       .AddMethod(__Method_SetCommitPriceConfig, serviceImpl.SetCommitPriceConfig)
     //       .AddMethod(__Method_AddFillOrderWhiteList, serviceImpl.AddFillOrderWhiteList)
     //       .AddMethod(__Method_RemoveFillOrderWhiteList, serviceImpl.RemoveFillOrderWhiteList)
     //       .AddMethod(__Method_CommitLimitOrder, serviceImpl.CommitLimitOrder)
@@ -410,6 +462,7 @@ namespace Awaken.Contracts.Order {
     //       .AddMethod(__Method_GetFillOrderWhiteList, serviceImpl.GetFillOrderWhiteList)
     //       .AddMethod(__Method_GetHooksContract, serviceImpl.GetHooksContract)
     //       .AddMethod(__Method_GetOrderBookConfig, serviceImpl.GetOrderBookConfig)
+    //       .AddMethod(__Method_GetCommitPriceConfig, serviceImpl.GetCommitPriceConfig)
     //       .AddMethod(__Method_GetPriceBook, serviceImpl.GetPriceBook)
     //       .AddMethod(__Method_GetOrderBook, serviceImpl.GetOrderBook)
     //       .AddMethod(__Method_GetUserLimitOrder, serviceImpl.GetUserLimitOrder)
