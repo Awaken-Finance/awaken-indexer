@@ -869,7 +869,7 @@ public class Query
         QueryContainer Filter(QueryContainerDescriptor<LimitOrderIndex> f) =>
             f.Bool(b => b.Must(mustQuery));
         var result = await repository.GetSortListAsync(Filter,
-            sortFunc: s => s.Descending(t => t.Deadline),
+            sortFunc: s => s.Descending(t => t.CommitTime),
             skip: dto.SkipCount,
             limit: dto.MaxResultCount);
         var dataList = objectMapper.Map<List<LimitOrderIndex>, List<LimitOrderDto>>(result.Item2);
