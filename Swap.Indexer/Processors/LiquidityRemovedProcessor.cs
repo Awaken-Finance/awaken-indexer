@@ -34,8 +34,6 @@ public class LiquidityRemovedProcessor : LiquidityProcessorBase<LiquidityRemoved
             return;
         }
         recordIndex = new LiquidityRecordIndex();
-        ObjectMapper.Map(eventValue, recordIndex);
-        ObjectMapper.Map(context, recordIndex);
 
         recordIndex.Id = id;
         recordIndex.Type = LiquidityRecordIndex.LiquidityType.Burn;
@@ -50,7 +48,7 @@ public class LiquidityRemovedProcessor : LiquidityProcessorBase<LiquidityRemoved
         recordIndex.Token1 = eventValue.SymbolB;
         recordIndex.Timestamp = context.BlockTime.ToTimestamp().Seconds * 1000 + context.BlockTime.Millisecond;
         recordIndex.TransactionHash = context.TransactionId;
-        
+        ObjectMapper.Map(context, recordIndex);
         Logger.Info("LiquidityRecordIndex:" + recordIndex);
         await Repository.AddOrUpdateAsync(recordIndex);
         await HandlerUserLiquidityAsync(recordIndex, context);

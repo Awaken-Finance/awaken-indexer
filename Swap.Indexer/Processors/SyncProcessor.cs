@@ -32,11 +32,12 @@ public class SyncProcessor : SyncProcessorBase<Sync>
             SymbolB = eventValue.SymbolB,
             ReserveA = eventValue.ReserveA,
             ReserveB = eventValue.ReserveB,
-            Timestamp = DateTimeHelper.ToUnixTimeMilliseconds(context.BlockTime)
+            Timestamp = DateTimeHelper.ToUnixTimeMilliseconds(context.BlockTime),
+            TransactionHash = context.TransactionId
         };
         ObjectMapper.Map(eventValue, record);
         ObjectMapper.Map(context, record);
-        record.Id = IdGenerateHelper.GetId(context.ChainId, context.TransactionId, record.BlockHeight);
+        record.Id = IdGenerateHelper.GetId(context.ChainId, context.TransactionId, eventValue.Pair.ToBase58());
         
         await SyncRecordIndexRepository.AddOrUpdateAsync(record);
     }

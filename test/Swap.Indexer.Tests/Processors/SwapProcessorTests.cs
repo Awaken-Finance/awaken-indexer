@@ -163,6 +163,23 @@ public sealed class SwapProcessorTests : SwapIndexerTests
         result.Data.First().SymbolIn.ShouldBe(dto.SymbolIn);
         result.Data.First().Channel.ShouldBe(dto.Channel);
         
+        result = await Query.SwapRecordAsync(_recordRepository, _objectMapper, new GetSwapRecordDto
+        {
+            SkipCount = 1,
+            MaxResultCount = 100,
+            ChainId = "AELF",
+            PairAddress = Address.FromPublicKey("AAA".HexToByteArray()).ToBase58(),
+            Sender = "AA",
+            TransactionHash = "aa",
+            Timestamp = 11,
+            AmountOut = 100,
+            AmountIn = 99,
+            SymbolOut = "AA",
+            SymbolIn = "BB",
+            Channel = "test"
+        });
+        result.Data.Count.ShouldBe(0);
+        
         var ret = await Query.GetSwapRecordsAsync(_recordRepository, _objectMapper, new GetChainBlockHeightDto
         {
             ChainId = "AELF",
@@ -181,5 +198,85 @@ public sealed class SwapProcessorTests : SwapIndexerTests
         ret.First().TotalFee.ShouldBe(15);
         ret.First().SymbolOut.ShouldBe("BTC");
         ret.First().SymbolIn.ShouldBe("AELF");
+        
+        ret = await Query.GetSwapRecordsAsync(_recordRepository, _objectMapper, new GetChainBlockHeightDto
+        {
+            ChainId = "AELF",
+            StartBlockHeight = 1,
+            EndBlockHeight = 101,
+            SkipCount = 1
+        });
+        ret.Count.ShouldBe(0);
+        
+        ret = await Query.GetSwapRecordsAsync(_recordRepository, _objectMapper, new GetChainBlockHeightDto
+        {
+            ChainId = "AELF",
+            StartBlockHeight = 1,
+            EndBlockHeight = 101,
+            MaxResultCount = 0
+        });
+        ret.Count.ShouldBe(0);
+        
+        await swapProcessor.HandleEventAsync(logEventInfo, logEventContext); 
+        
+        //step4: save blockStateSet into es
+        await BlockStateSetSaveDataAsync<LogEventInfo>(blockStateSetKey);
+        await BlockStateSetSaveDataAsync<TransactionInfo>(blockStateSetKeyTransaction);
+        ret = await Query.GetSwapRecordsAsync(_recordRepository, _objectMapper, new GetChainBlockHeightDto
+        {
+            ChainId = "AELF",
+            StartBlockHeight = 1,
+            EndBlockHeight = 101
+        });
+        ret.Count.ShouldBe(1);
+        ret.First().SwapRecords.Count.ShouldBe(0);
+        
+        // step2: create logEventInfo
+        var swap2 = new Awaken.Contracts.Swap.Swap()
+        {
+            Pair = Address.FromPublicKey("AAA2".HexToByteArray()),
+            To = Address.FromPublicKey("BBB".HexToByteArray()),
+            Sender = Address.FromPublicKey("CCC".HexToByteArray()),
+            SymbolIn = "BTC",
+            SymbolOut = "ETH",
+            AmountIn = 100,
+            AmountOut = 1,
+            TotalFee = 15,
+            Channel = "test"
+        };
+        logEventInfo = LogEventHelper.ConvertAElfLogEventToLogEventInfo(swap2.ToLogEvent());
+        logEventInfo.BlockHeight = blockHeight;
+        logEventInfo.ChainId= chainId;
+        logEventInfo.BlockHash = blockHash;
+        logEventInfo.TransactionId = transactionId;
+        
+        await swapProcessor.HandleEventAsync(logEventInfo, logEventContext); 
+        
+        //step4: save blockStateSet into es
+        await BlockStateSetSaveDataAsync<LogEventInfo>(blockStateSetKey);
+        await BlockStateSetSaveDataAsync<TransactionInfo>(blockStateSetKeyTransaction);
+        
+        ret = await Query.GetSwapRecordsAsync(_recordRepository, _objectMapper, new GetChainBlockHeightDto
+        {
+            ChainId = "AELF",
+            StartBlockHeight = 1,
+            EndBlockHeight = 101
+        });
+        ret.Count.ShouldBe(1);
+        ret.First().SwapRecords.Count.ShouldBe(1);
+        ret.First().SwapRecords[0].PairAddress.ShouldBe(swap2.Pair.ToBase58());
+        ret.First().SwapRecords[0].AmountIn.ShouldBe(swap2.AmountIn);
+        ret.First().SwapRecords[0].AmountOut.ShouldBe(swap2.AmountOut);
+        ret.First().SwapRecords[0].SymbolIn.ShouldBe(swap2.SymbolIn);
+        ret.First().SwapRecords[0].SymbolOut.ShouldBe(swap2.SymbolOut);
+        ret.First().SwapRecords[0].TotalFee.ShouldBe(swap2.TotalFee);
+        
+        await swapProcessor.HandleEventAsync(logEventInfo, logEventContext); 
+        
+        //step4: save blockStateSet into es
+        await BlockStateSetSaveDataAsync<LogEventInfo>(blockStateSetKey);
+        await BlockStateSetSaveDataAsync<TransactionInfo>(blockStateSetKeyTransaction);
+        ret.Count.ShouldBe(1);
+        ret.First().SwapRecords.Count.ShouldBe(1);
     }
 }

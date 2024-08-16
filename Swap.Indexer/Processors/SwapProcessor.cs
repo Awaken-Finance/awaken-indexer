@@ -24,25 +24,47 @@ public class SwapProcessor : SwapProcessorBase<Awaken.Contracts.Swap.Swap>
     protected override async Task HandleEventAsync(Awaken.Contracts.Swap.Swap eventValue, LogEventContext context)
     {
         Logger.Info("received Swap:" + context.BlockTime);
-        var record = new SwapRecordIndex
+        var indexId = IdGenerateHelper.GetId(context.ChainId, context.TransactionId, context.BlockHeight);
+        var record = await SwapRecordIndexRepository.GetFromBlockStateSetAsync(indexId, context.ChainId);
+        if (record == null)
         {
-            ChainId = context.ChainId,
-            PairAddress = eventValue.Pair.ToBase58(),
-            Sender = eventValue.Sender.ToBase58(),
-            TransactionHash = context.TransactionId,
-            Timestamp = DateTimeHelper.ToUnixTimeMilliseconds(context.BlockTime),
-            AmountOut = eventValue.AmountOut,
-            AmountIn = eventValue.AmountIn,
-            TotalFee = eventValue.TotalFee,
-            SymbolOut = eventValue.SymbolOut,
-            SymbolIn = eventValue.SymbolIn,
-            Channel = eventValue.Channel
-        };
-        ObjectMapper.Map(eventValue, record);
+            record = new SwapRecordIndex
+            {
+                Id = indexId,
+                ChainId = context.ChainId,
+                PairAddress = eventValue.Pair.ToBase58(),
+                Sender = eventValue.Sender.ToBase58(),
+                TransactionHash = context.TransactionId,
+                Timestamp = DateTimeHelper.ToUnixTimeMilliseconds(context.BlockTime),
+                AmountOut = eventValue.AmountOut,
+                AmountIn = eventValue.AmountIn,
+                TotalFee = eventValue.TotalFee,
+                SymbolOut = eventValue.SymbolOut,
+                SymbolIn = eventValue.SymbolIn,
+                Channel = eventValue.Channel
+            };
+        }
+        else
+        {
+            if (record.PairAddress == eventValue.Pair.ToBase58() || 
+                record.SwapRecords.FirstOrDefault(s => s.PairAddress == eventValue.Pair.ToBase58()) != null)
+            {
+                return;
+            }
+
+            var swapRecord = new SwapRecord
+            {
+                AmountIn = eventValue.AmountIn,
+                AmountOut = eventValue.AmountOut,
+                SymbolIn = eventValue.SymbolIn,
+                SymbolOut = eventValue.SymbolOut,
+                TotalFee = eventValue.TotalFee,
+                PairAddress = eventValue.Pair.ToBase58(),
+                Channel = eventValue.Channel
+            };
+            record.SwapRecords.Add(swapRecord);
+        }
         ObjectMapper.Map(context, record);
-        record.Id = IdGenerateHelper.GetId(context.ChainId, context.TransactionId, record.BlockHeight);
-        record.Sender = eventValue.Sender.ToBase58();
-        
         await SwapRecordIndexRepository.AddOrUpdateAsync(record);
     }
 }

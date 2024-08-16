@@ -2,7 +2,7 @@ using Swap.Indexer.Entities;
 
 namespace Swap.Indexer.GraphQL;
 
-public class GetLiquidityRecordDto
+public class GetLiquidityRecordDto : PagedResultQueryDtoBase
 {
     public string ChainId { get; set; }
     public string Address { get; set; }
@@ -14,7 +14,5 @@ public class GetLiquidityRecordDto
     public string Token1 { get; set; }
     public long TimestampMin { get; set; }
     public long TimestampMax { get; set; }
-    public int SkipCount { get; set; }
-    public int MaxResultCount { get; set; }
     public string Sorting { get; set; }
 }

@@ -5,9 +5,14 @@ using AElfIndexer.Grains;
 using AElfIndexer.Grains.Grain.Client;
 using AElfIndexer.Grains.State.Client;
 using GraphQL;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Nest;
+using Nito.AsyncEx;
 using Orleans;
 using Swap.Indexer.Entities;
+using Swap.Indexer.Options;
+using Swap.Indexer.Providers;
 using Volo.Abp.ObjectMapping;
 
 namespace Swap.Indexer.GraphQL;
@@ -25,6 +30,8 @@ public class Query
         GetPullLiquidityRecordDto dto
         )
     {
+        dto.Validate();
+        
         var mustQuery = new List<Func<QueryContainerDescriptor<LiquidityRecordIndex>, QueryContainer>>();
         mustQuery.Add(q => q.Term(i
             => i.Field(f => f.ChainId).Value(dto.ChainId)));
@@ -43,7 +50,7 @@ public class Query
         QueryContainer Filter(QueryContainerDescriptor<LiquidityRecordIndex> f) =>
             f.Bool(b => b.Must(mustQuery));
 
-        var result = await repository.GetListAsync(Filter, sortType: SortOrder.Ascending, sortExp: o => o.BlockHeight, skip: 0, limit: 10000);
+        var result = await repository.GetListAsync(Filter, sortType: SortOrder.Ascending, sortExp: o => o.BlockHeight, skip: dto.SkipCount, limit: dto.MaxResultCount);
         return objectMapper.Map<List<LiquidityRecordIndex>, List<LiquidityRecordDto>>(result.Item2);
     }
     
@@ -54,11 +61,22 @@ public class Query
         GetLiquidityRecordDto dto
         )
     {
+        dto.Validate();
+        
         var mustQuery = new List<Func<QueryContainerDescriptor<LiquidityRecordIndex>, QueryContainer>>();
-        mustQuery.Add(q => q.Term(i
-            => i.Field(f => f.ChainId).Value(dto.ChainId)));
-        mustQuery.Add(q => q.Term(i
-            => i.Field(f => f.Address).Value(dto.Address)));
+
+        if (!string.IsNullOrEmpty(dto.ChainId))
+        {
+            mustQuery.Add(q => q.Term(i
+                => i.Field(f => f.ChainId).Value(dto.ChainId)));
+        }
+
+        if (!string.IsNullOrEmpty(dto.Address))
+        {
+            mustQuery.Add(q => q.Term(i
+                => i.Field(f => f.Address).Value(dto.Address)));
+        }
+
         if (dto.Pair != null)
         {
             mustQuery.Add(q => q.Term(i
@@ -85,8 +103,10 @@ public class Query
         if (dto.TokenSymbol != null)
         {
             mustQuery.Add(q => q.Bool(i => i.Should(
-                s => s.Match(m => m.Field(f => f.Token0).Query(dto.TokenSymbol).Fuzziness(Fuzziness.Auto)),
-                s => s.Match(m => m.Field(f => f.Token1).Query(dto.TokenSymbol).Fuzziness(Fuzziness.Auto)))));
+                s => s.Wildcard(w =>
+                    w.Field(f => f.Token0).Value($"*{dto.TokenSymbol.ToUpper()}*")),
+                s => s.Wildcard(w =>
+                    w.Field(f => f.Token1).Value($"*{dto.TokenSymbol.ToUpper()}*")))));
         }
 
         if (dto.TransactionHash != null)
@@ -169,12 +189,21 @@ public class Query
         GetUserLiquidityDto dto
     )
     {
+        dto.Validate();
+        
         var mustQuery = new List<Func<QueryContainerDescriptor<UserLiquidityIndex>, QueryContainer>>();
-        mustQuery.Add(q => q.Term(i
-            => i.Field(f => f.ChainId).Value(dto.ChainId)));
-        mustQuery.Add(q => q.Term(i
-            => i.Field(f => f.Address).Value(dto.Address)));
-       
+        if (!string.IsNullOrEmpty(dto.ChainId))
+        {
+            mustQuery.Add(q => q.Term(i
+                => i.Field(f => f.ChainId).Value(dto.ChainId)));
+        }
+
+        if (!string.IsNullOrEmpty(dto.Address))
+        {
+            mustQuery.Add(q => q.Term(i
+                => i.Field(f => f.Address).Value(dto.Address)));
+        }
+
         QueryContainer Filter(QueryContainerDescriptor<UserLiquidityIndex> f) =>
             f.Bool(b => b.Must(mustQuery));
         var sorting = GetUserLiquiditySorting(dto.Sorting);
@@ -259,10 +288,18 @@ public class Query
         [FromServices] IObjectMapper objectMapper, GetUserTokenDto dto)
     {
         var mustQuery = new List<Func<QueryContainerDescriptor<SwapUserTokenIndex>, QueryContainer>>();
-        mustQuery.Add(q => q.Term(i
-            => i.Field(f => f.ChainId).Value(dto.ChainId)));
-        mustQuery.Add(q => q.Term(i
-            => i.Field(f => f.Address).Value(dto.Address)));
+        if (!string.IsNullOrEmpty(dto.ChainId))
+        {
+            mustQuery.Add(q => q.Term(i
+                => i.Field(f => f.ChainId).Value(dto.ChainId)));
+        }
+
+        if (!string.IsNullOrEmpty(dto.Address))
+        {
+            mustQuery.Add(q => q.Term(i
+                => i.Field(f => f.Address).Value(dto.Address)));
+        }
+
         if (dto.Symbol != null)
         {
             mustQuery.Add(q => q.Term(i
@@ -279,23 +316,36 @@ public class Query
     public static async Task<SyncRecordPageResultDto> SyncRecordAsync(
         [FromServices] IAElfIndexerClientEntityRepository<SyncRecordIndex, LogEventInfo> repository,
         [FromServices] IObjectMapper objectMapper,
-        GetSyncRecordDto getSyncRecordDto
+        GetSyncRecordDto dto
     )
     {
+        dto.Validate();
+
         var mustQuery = new List<Func<QueryContainerDescriptor<SyncRecordIndex>, QueryContainer>>();
-        mustQuery.Add(q => q.Term(i
-            => i.Field(f => f.ChainId).Value(getSyncRecordDto.ChainId)));
-        
-        if (!string.IsNullOrEmpty(getSyncRecordDto.PairAddress))
+
+        if (!string.IsNullOrEmpty(dto.ChainId))
         {
             mustQuery.Add(q => q.Term(i
-                => i.Field(f => f.PairAddress).Value(getSyncRecordDto.PairAddress)));
+                => i.Field(f => f.ChainId).Value(dto.ChainId)));
         }
-       
+
+
+        if (!string.IsNullOrEmpty(dto.PairAddress))
+        {
+            mustQuery.Add(q => q.Term(i
+                => i.Field(f => f.PairAddress).Value(dto.PairAddress)));
+        }
+
+        if (dto.TimestampMax > 0)
+        {
+            mustQuery.Add(q => q.Range(i
+                => i.Field(f => f.Timestamp).LessThanOrEquals(dto.TimestampMax)));
+        }
+
         QueryContainer Filter(QueryContainerDescriptor<SyncRecordIndex> f) =>
             f.Bool(b => b.Must(mustQuery));
-        var result = await repository.GetListAsync(Filter,  skip: getSyncRecordDto.SkipCount,
-            limit: getSyncRecordDto.MaxResultCount, sortType: SortOrder.Ascending, sortExp: o => o.Timestamp);
+        var result = await repository.GetListAsync(Filter,  skip: dto.SkipCount,
+            limit: dto.MaxResultCount, sortType: SortOrder.Descending, sortExp: o => o.Timestamp);
         var dataList = objectMapper.Map<List<SyncRecordIndex>, List<SyncRecordDto>>(result.Item2);
         return new SyncRecordPageResultDto()
         {
@@ -311,10 +361,17 @@ public class Query
         GetChainBlockHeightDto dto
     )
     {
+        dto.Validate();
+
         var mustQuery = new List<Func<QueryContainerDescriptor<SyncRecordIndex>, QueryContainer>>();
-        mustQuery.Add(q => q.Term(i
-            => i.Field(f => f.ChainId).Value(dto.ChainId)));
         
+        if (!string.IsNullOrEmpty(dto.ChainId))
+        {
+            mustQuery.Add(q => q.Term(i
+                => i.Field(f => f.ChainId).Value(dto.ChainId)));
+        }
+        
+
         if (dto.StartBlockHeight > 0)
         {
             mustQuery.Add(q => q.Range(i
@@ -330,7 +387,7 @@ public class Query
         QueryContainer Filter(QueryContainerDescriptor<SyncRecordIndex> f) =>
             f.Bool(b => b.Must(mustQuery));
 
-        var result = await repository.GetListAsync(Filter, skip: 0, limit: 10000, sortType: SortOrder.Ascending, sortExp: o => o.BlockHeight);
+        var result = await repository.GetListAsync(Filter, skip: dto.SkipCount, limit: dto.MaxResultCount, sortType: SortOrder.Ascending, sortExp: o => o.BlockHeight);
         return objectMapper.Map<List<SyncRecordIndex>, List<SyncRecordDto>>(result.Item2);
     }
     
@@ -341,9 +398,16 @@ public class Query
         GetSwapRecordDto getSwapRecordDto
     )
     {
+        getSwapRecordDto.Validate();
+        
         var mustQuery = new List<Func<QueryContainerDescriptor<SwapRecordIndex>, QueryContainer>>();
-        mustQuery.Add(q => q.Term(i
-            => i.Field(f => f.ChainId).Value(getSwapRecordDto.ChainId)));
+
+        if (!string.IsNullOrEmpty(getSwapRecordDto.ChainId))
+        {
+            mustQuery.Add(q => q.Term(i
+                => i.Field(f => f.ChainId).Value(getSwapRecordDto.ChainId)));
+        }
+
         if (!string.IsNullOrEmpty(getSwapRecordDto.PairAddress))
         {
             mustQuery.Add(q => q.Term(i
@@ -369,9 +433,16 @@ public class Query
         GetChainBlockHeightDto dto
     )
     {
+        dto.Validate();
+        
         var mustQuery = new List<Func<QueryContainerDescriptor<SwapRecordIndex>, QueryContainer>>();
-        mustQuery.Add(q => q.Term(i
-            => i.Field(f => f.ChainId).Value(dto.ChainId)));
+
+        if (!string.IsNullOrEmpty(dto.ChainId))
+        {
+            mustQuery.Add(q => q.Term(i
+                => i.Field(f => f.ChainId).Value(dto.ChainId)));
+        }
+
         if (dto.StartBlockHeight > 0)
         {
             mustQuery.Add(q => q.Range(i
@@ -387,7 +458,7 @@ public class Query
         QueryContainer Filter(QueryContainerDescriptor<SwapRecordIndex> f) =>
             f.Bool(b => b.Must(mustQuery));
 
-        var result = await repository.GetListAsync(Filter, skip: 0, limit: 10000, sortType: SortOrder.Ascending, sortExp: o => o.BlockHeight);
+        var result = await repository.GetListAsync(Filter, skip: dto.SkipCount, limit: dto.MaxResultCount, sortType: SortOrder.Ascending, sortExp: o => o.BlockHeight);
         return objectMapper.Map<List<SwapRecordIndex>, List<SwapRecordDto>>(result.Item2);
     }
 
@@ -397,13 +468,27 @@ public class Query
         [FromServices] IObjectMapper objectMapper, GetTradePairInfoDto getTradePairInfoDto
     )
     {
+        getTradePairInfoDto.Validate();
+        
         var mustQuery = new List<Func<QueryContainerDescriptor<TradePairInfoIndex>, QueryContainer>>();
-        mustQuery.Add(q => q.Term(i
-            => i.Field(f => f.ChainId).Value(getTradePairInfoDto.ChainId)));
-        mustQuery.Add(q => q.Term(i
-            => i.Field(f => f.Token0Symbol).Value(getTradePairInfoDto.Token0Symbol)));
-        mustQuery.Add(q => q.Term(i
-            => i.Field(f => f.Token1Symbol).Value(getTradePairInfoDto.Token1Symbol)));
+        
+        if (!string.IsNullOrEmpty(getTradePairInfoDto.ChainId))
+        {
+            mustQuery.Add(q => q.Term(i
+                => i.Field(f => f.ChainId).Value(getTradePairInfoDto.ChainId)));
+        }
+
+        if (!string.IsNullOrEmpty(getTradePairInfoDto.Token0Symbol))
+        {
+            mustQuery.Add(q => q.Term(i
+                => i.Field(f => f.Token0Symbol).Value(getTradePairInfoDto.Token0Symbol)));
+        }
+
+        if (!string.IsNullOrEmpty(getTradePairInfoDto.Token1Symbol))
+        {
+            mustQuery.Add(q => q.Term(i
+                => i.Field(f => f.Token1Symbol).Value(getTradePairInfoDto.Token1Symbol)));
+        }
 
         QueryContainer Filter(QueryContainerDescriptor<TradePairInfoIndex> f) =>
             f.Bool(b => b.Must(mustQuery));
@@ -456,6 +541,18 @@ public class Query
             mustQuery.Add(q => q.Term(t => t.Field(f => f.Token0Symbol).Value(getTradePairInfoDto.TokenSymbol))
                                || q.Term(t => t.Field(f => f.Token0Symbol).Value(getTradePairInfoDto.TokenSymbol)));
         }
+        
+        if (getTradePairInfoDto.StartBlockHeight > 0)
+        {
+            mustQuery.Add(q => q.Range(i
+                => i.Field(f => f.BlockHeight).GreaterThanOrEquals(getTradePairInfoDto.StartBlockHeight)));
+        }
+
+        if (getTradePairInfoDto.EndBlockHeight > 0)
+        {
+            mustQuery.Add(q => q.Range(i
+                => i.Field(f => f.BlockHeight).LessThanOrEquals(getTradePairInfoDto.EndBlockHeight)));
+        }
 
         QueryContainer Filter(QueryContainerDescriptor<TradePairInfoIndex> f) =>
             f.Bool(b => b.Must(mustQuery));
@@ -467,5 +564,203 @@ public class Query
             Data = dataList,
             TotalCount = result.Item1
         };
+    }
+    
+    
+    [Name("totalValueLocked")]
+    public static async Task<TotalValueLockedResultDto> TotalValueLockedAsync(
+        [FromServices] IAElfIndexerClientEntityRepository<SyncRecordIndex, LogEventInfo> repository,
+        [FromServices] IAElfIndexerClientEntityRepository<TradePairInfoIndex, LogEventInfo> tradePairRepository,
+        [FromServices] IAElfDataProvider aelfDataProvider,
+        [FromServices] IObjectMapper objectMapper,
+        [FromServices] ILogger<SyncRecordIndex> _logger,
+        [FromServices] IOptionsSnapshot<TotalValueLockedOptions> totalValueLockedOptions,
+        GetTotalValueLockedDto dto
+    )
+    {
+        var baseToken = totalValueLockedOptions.Value.BaseToken;
+        var quoteToken = totalValueLockedOptions.Value.QuoteToken;
+        
+        _logger.LogInformation($"[TotalValueLockedAsync] input: {dto.ChainId} {dto.Timestamp}");
+        
+        long quoteDecimal = await aelfDataProvider.GetDecimaleAsync(dto.ChainId, quoteToken);
+        long baseDecimal = await aelfDataProvider.GetDecimaleAsync(dto.ChainId, baseToken);
+        
+        _logger.LogInformation($"[TotalValueLockedAsync] token decimal usdt: {baseDecimal}, elf: {quoteDecimal}");
+        
+        var tradepairMustQuery = new List<Func<QueryContainerDescriptor<TradePairInfoIndex>, QueryContainer>>();
+        
+        tradepairMustQuery.Add(q => q.Term(i => i.Field(f => f.ChainId).Value(dto.ChainId)));
+        
+        QueryContainer TradePairFilter(QueryContainerDescriptor<TradePairInfoIndex> f) =>
+            f.Bool(b => b.Must(tradepairMustQuery));
+
+        var tradePairResult = await tradePairRepository.GetListAsync(TradePairFilter,  skip: 0, limit: 10000);
+        _logger.LogInformation($"[TotalValueLockedAsync] all trade pair count: {tradePairResult.Item2.Count}");
+        
+        var tradePairAddresses = new List<string>();
+        var standTradePairAddresses = new List<string>();
+        try
+        {
+            foreach (var tradePairInfo in tradePairResult.Item2)
+            {
+                if (tradePairInfo.Token0Symbol == quoteToken || tradePairInfo.Token1Symbol == quoteToken
+                                                             || tradePairInfo.Token0Symbol == baseToken ||
+                                                             tradePairInfo.Token1Symbol == baseToken)
+                {
+                    tradePairAddresses.Add(tradePairInfo.Address);
+                }
+            
+                if (tradePairInfo.Token0Symbol == quoteToken && tradePairInfo.Token1Symbol == baseToken
+                    || tradePairInfo.Token0Symbol == baseToken && tradePairInfo.Token1Symbol == quoteToken)
+                {
+                    standTradePairAddresses.Add(tradePairInfo.Address);
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            _logger.LogInformation($"[TotalValueLockedAsync] Exception: {e}");
+        }
+        
+        _logger.LogInformation($"[TotalValueLockedAsync] standTradePairAddresses count: {standTradePairAddresses.Count}");
+        _logger.LogInformation($"[TotalValueLockedAsync] quoteTradePairAddresses count: {tradePairAddresses.Count}");
+        
+        double priceSum = 0.0;
+        long count = 0;
+        
+        foreach (var pairAddress in standTradePairAddresses)
+        {
+            try
+            {
+                var mustQuery = new List<Func<QueryContainerDescriptor<SyncRecordIndex>, QueryContainer>>();
+        
+                mustQuery.Add(q => q.Term(i
+                    => i.Field(f => f.ChainId).Value(dto.ChainId)));
+        
+                mustQuery.Add(q => q.Term(i
+                    => i.Field(f => f.PairAddress).Value(pairAddress)));
+        
+                mustQuery.Add(q => q.Range(i
+                    => i.Field(f => f.Timestamp).LessThanOrEquals(dto.Timestamp)));
+        
+        
+                QueryContainer Filter(QueryContainerDescriptor<SyncRecordIndex> f) =>
+                    f.Bool(b => b.Must(mustQuery));
+                var result = await repository.GetAsync(Filter, sortType: SortOrder.Descending, sortExp: o => o.Timestamp);
+            
+                if (result.SymbolA == baseToken)
+                {
+                    ++count;
+                    priceSum += (result.ReserveA / Math.Pow(10, baseDecimal)) / (result.ReserveB / Math.Pow(10, quoteDecimal));
+                } else if (result.SymbolB == baseToken)
+                {
+                    ++count;
+                    priceSum += (result.ReserveB / Math.Pow(10, baseDecimal)) / (result.ReserveA / Math.Pow(10, quoteDecimal));
+                }
+                _logger.LogInformation($"[TotalValueLockedAsync] cal elf price count: {count}, price sum: {priceSum}");
+            }
+            catch (Exception e)
+            {
+                _logger.LogInformation($"[TotalValueLockedAsync] Exception: {e}");
+            }
+        }
+
+        double priceAvg = 0.0;
+        if (count > 0)
+        {
+            priceAvg = priceSum / count;
+        }
+         
+        _logger.LogInformation($"[TotalValueLockedAsync] cal elf price avg: {priceAvg}");
+
+        double tvl = 0.0;
+        foreach (var pairAddress in tradePairAddresses)
+        {
+            try
+            {
+                var mustQuery = new List<Func<QueryContainerDescriptor<SyncRecordIndex>, QueryContainer>>();
+        
+                mustQuery.Add(q => q.Term(i
+                    => i.Field(f => f.ChainId).Value(dto.ChainId)));
+        
+                mustQuery.Add(q => q.Term(i
+                    => i.Field(f => f.PairAddress).Value(pairAddress)));
+        
+                mustQuery.Add(q => q.Range(i
+                    => i.Field(f => f.Timestamp).LessThanOrEquals(dto.Timestamp)));
+        
+        
+                QueryContainer Filter(QueryContainerDescriptor<SyncRecordIndex> f) =>
+                    f.Bool(b => b.Must(mustQuery));
+                var result = await repository.GetAsync(Filter, sortType: SortOrder.Descending, sortExp: o => o.Timestamp);
+                if (result != null)
+                {
+                    double value = 0.0;
+                    
+                    if (result.SymbolA == baseToken)
+                    {
+                        value = 2 * result.ReserveA / Math.Pow(10, baseDecimal);
+                    } else if (result.SymbolB == baseToken)
+                    {
+                        value = 2 * result.ReserveB / Math.Pow(10, baseDecimal);
+                    } else if (result.SymbolA == quoteToken)
+                    {
+                        value = 2 * result.ReserveA / Math.Pow(10, quoteDecimal) * priceAvg;
+                    } else if (result.SymbolB == quoteToken)
+                    {
+                        value = 2 * result.ReserveB / Math.Pow(10, quoteDecimal) * priceAvg;
+                    }
+                    
+                    _logger.LogInformation($"[TotalValueLockedAsync] pair: {pairAddress}, tokenA: {result.SymbolA}, tokenB: {result.SymbolB}, reserveA: {result.ReserveA}, reserveB: {result.ReserveB}, value: {value}");
+            
+                    tvl += value;
+                }
+            }
+            catch (Exception e)
+            {
+                _logger.LogInformation($"[TotalValueLockedAsync] Exception: {e}");
+            }
+        }
+        
+        _logger.LogInformation($"[TotalValueLockedAsync] chain: {dto.ChainId}, time: {dto.Timestamp} result: {tvl}");
+
+        if (Double.IsNaN(tvl))
+        {
+            tvl = 0.0;
+        }
+        
+        return new TotalValueLockedResultDto()
+        {
+            Value = tvl
+        };
+    }
+
+    [Name("pairSyncRecords")]
+    public static async Task<List<SyncRecordDto>> PairSyncRecordsAsync(
+        [FromServices] IAElfIndexerClientEntityRepository<SyncRecordIndex, LogEventInfo> repository,
+        [FromServices] IObjectMapper objectMapper, GetPairSyncRecordsDto dto
+    )
+    {
+        var tasks = dto.PairAddresses.Distinct().Select(t => GetLatestSyncRecordIndexAsync(t, objectMapper, repository));
+        var taskResultList = await tasks.WhenAll();
+        return taskResultList.Where(t => t != null).ToList();
+    }
+
+    private static async Task<SyncRecordDto> GetLatestSyncRecordIndexAsync(string pairAddress, IObjectMapper objectMapper,
+        IAElfIndexerClientEntityRepository<SyncRecordIndex, LogEventInfo> repository)
+    {
+        var query = new List<Func<QueryContainerDescriptor<SyncRecordIndex>, QueryContainer>>
+            { q => q.Term(i => i.Field(f => f.PairAddress).Value(pairAddress)) };
+        QueryContainer SyncRecordFilter(QueryContainerDescriptor<SyncRecordIndex> f) =>
+            f.Bool(b => b.Must(query));
+
+        var recentSyncRecord = await repository.GetListAsync(SyncRecordFilter, sortExp: k => k.Timestamp, sortType: SortOrder.Descending,
+            skip:0, limit:1);
+        if (recentSyncRecord.Item1 > 0)
+        {
+            return objectMapper.Map<SyncRecordIndex, SyncRecordDto>(recentSyncRecord.Item2[0]);
+        }
+        return null;
     }
 }

@@ -31,7 +31,7 @@ public class PairCreatedProcessor : SwapProcessorBase<PairCreated>
             _tradePairTokenOrderProvider.GetTokenWeight(eventValue.SymbolA);
         var token1Weight =
             _tradePairTokenOrderProvider.GetTokenWeight(eventValue.SymbolB);
-        var isTokenReversed = token0Weight < token1Weight;
+        var isTokenReversed = token0Weight > token1Weight;
         var info = new TradePairInfoIndex
         {
             Id = Guid.NewGuid().ToString(),
@@ -41,6 +41,7 @@ public class PairCreatedProcessor : SwapProcessorBase<PairCreated>
             Token1Symbol = isTokenReversed ? eventValue.SymbolA : eventValue.SymbolB, 
             FeeRate = GetContractFeeRate(context.ChainId),
             IsTokenReversed = isTokenReversed,
+            TransactionHash = context.TransactionId
         };
         ObjectMapper.Map(context, info);
         ObjectMapper.Map(eventValue, info);

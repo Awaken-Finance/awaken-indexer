@@ -27,4 +27,18 @@ public class MockAElfDataProvider : IAElfDataProvider
 
         return 0;
     }
+    
+    public async Task<long> GetDecimaleAsync(string chainId, string symbol)
+    {
+        if ("USDT" == symbol)
+        {
+            return 6;
+        }
+
+        if ("ELF" == symbol)
+        {
+            return 8;
+        }
+        return 0;
+    }
 }

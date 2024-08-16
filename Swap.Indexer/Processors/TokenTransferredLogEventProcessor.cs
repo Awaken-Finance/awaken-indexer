@@ -6,24 +6,27 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Orleans.Runtime;
 using Swap.Indexer.Entities;
+using Swap.Indexer.GraphQL;
 using Swap.Indexer.Options;
 using Swap.Indexer.Providers;
 using Volo.Abp.ObjectMapping;
+using JsonConvert = Newtonsoft.Json.JsonConvert;
 
 namespace Swap.Indexer.Processors;
 
-public class TokenTransferredLogEventProcessor : AElfLogEventProcessorBase<Transferred, LogEventInfo>
+public class TokenTransferredLogEventProcessor : TokenProcessorBase<Transferred>
 {
     private readonly IObjectMapper _objectMapper;
     private readonly ContractInfoOptions _contractInfoOptions;
     private readonly IAElfDataProvider _aElfDataProvider;
-    private IAElfIndexerClientEntityRepository<SwapUserTokenIndex, LogEventInfo> _repository;
-    private ILogger<TokenTransferredLogEventProcessor> _logger;
+    private readonly IAElfIndexerClientEntityRepository<SwapUserTokenIndex, LogEventInfo> _repository;
+    private readonly ILogger<TokenTransferredLogEventProcessor> _logger;
+
     public TokenTransferredLogEventProcessor(ILogger<TokenTransferredLogEventProcessor> logger,
         IAElfIndexerClientEntityRepository<SwapUserTokenIndex, LogEventInfo> repository,
         IOptionsSnapshot<ContractInfoOptions> contractInfoOptions,
         IAElfDataProvider aElfDataProvider,
-        IObjectMapper objectMapper) : base(logger)
+        IObjectMapper objectMapper) : base(logger, repository, contractInfoOptions, aElfDataProvider, objectMapper)
     {
         _logger = logger;
         _objectMapper = objectMapper;
@@ -39,14 +42,8 @@ public class TokenTransferredLogEventProcessor : AElfLogEventProcessorBase<Trans
 
     protected override async Task HandleEventAsync(Transferred eventValue, LogEventContext context)
     {
-        _logger.Info("received Transferred:" + eventValue + ",context:" + context);
-        var tokenType = TokenHelper.GetTokenType(eventValue.Symbol);
-        if (tokenType != TokenType.Token)
-        {
-            _logger.Info("not token return");
-            return;
-        }
-
+        _logger.Info("received Transferred:" + eventValue + ", context: " + JsonConvert.SerializeObject(context));
+        
         var fromId = IdGenerateHelper.GetId(context.ChainId, eventValue.From.ToBase58(), eventValue.Symbol);
         var fromIndex = await _repository.GetFromBlockStateSetAsync(fromId, context.ChainId);
         fromIndex ??= new SwapUserTokenIndex()
@@ -56,8 +53,9 @@ public class TokenTransferredLogEventProcessor : AElfLogEventProcessorBase<Trans
             Symbol = eventValue.Symbol
         };
         _objectMapper.Map(context, fromIndex);
-        fromIndex.Balance = await _aElfDataProvider.GetBalanceAsync(context.ChainId, eventValue.Symbol, eventValue.From);
-        _logger.Info("SwapUserTokenIndex from:" + fromIndex);
+        fromIndex.Balance =
+            await _aElfDataProvider.GetBalanceAsync(context.ChainId, eventValue.Symbol, eventValue.From);
+        _logger.Info("SwapUserTokenIndex from:" + JsonConvert.SerializeObject(fromIndex));
         await _repository.AddOrUpdateAsync(fromIndex);
 
         var toId = IdGenerateHelper.GetId(context.ChainId, eventValue.To.ToBase58(), eventValue.Symbol);
@@ -70,7 +68,7 @@ public class TokenTransferredLogEventProcessor : AElfLogEventProcessorBase<Trans
         };
         _objectMapper.Map(context, toIndex);
         toIndex.Balance = await _aElfDataProvider.GetBalanceAsync(context.ChainId, eventValue.Symbol, eventValue.To);
-        _logger.Info("SwapUserTokenIndex to:" + toIndex);
+        _logger.Info("SwapUserTokenIndex to:" + JsonConvert.SerializeObject(toIndex));
         await _repository.AddOrUpdateAsync(toIndex);
     }
 }

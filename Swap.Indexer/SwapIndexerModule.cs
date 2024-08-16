@@ -22,6 +22,7 @@ public class SwapIndexerModule : AElfIndexerClientPluginBaseModule<SwapIndexerMo
         });
         var configuration = serviceCollection.GetConfiguration();
         serviceCollection.AddSingleton<IAElfDataProvider, AElfDataProvider>();
+        serviceCollection.AddSingleton<ITradePairTokenOrderProvider, TradePairTokenOrderProvider>();
         serviceCollection.AddSingleton<IAElfLogEventProcessor<LogEventInfo>, PairCreatedProcessor>();
         serviceCollection.AddSingleton<IAElfLogEventProcessor<LogEventInfo>, PairCreatedProcessor2>();
         serviceCollection.AddSingleton<IAElfLogEventProcessor<LogEventInfo>, PairCreatedProcessor3>();
@@ -54,8 +55,11 @@ public class SwapIndexerModule : AElfIndexerClientPluginBaseModule<SwapIndexerMo
         serviceCollection.AddSingleton<IAElfLogEventProcessor<LogEventInfo>, TokenBurnedEventProcessor>();
         Configure<ContractInfoOptions>(configuration.GetSection("ContractInfo"));
         Configure<NodeOptions>(configuration.GetSection("Node"));
+        Configure<TradePairTokenOrderOptions>(configuration.GetSection("TradePairTokenOrderOptions"));
+        Configure<TotalValueLockedOptions>(configuration.GetSection("TotalValueLockedOptions"));
     }
 
+
     protected override string ClientId => "AElfIndexer_Swap";
-    protected override string Version => "022b4ca2f4764950833ea3d0616ee562";
+    protected override string Version => "05a008af0f8e45eea07cd1bc8f3daaf3";
 }
