@@ -20,6 +20,7 @@ public class SwapRecordDto
     public string SymbolIn { get; set; }
     public string Channel { get; set; }
     public long BlockHeight { get; set; }
+    public string MethodName { get; set; }
     public List<SwapRecord> SwapRecords { get; set; }
 }
 

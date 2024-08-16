@@ -5,6 +5,7 @@ using AElfIndexer.Client;
 using AElfIndexer.Client.Handlers;
 using AElfIndexer.Client.Providers;
 using AElfIndexer.Grains.State.Client;
+using Awaken.Contracts.Hooks;
 using Awaken.Contracts.Swap;
 using Google.Protobuf.WellKnownTypes;
 using Nethereum.Hex.HexConvertors.Extensions;
@@ -122,14 +123,16 @@ public sealed class LiquidityRecordProcessorTests : SwapIndexerTests
         await Task.Delay(2000);
         
         //step5: check result
-        var userLiquidityIndexData = await _userLiquidityRepository.GetAsync(chainId + "-" + liquidityAdd.Sender.ToBase58() + "-" + liquidityAdd.Pair.ToBase58());
-        userLiquidityIndexData.Address.ShouldBe(Address.FromPublicKey("CCC".HexToByteArray()).ToBase58());
+        var userLiquidityIndexData = await _userLiquidityRepository.GetAsync(chainId + "-" + liquidityAdd.To.ToBase58() + "-" + liquidityAdd.Pair.ToBase58());
+        userLiquidityIndexData.Address.ShouldBe(Address.FromPublicKey("BBB".HexToByteArray()).ToBase58());
         userLiquidityIndexData.Pair.ShouldBe(Address.FromPublicKey("AAA".HexToByteArray()).ToBase58());
         userLiquidityIndexData.LpTokenAmount.ShouldBe(liquidityAdd.LiquidityToken);
         
         var liquidityRecordData = await _recordRepository.GetAsync(chainId + "-" + transactionId);
         liquidityRecordData.TransactionHash.ShouldBe(transactionId);
-        liquidityRecordData.Address.ShouldBe(Address.FromPublicKey("CCC".HexToByteArray()).ToBase58());
+        liquidityRecordData.Address.ShouldBe(Address.FromPublicKey("BBB".HexToByteArray()).ToBase58());
+        liquidityRecordData.Sender.ShouldBe(Address.FromPublicKey("CCC".HexToByteArray()).ToBase58());
+        liquidityRecordData.To.ShouldBe(Address.FromPublicKey("BBB".HexToByteArray()).ToBase58());
         liquidityRecordData.Pair.ShouldBe(Address.FromPublicKey("AAA".HexToByteArray()).ToBase58());
         liquidityRecordData.Type.ShouldBe(LiquidityRecordIndex.LiquidityType.Mint);
         liquidityRecordData.Token0.ShouldBe("AELF");
@@ -137,8 +140,7 @@ public sealed class LiquidityRecordProcessorTests : SwapIndexerTests
         liquidityRecordData.Token0Amount.ShouldBe(100);
         liquidityRecordData.Token1Amount.ShouldBe(1);
     }
-    
-    
+
     [Fact]
     public async Task LiquidityAddedSpecialTokenAsyncTests()
     {
@@ -224,14 +226,14 @@ public sealed class LiquidityRecordProcessorTests : SwapIndexerTests
         await Task.Delay(2000);
         
         //step5: check result
-        var userLiquidityIndexData = await _userLiquidityRepository.GetAsync(chainId + "-" + liquidityAdd.Sender.ToBase58() + "-" + liquidityAdd.Pair.ToBase58());
-        userLiquidityIndexData.Address.ShouldBe(Address.FromPublicKey("CCC".HexToByteArray()).ToBase58());
+        var userLiquidityIndexData = await _userLiquidityRepository.GetAsync(chainId + "-" + liquidityAdd.To.ToBase58() + "-" + liquidityAdd.Pair.ToBase58());
+        userLiquidityIndexData.Address.ShouldBe(Address.FromPublicKey("BBB".HexToByteArray()).ToBase58());
         userLiquidityIndexData.Pair.ShouldBe(Address.FromPublicKey("AAA".HexToByteArray()).ToBase58());
         userLiquidityIndexData.LpTokenAmount.ShouldBe(liquidityAdd.LiquidityToken);
         
         var liquidityRecordData = await _recordRepository.GetAsync(chainId + "-" + transactionId);
         liquidityRecordData.TransactionHash.ShouldBe(transactionId);
-        liquidityRecordData.Address.ShouldBe(Address.FromPublicKey("CCC".HexToByteArray()).ToBase58());
+        liquidityRecordData.Address.ShouldBe(Address.FromPublicKey("BBB".HexToByteArray()).ToBase58());
         liquidityRecordData.Pair.ShouldBe(Address.FromPublicKey("AAA".HexToByteArray()).ToBase58());
         liquidityRecordData.Type.ShouldBe(LiquidityRecordIndex.LiquidityType.Mint);
         liquidityRecordData.Token0.ShouldBe("SGR-1");
@@ -325,14 +327,14 @@ public sealed class LiquidityRecordProcessorTests : SwapIndexerTests
         await Task.Delay(2000);
         
         //step5: check result
-        var userLiquidityIndexData = await _userLiquidityRepository.GetAsync(chainId + "-" + liquidityRemove.Sender.ToBase58() + "-" + liquidityRemove.Pair.ToBase58());
-        userLiquidityIndexData.Address.ShouldBe(Address.FromPublicKey("CCC".HexToByteArray()).ToBase58());
+        var userLiquidityIndexData = await _userLiquidityRepository.GetAsync(chainId + "-" + liquidityRemove.To.ToBase58() + "-" + liquidityRemove.Pair.ToBase58());
+        userLiquidityIndexData.Address.ShouldBe(Address.FromPublicKey("BBB".HexToByteArray()).ToBase58());
         userLiquidityIndexData.Pair.ShouldBe(Address.FromPublicKey("AAA".HexToByteArray()).ToBase58());
         userLiquidityIndexData.LpTokenAmount.ShouldBe(0);
         
         var liquidityRecordData = await _recordRepository.GetAsync(chainId + "-" + transactionId);
         liquidityRecordData.TransactionHash.ShouldBe(transactionId);
-        liquidityRecordData.Address.ShouldBe(Address.FromPublicKey("CCC".HexToByteArray()).ToBase58());
+        liquidityRecordData.Address.ShouldBe(Address.FromPublicKey("BBB".HexToByteArray()).ToBase58());
         liquidityRecordData.Pair.ShouldBe(Address.FromPublicKey("AAA".HexToByteArray()).ToBase58());
         liquidityRecordData.Type.ShouldBe(LiquidityRecordIndex.LiquidityType.Burn);
         liquidityRecordData.Token0.ShouldBe("AELF");
@@ -350,7 +352,7 @@ public sealed class LiquidityRecordProcessorTests : SwapIndexerTests
             SkipCount = 0,
             MaxResultCount = 100,
             ChainId = "AELF",
-            Address = Address.FromPublicKey("CCC".HexToByteArray()).ToBase58(),
+            Address = Address.FromPublicKey("BBB".HexToByteArray()).ToBase58(),
             Pair = Address.FromPublicKey("AAA".HexToByteArray()).ToBase58(),
             TimestampMin = DateTime.UtcNow.ToTimestamp().Seconds * 1000 - 60000,
             TimestampMax = DateTime.UtcNow.ToTimestamp().Seconds * 1000,
@@ -362,7 +364,7 @@ public sealed class LiquidityRecordProcessorTests : SwapIndexerTests
         });
         result.TotalCount.ShouldBe(1);
         result.Data.First().LpTokenAmount.ShouldBe(1);
-        result.Data.First().Address.ShouldBe(Address.FromPublicKey("CCC".HexToByteArray()).ToBase58());
+        result.Data.First().Address.ShouldBe(Address.FromPublicKey("BBB".HexToByteArray()).ToBase58());
         result.Data.First().Pair.ShouldBe(Address.FromPublicKey("AAA".HexToByteArray()).ToBase58());
         result.Data.First().ChainId.ShouldBe("AELF");
 
@@ -372,7 +374,7 @@ public sealed class LiquidityRecordProcessorTests : SwapIndexerTests
             SkipCount = 0,
             MaxResultCount = 100,
             ChainId = "AELF",
-            Address = Address.FromPublicKey("CCC".HexToByteArray()).ToBase58(),
+            Address = Address.FromPublicKey("BBB".HexToByteArray()).ToBase58(),
             Pair = Address.FromPublicKey("AAA".HexToByteArray()).ToBase58(),
             TimestampMin = DateTime.UtcNow.ToTimestamp().Seconds * 1000 - 60000,
             TimestampMax = DateTime.UtcNow.ToTimestamp().Seconds * 1000
@@ -435,12 +437,12 @@ public sealed class LiquidityRecordProcessorTests : SwapIndexerTests
             SkipCount = 0,
             MaxResultCount = 100,
             ChainId = "AELF",
-            Address = Address.FromPublicKey("CCC".HexToByteArray()).ToBase58(),
+            Address = Address.FromPublicKey("BBB".HexToByteArray()).ToBase58(),
             TokenSymbol = "sgr"
         });
         result.TotalCount.ShouldBe(1);
         result.Data.First().LpTokenAmount.ShouldBe(1);
-        result.Data.First().Address.ShouldBe(Address.FromPublicKey("CCC".HexToByteArray()).ToBase58());
+        result.Data.First().Address.ShouldBe(Address.FromPublicKey("BBB".HexToByteArray()).ToBase58());
         result.Data.First().Pair.ShouldBe(Address.FromPublicKey("AAA".HexToByteArray()).ToBase58());
         result.Data.First().ChainId.ShouldBe("AELF");
         result.Data.First().Token0.ShouldBe("SGR-1");
@@ -454,7 +456,7 @@ public sealed class LiquidityRecordProcessorTests : SwapIndexerTests
         var recordDto = new GetUserLiquidityDto()
         {
             ChainId = "AELF",
-            Address = Address.FromPublicKey("CCC".HexToByteArray()).ToBase58(),
+            Address = Address.FromPublicKey("BBB".HexToByteArray()).ToBase58(),
             Pair = Address.FromPublicKey("AAA".HexToByteArray()).ToBase58(),
             SkipCount = 0,
             MaxResultCount = 100
@@ -462,7 +464,7 @@ public sealed class LiquidityRecordProcessorTests : SwapIndexerTests
         var result = await Query.UserLiquidityAsync(_userLiquidityRepository, _objectMapper, recordDto);
         result.TotalCount.ShouldBe(1);
         result.Data.First().LpTokenAmount.ShouldBe(1);
-        result.Data.First().Address.ShouldBe(Address.FromPublicKey("CCC".HexToByteArray()).ToBase58());
+        result.Data.First().Address.ShouldBe(Address.FromPublicKey("BBB".HexToByteArray()).ToBase58());
         result.Data.First().Pair.ShouldBe(Address.FromPublicKey("AAA".HexToByteArray()).ToBase58());
         result.Data.First().ChainId.ShouldBe("AELF");
         

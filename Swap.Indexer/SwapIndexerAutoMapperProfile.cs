@@ -5,6 +5,7 @@ using Swap.Indexer.Application.Contracts.Token;
 using Swap.Indexer.Entities;
 using Swap.Indexer.Entities.Token;
 using Swap.Indexer.GraphQL;
+using Volo.Abp.AutoMapper;
 using SwapRecord = Swap.Indexer.GraphQL.SwapRecord;
 
 namespace Swap.Indexer;
@@ -25,7 +26,7 @@ public class SwapIndexerAutoMapperProfile : Profile
         CreateMap<Sync, SyncRecordIndex>();
         CreateMap<SwapRecordIndex, SwapRecordDto>();
         CreateMap<Entities.SwapRecord, SwapRecord>();
-        CreateMap<LogEventContext, SwapRecordIndex>();
+        CreateMap<LogEventContext, SwapRecordIndex>().Ignore(t => t.MethodName);
         CreateMap<Awaken.Contracts.Swap.Swap, SwapRecordIndex>();
         CreateMap<LogEventContext, SwapUserTokenIndex>();
         CreateMap<SwapUserTokenIndex, UserTokenDto>();

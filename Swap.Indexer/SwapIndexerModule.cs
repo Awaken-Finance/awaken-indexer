@@ -53,6 +53,7 @@ public class SwapIndexerModule : AElfIndexerClientPluginBaseModule<SwapIndexerMo
         serviceCollection.AddSingleton<IAElfLogEventProcessor<LogEventInfo>, TokenCrossChainTransferredProcessor>();
         serviceCollection.AddSingleton<IAElfLogEventProcessor<LogEventInfo>, TokenIssuedEventProcessor>();
         serviceCollection.AddSingleton<IAElfLogEventProcessor<LogEventInfo>, TokenBurnedEventProcessor>();
+        serviceCollection.AddSingleton<IAElfLogEventProcessor<LogEventInfo>, HooksTransactionCreatedProcessor>();
         Configure<ContractInfoOptions>(configuration.GetSection("ContractInfo"));
         Configure<NodeOptions>(configuration.GetSection("Node"));
         Configure<TradePairTokenOrderOptions>(configuration.GetSection("TradePairTokenOrderOptions"));
@@ -61,5 +62,5 @@ public class SwapIndexerModule : AElfIndexerClientPluginBaseModule<SwapIndexerMo
 
 
     protected override string ClientId => "AElfIndexer_Swap";
-    protected override string Version => "05a008af0f8e45eea07cd1bc8f3daaf3";
+    protected override string Version => "c6cdad03fe0142a0b9d66303e3351dd7";
 }

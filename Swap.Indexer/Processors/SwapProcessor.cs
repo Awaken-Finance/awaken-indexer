@@ -26,23 +26,23 @@ public class SwapProcessor : SwapProcessorBase<Awaken.Contracts.Swap.Swap>
         Logger.Info("received Swap:" + context.BlockTime);
         var indexId = IdGenerateHelper.GetId(context.ChainId, context.TransactionId, context.BlockHeight);
         var record = await SwapRecordIndexRepository.GetFromBlockStateSetAsync(indexId, context.ChainId);
-        if (record == null)
+        if (record == null || record.TransactionHash.IsNullOrWhiteSpace())
         {
-            record = new SwapRecordIndex
+            record ??= new SwapRecordIndex
             {
                 Id = indexId,
-                ChainId = context.ChainId,
-                PairAddress = eventValue.Pair.ToBase58(),
-                Sender = eventValue.Sender.ToBase58(),
-                TransactionHash = context.TransactionId,
-                Timestamp = DateTimeHelper.ToUnixTimeMilliseconds(context.BlockTime),
-                AmountOut = eventValue.AmountOut,
-                AmountIn = eventValue.AmountIn,
-                TotalFee = eventValue.TotalFee,
-                SymbolOut = eventValue.SymbolOut,
-                SymbolIn = eventValue.SymbolIn,
-                Channel = eventValue.Channel
+                Sender = eventValue.Sender.ToBase58()
             };
+            record.ChainId = context.ChainId;
+            record.PairAddress = eventValue.Pair.ToBase58();
+            record.TransactionHash = context.TransactionId;
+            record.Timestamp = DateTimeHelper.ToUnixTimeMilliseconds(context.BlockTime);
+            record.AmountOut = eventValue.AmountOut;
+            record.AmountIn = eventValue.AmountIn;
+            record.TotalFee = eventValue.TotalFee;
+            record.SymbolIn = eventValue.SymbolIn;
+            record.SymbolOut = eventValue.SymbolOut;
+            record.Channel = eventValue.Channel;
         }
         else
         {

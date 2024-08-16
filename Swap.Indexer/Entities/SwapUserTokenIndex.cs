@@ -13,4 +13,6 @@ public class SwapUserTokenIndex : AElfIndexerClientEntity<string>, IIndexBuild
     public string Symbol { get; set; }
     
     public long Balance { get; set; }
+    [Keyword]
+    public string ImageUri { get; set; }
 }
