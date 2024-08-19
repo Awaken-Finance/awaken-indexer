@@ -950,8 +950,19 @@ public class Query
 
         var amountIn = new BigIntValue(0);
         var filledAmountIn = new BigIntValue(0);
+        var orderCount = 0;
         foreach (var limitOrderDto in dataList)
         {
+            if (limitOrderDto.LimitOrderStatus == LimitOrderStatus.Committed
+                || limitOrderDto.LimitOrderStatus == LimitOrderStatus.PartiallyFilling)
+            {
+                if (limitOrderDto.Deadline < DateTimeOffset.UtcNow.ToUnixTimeMilliseconds())
+                {
+                    continue;
+                }   
+            }
+
+            orderCount++;
             amountIn = amountIn.Add(limitOrderDto.AmountIn);
             filledAmountIn = filledAmountIn.Add(limitOrderDto.AmountInFilled);
             logger.LogInformation($"[LimitOrderRemainingUnfilled] amountIn: {amountIn} filledAmountIn: {filledAmountIn}");
@@ -963,7 +974,7 @@ public class Query
         
         return new LimitOrderRemainingUnfilledResultDto()
         {
-            OrderCount = dataList.Count,
+            OrderCount = orderCount,
             Value = remainingUnfilled.Value
         };
     }
