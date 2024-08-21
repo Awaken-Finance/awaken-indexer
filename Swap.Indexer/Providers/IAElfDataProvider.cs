@@ -24,7 +24,7 @@ public class AElfDataProvider : IAElfDataProvider
     private const string PrivateKey = "09da44778f8db2e602fb484334f37df19e221c84c4582ce5b7770ccfbc3ddbef";
     private const string FTImageUriKey = "__ft_image_uri";
     private const string NFTImageUriKey = "__nft_image_uri";
-    
+    private const string NFTImageUrlKey = "__nft_image_url";
     private readonly IAElfClientProvider _aElfClientProvider;
     
     public AElfDataProvider(IAElfClientProvider aElfClientProvider)
@@ -128,11 +128,14 @@ public class AElfDataProvider : IAElfDataProvider
             {
                 return externalInfo.Value[FTImageUriKey];
             }
-            else if (externalInfo.Value.ContainsKey(NFTImageUriKey))
+            if (externalInfo.Value.ContainsKey(NFTImageUriKey))
             {
                 return externalInfo.Value[NFTImageUriKey];
             }
-            
+            if (externalInfo.Value.ContainsKey(NFTImageUrlKey))
+            {
+                return externalInfo.Value[NFTImageUrlKey];
+            }
         }
         return null;
 
