@@ -4,6 +4,8 @@ using AElfIndexer.Client;
 using AElfIndexer.Client.Handlers;
 using AElfIndexer.Grains.State.Client;
 using Awaken.Contracts.Hooks;
+using Awaken.Contracts.Order;
+using Google.Protobuf;
 using Nethereum.Hex.HexConvertors.Extensions;
 using Shouldly;
 using Swap.Indexer.Entities;
@@ -491,5 +493,127 @@ public sealed class SwapProcessorTests : SwapIndexerTests
         recordData.Sender.ShouldBe(Address.FromPublicKey("DDD".HexToByteArray()).ToBase58());
         recordData.TransactionHash.ShouldBe(transactionId);
         recordData.MethodName.ShouldBe("SwapExactTokensForTokens");
+    }
+    
+    [Fact]
+    public async Task SwapLimitOrderTotalFilledTests()
+    {
+        //step1: create blockStateSet
+        const string chainId = "AELF";
+        const string blockHash = "DefaultBlockHash";
+        const string previousBlockHash = "DefaultPreviousBlockHash";
+        const string transactionId = "DefaultTransactionId";
+        const long blockHeight = 100;
+        var blockStateSet = new BlockStateSet<LogEventInfo>
+        {
+            BlockHash = blockHash,
+            BlockHeight = blockHeight,
+            Confirmed = true,
+            PreviousBlockHash = previousBlockHash,
+        };
+        var blockStateSetTransaction = new BlockStateSet<TransactionInfo>
+        {
+            BlockHash = blockHash,
+            BlockHeight = blockHeight,
+            Confirmed = true,
+            PreviousBlockHash = previousBlockHash,
+        };
+        
+        var blockStateSetKey = await InitializeBlockStateSetAsync(blockStateSet, chainId);
+        var blockStateSetKeyTransaction = await InitializeBlockStateSetAsync(blockStateSetTransaction, chainId);
+
+        var logEventContext = new LogEventContext
+        {
+            ChainId = chainId,
+            BlockHeight = blockHeight,
+            BlockHash = blockHash,
+            PreviousBlockHash = previousBlockHash,
+            TransactionId = transactionId,
+            Signature = "AELF",
+            Params = "{ \"to\": \"swap\", \"symbol\": \"ELF\", \"amount\": \"100000000000\" }",
+            MethodName = "Swap",
+            ExtraProperties = new Dictionary<string, string>
+            {
+                { "TransactionFee", "{\"ELF\":\"3\"}" },
+                { "ResourceFee", "{\"ELF\":\"3\"}" }
+            },
+            BlockTime = DateTime.UtcNow
+        };
+        var swapArgs = new SwapExactTokensForTokensInput()
+        {
+            SwapTokens = { 
+                new SwapExactTokensForTokens() {
+                    Path = { "USDT", "ELF" },
+                    FeeRates = { 5 }
+                }
+            }
+        };
+        var hooksTransactionCreatedLogEvent = new HooksTransactionCreated()
+        {
+            Sender = Address.FromPublicKey("DDD".HexToByteArray()),
+            MethodName = "SwapExactTokensForTokens",
+            Args = swapArgs.ToByteString()
+        };
+        var logEventInfo = LogEventHelper.ConvertAElfLogEventToLogEventInfo(hooksTransactionCreatedLogEvent.ToLogEvent());
+        logEventInfo.BlockHeight = blockHeight;
+        logEventInfo.ChainId= chainId;
+        logEventInfo.BlockHash = blockHash;
+        logEventInfo.TransactionId = transactionId;
+        
+        //step3: handle event and write result to blockStateSet
+        var hooksProcessor = GetRequiredService<HooksTransactionCreatedProcessor>();
+        await hooksProcessor.HandleEventAsync(logEventInfo, logEventContext);
+        
+        //step4: save blockStateSet into es
+        await BlockStateSetSaveDataAsync<LogEventInfo>(blockStateSetKey);
+        await BlockStateSetSaveDataAsync<TransactionInfo>(blockStateSetKeyTransaction);
+        await Task.Delay(2000);
+        
+        //step5: check result
+        var recordData = await _recordRepository.GetAsync($"{chainId}-{transactionId}-{blockHeight}");
+        recordData.Sender.ShouldBe(Address.FromPublicKey("DDD".HexToByteArray()).ToBase58());
+        recordData.MethodName.ShouldBe("SwapExactTokensForTokens");
+        recordData.TransactionHash.ShouldBeNull();
+        recordData.InputArgs.ShouldBe(hooksTransactionCreatedLogEvent.Args.ToBase64());
+        
+        // step2: create logEventInfo
+        var limitOrderTotalFilledLogEvent = new LimitOrderTotalFilled()
+        {
+            Sender = Address.FromPublicKey("DDD".HexToByteArray()),
+            SymbolIn = "ELF",
+            SymbolOut = "USDT",
+            AmountInFilled = 100,
+            AmountOutFilled = 10,
+        };
+        logEventInfo = LogEventHelper.ConvertAElfLogEventToLogEventInfo(limitOrderTotalFilledLogEvent.ToLogEvent());
+        logEventInfo.BlockHeight = blockHeight;
+        logEventInfo.ChainId= chainId;
+        logEventInfo.BlockHash = blockHash;
+        logEventInfo.TransactionId = transactionId;
+        
+        //step3: handle event and write result to blockStateSet
+        var limitOrderTotalFilledProcessor = GetRequiredService<LimitOrderTotalFilledProcessor>();
+        await limitOrderTotalFilledProcessor.HandleEventAsync(logEventInfo, logEventContext);
+        
+        //step4: save blockStateSet into es
+        await BlockStateSetSaveDataAsync<LogEventInfo>(blockStateSetKey);
+        await BlockStateSetSaveDataAsync<TransactionInfo>(blockStateSetKeyTransaction);
+        await Task.Delay(2000);
+        
+        //step5: check result
+        recordData = await _recordRepository.GetAsync($"{chainId}-{transactionId}-{blockHeight}");
+        recordData.Sender.ShouldBe(Address.FromPublicKey("DDD".HexToByteArray()).ToBase58());
+        recordData.SymbolIn.ShouldBe("USDT");
+        recordData.SymbolOut.ShouldBe("ELF");
+        recordData.AmountIn.ShouldBe(10);
+        recordData.AmountOut.ShouldBe(100);
+        recordData.IsLimitOrder.ShouldBe(true);
+        recordData.InputArgs.ShouldBe(hooksTransactionCreatedLogEvent.Args.ToBase64());
+        var swapTokens = SwapExactTokensForTokensInput
+            .Parser.ParseFrom(ByteString.FromBase64(recordData.InputArgs)).SwapTokens;
+        swapTokens.Count.ShouldBe(1);
+        swapTokens[0].Path.Count.ShouldBe(2);
+        swapTokens[0].Path[0].ShouldBe("USDT");
+        swapTokens[0].Path[1].ShouldBe("ELF");
     }
 }

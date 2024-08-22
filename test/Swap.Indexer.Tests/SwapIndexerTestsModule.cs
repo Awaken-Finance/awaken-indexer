@@ -83,6 +83,7 @@ public class SwapIndexerTestsModule : AbpModule
                     {
                         ChainId = "AELF",
                         SwapContractAddress = "XXXXXX",
+                        LimitOrderContractAddress = "CCCCCC",
                         Level = 1,
                         FeeRate = 0.003
                     },

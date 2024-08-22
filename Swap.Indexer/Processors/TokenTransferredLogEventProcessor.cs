@@ -55,6 +55,17 @@ public class TokenTransferredLogEventProcessor : TokenProcessorBase<Transferred>
         _objectMapper.Map(context, fromIndex);
         fromIndex.Balance =
             await _aElfDataProvider.GetBalanceAsync(context.ChainId, eventValue.Symbol, eventValue.From);
+        if (string.IsNullOrEmpty(fromIndex.ImageUri))
+        {
+            try
+            {
+                fromIndex.ImageUri = await _aElfDataProvider.GetTokenUriAsync(context.ChainId, eventValue.Symbol);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, $"Get token uri faild. chain: {context.ChainId}, symbol: {eventValue.Symbol}");
+            }
+        }
         _logger.Info("SwapUserTokenIndex from:" + JsonConvert.SerializeObject(fromIndex));
         await _repository.AddOrUpdateAsync(fromIndex);
 
@@ -68,6 +79,17 @@ public class TokenTransferredLogEventProcessor : TokenProcessorBase<Transferred>
         };
         _objectMapper.Map(context, toIndex);
         toIndex.Balance = await _aElfDataProvider.GetBalanceAsync(context.ChainId, eventValue.Symbol, eventValue.To);
+        if (string.IsNullOrEmpty(toIndex.ImageUri))
+        {
+            try
+            {
+                toIndex.ImageUri = await _aElfDataProvider.GetTokenUriAsync(context.ChainId, eventValue.Symbol);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, $"Get token uri faild. chain: {context.ChainId}, symbol: {eventValue.Symbol}");
+            }
+        }
         _logger.Info("SwapUserTokenIndex to:" + JsonConvert.SerializeObject(toIndex));
         await _repository.AddOrUpdateAsync(toIndex);
     }

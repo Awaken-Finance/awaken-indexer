@@ -22,6 +22,8 @@ public class SwapRecordDto
     public long BlockHeight { get; set; }
     public string MethodName { get; set; }
     public List<SwapRecord> SwapRecords { get; set; }
+    public string InputArgs { get; set; }
+    public bool IsLimitOrder { get; set; }
 }
 
 public class SwapRecord
@@ -33,4 +35,5 @@ public class SwapRecord
     public string SymbolOut { get; set; }
     public string SymbolIn { get; set; }
     public string Channel { get; set; }
+    public bool IsLimitOrder { get; set; }
 }

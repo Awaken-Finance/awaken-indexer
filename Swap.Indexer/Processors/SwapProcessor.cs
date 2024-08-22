@@ -23,7 +23,7 @@ public class SwapProcessor : SwapProcessorBase<Awaken.Contracts.Swap.Swap>
 
     protected override async Task HandleEventAsync(Awaken.Contracts.Swap.Swap eventValue, LogEventContext context)
     {
-        Logger.Info("received Swap:" + context.BlockTime);
+        Logger.Info("received Swap:" + context.BlockTime + ",txn id:" + context.TransactionId + ",event:" + eventValue);
         var indexId = IdGenerateHelper.GetId(context.ChainId, context.TransactionId, context.BlockHeight);
         var record = await SwapRecordIndexRepository.GetFromBlockStateSetAsync(indexId, context.ChainId);
         if (record == null || record.TransactionHash.IsNullOrWhiteSpace())

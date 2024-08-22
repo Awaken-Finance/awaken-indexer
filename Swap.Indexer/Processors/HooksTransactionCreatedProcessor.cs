@@ -2,6 +2,7 @@ using AElfIndexer.Client;
 using AElfIndexer.Client.Handlers;
 using AElfIndexer.Grains.State.Client;
 using Awaken.Contracts.Hooks;
+using Google.Protobuf;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Orleans.Runtime;
@@ -32,6 +33,7 @@ public class HooksTransactionCreatedProcessor : SwapProcessorBase<HooksTransacti
     {
         if (eventValue.MethodName == "SwapExactTokensForTokens" || eventValue.MethodName == "SwapTokensForExactTokens")
         {
+            Logger.Info("received HooksTransactionCreated:" + eventValue + ",txn id:" + context.TransactionId);
             var id = IdGenerateHelper.GetId(context.ChainId, context.TransactionId, context.BlockHeight);
             var recordIndex = await SwapRecordIndexRepository.GetFromBlockStateSetAsync(id, context.ChainId) ?? new SwapRecordIndex
             {
@@ -41,6 +43,7 @@ public class HooksTransactionCreatedProcessor : SwapProcessorBase<HooksTransacti
             ObjectMapper.Map(context, recordIndex);
             recordIndex.Sender = eventValue.Sender.ToBase58();
             recordIndex.MethodName = eventValue.MethodName;
+            recordIndex.InputArgs = eventValue.Args.ToBase64();
             Logger.Info("HooksTransactionCreated:" + recordIndex);
             await SwapRecordIndexRepository.AddOrUpdateAsync(recordIndex);
         }

@@ -1,6 +1,7 @@
 ﻿using AElfIndexer.Client;
 using AElfIndexer.Client.Handlers;
 using AElfIndexer.Grains.State.Client;
+using Awaken.Contracts.Order;
 using Microsoft.Extensions.DependencyInjection;
 using Swap.Indexer.GraphQL;
 using Swap.Indexer.Options;
@@ -54,6 +55,11 @@ public class SwapIndexerModule : AElfIndexerClientPluginBaseModule<SwapIndexerMo
         serviceCollection.AddSingleton<IAElfLogEventProcessor<LogEventInfo>, TokenIssuedEventProcessor>();
         serviceCollection.AddSingleton<IAElfLogEventProcessor<LogEventInfo>, TokenBurnedEventProcessor>();
         serviceCollection.AddSingleton<IAElfLogEventProcessor<LogEventInfo>, HooksTransactionCreatedProcessor>();
+        serviceCollection.AddSingleton<IAElfLogEventProcessor<LogEventInfo>, LimitOrderCreatedProcessor>();
+        serviceCollection.AddSingleton<IAElfLogEventProcessor<LogEventInfo>, LimitOrderCancelledProcessor>();
+        serviceCollection.AddSingleton<IAElfLogEventProcessor<LogEventInfo>, LimitOrderFilledProcessor>();
+        serviceCollection.AddSingleton<IAElfLogEventProcessor<LogEventInfo>, LimitOrderRemovedProcessor>();
+        serviceCollection.AddSingleton<IAElfLogEventProcessor<LogEventInfo>, LimitOrderTotalFilledProcessor>();
         Configure<ContractInfoOptions>(configuration.GetSection("ContractInfo"));
         Configure<NodeOptions>(configuration.GetSection("Node"));
         Configure<TradePairTokenOrderOptions>(configuration.GetSection("TradePairTokenOrderOptions"));
@@ -62,5 +68,5 @@ public class SwapIndexerModule : AElfIndexerClientPluginBaseModule<SwapIndexerMo
 
 
     protected override string ClientId => "AElfIndexer_Swap";
-    protected override string Version => "c6cdad03fe0142a0b9d66303e3351dd7";
+    protected override string Version => "7084a134581b43c5a2d9bf2a02bafbd1";
 }

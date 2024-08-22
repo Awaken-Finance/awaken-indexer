@@ -12,7 +12,11 @@ public interface IAElfDataProvider
     Task<long> GetBalanceAsync(string chainId, string symbol, Address owner);
 
     Task<long> GetDecimaleAsync(string chainId, string symbol);
+
+    Task<long> GetTransactionFeeAsync(string chainId, string txnId);
+
     Task<string> GetTokenUriAsync(string chainId, string symbol);
+
 }
 
 public class AElfDataProvider : IAElfDataProvider
@@ -20,7 +24,7 @@ public class AElfDataProvider : IAElfDataProvider
     private const string PrivateKey = "09da44778f8db2e602fb484334f37df19e221c84c4582ce5b7770ccfbc3ddbef";
     private const string FTImageUriKey = "__ft_image_uri";
     private const string NFTImageUriKey = "__nft_image_uri";
-    
+    private const string NFTImageUrlKey = "__nft_image_url";
     private readonly IAElfClientProvider _aElfClientProvider;
     
     public AElfDataProvider(IAElfClientProvider aElfClientProvider)
@@ -74,7 +78,29 @@ public class AElfDataProvider : IAElfDataProvider
         return TokenInfo.Parser.ParseFrom(
             ByteArrayHelper.HexStringToByteArray(transactionGetTokenResult)).Decimals;
     }
-    
+
+
+    public async Task<long> GetTransactionFeeAsync(string chainId, string transactionId)
+    {
+        try
+        {
+            var client = _aElfClientProvider.GetClient(chainId);
+            var result = await client.GetTransactionResultAsync(transactionId);
+            if (result == null)
+            {
+                return 0;
+            }
+
+            var transactionFeeCharged = TransactionFeeCharged.Parser.ParseFrom(
+                ByteString.FromBase64(result.Logs.First(l => l.Name == nameof(TransactionFeeCharged)).NonIndexed));
+            return transactionFeeCharged.Amount;
+        }
+        catch (Exception e)
+        {
+            return 0;
+        }
+    }
+
     public async Task<string> GetTokenUriAsync(string chainId, string symbol)
     {
         var client = _aElfClientProvider.GetClient(chainId);
@@ -102,12 +128,16 @@ public class AElfDataProvider : IAElfDataProvider
             {
                 return externalInfo.Value[FTImageUriKey];
             }
-            else if (externalInfo.Value.ContainsKey(NFTImageUriKey))
+            if (externalInfo.Value.ContainsKey(NFTImageUriKey))
             {
                 return externalInfo.Value[NFTImageUriKey];
             }
-            
+            if (externalInfo.Value.ContainsKey(NFTImageUrlKey))
+            {
+                return externalInfo.Value[NFTImageUrlKey];
+            }
         }
         return null;
+
     }
 }

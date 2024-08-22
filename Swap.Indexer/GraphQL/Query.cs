@@ -1,4 +1,6 @@
 using System.Linq.Expressions;
+using AElf.CSharp.Core;
+using AElf.Types;
 using AElfIndexer.Client;
 using AElfIndexer.Client.Providers;
 using AElfIndexer.Grains;
@@ -748,6 +750,37 @@ public class Query
         var taskResultList = await tasks.WhenAll();
         return taskResultList.Where(t => t != null).ToList();
     }
+    
+    [Name("pairReserve")]
+    public static async Task<PairReserveDto> PairReserveAsync(
+        [FromServices] IAElfIndexerClientEntityRepository<SyncRecordIndex, LogEventInfo> repository,
+        [FromServices] IAElfIndexerClientEntityRepository<TradePairInfoIndex, LogEventInfo> tradePairRepository,
+        [FromServices] IObjectMapper objectMapper, GetPairReserveDto dto
+    )
+    {
+        
+        var pairInfos =
+                await GetPairAddressesAsync(dto.SymbolA, dto.SymbolB, objectMapper, tradePairRepository);
+        
+        var tasks = pairInfos.Select(x=>x.Address).Distinct().Select(t => GetLatestSyncRecordIndexAsync(t, objectMapper, repository));
+        var taskResultList = await tasks.WhenAll();
+        var syncRecords = taskResultList.Where(t => t != null).ToList();
+        var totalReserveA = 0L;
+        var totalReserveB = 0L;
+        foreach (var syncRecord in syncRecords)
+        {
+            totalReserveA += syncRecord.SymbolA == dto.SymbolA ? syncRecord.ReserveA : syncRecord.ReserveB;
+            totalReserveB += syncRecord.SymbolB == dto.SymbolB ? syncRecord.ReserveB : syncRecord.ReserveA;
+        }
+
+        return new PairReserveDto()
+        {
+            TradePairs = pairInfos,
+            SyncRecords = syncRecords,
+            TotalReserveA = totalReserveA,
+            TotalReserveB = totalReserveB
+        };
+    }
 
     private static async Task<SyncRecordDto> GetLatestSyncRecordIndexAsync(string pairAddress, IObjectMapper objectMapper,
         IAElfIndexerClientEntityRepository<SyncRecordIndex, LogEventInfo> repository)
@@ -765,4 +798,185 @@ public class Query
         }
         return null;
     }
+    
+    private static async Task<List<TradePairInfoDto>> GetPairAddressesAsync(string tokenA, string tokenB, IObjectMapper objectMapper,
+        IAElfIndexerClientEntityRepository<TradePairInfoIndex, LogEventInfo> repository)
+    {
+        var query = new List<Func<QueryContainerDescriptor<TradePairInfoIndex>, QueryContainer>>
+        {
+            q => q.Bool(b => b
+                    .Should(
+                        s => s.Bool(bb => bb
+                            .Must(
+                                m => m.Term(t => t.Field(f => f.Token0Symbol).Value(tokenA)),
+                                m => m.Term(t => t.Field(f => f.Token1Symbol).Value(tokenB))
+                            )
+                        ),
+                        s => s.Bool(bb => bb
+                            .Must(
+                                m => m.Term(t => t.Field(f => f.Token0Symbol).Value(tokenB)),
+                                m => m.Term(t => t.Field(f => f.Token1Symbol).Value(tokenA))
+                            )
+                        )
+                    )
+                    .MinimumShouldMatch(1)
+            )
+        };
+
+        QueryContainer tradePairFilter(QueryContainerDescriptor<TradePairInfoIndex> f) =>
+            f.Bool(b => b.Must(query));
+
+        var tradePairRecord = await repository.GetListAsync(tradePairFilter, sortExp: k => k.BlockHeight, sortType: SortOrder.Descending,
+            skip:0, limit:100);
+        if (tradePairRecord.Item1 > 0)
+        {
+            return objectMapper.Map<List<TradePairInfoIndex>, List<TradePairInfoDto>>(tradePairRecord.Item2);
+        }
+        return null;
+    }
+    
+    [Name("limitOrders")]
+    public static async Task<LimitOrderPageResultDto> LimitOrderAsync(
+        [FromServices] IAElfIndexerClientEntityRepository<LimitOrderIndex, LogEventInfo> repository,
+        [FromServices] IObjectMapper objectMapper,
+        GetLimitOrderDto dto
+    )
+    {
+        dto.Validate();
+        
+        var mustQuery = new List<Func<QueryContainerDescriptor<LimitOrderIndex>, QueryContainer>>();
+        if (dto.LimitOrderStatus > 0)
+        {
+            mustQuery.Add(q => q.Term(i
+                => i.Field(f => f.LimitOrderStatus).Value((LimitOrderStatus)dto.LimitOrderStatus)));
+        }
+
+        if (!string.IsNullOrEmpty(dto.MakerAddress))
+        {
+            mustQuery.Add(q => q.Term(i
+                => i.Field(f => f.Maker).Value(dto.MakerAddress)));
+        }
+        
+        if (!string.IsNullOrEmpty(dto.TokenSymbol))
+        {
+            mustQuery.Add(q => q.Bool(i => i.Should(
+                s => s.Wildcard(w =>
+                    w.Field(f => f.SymbolIn).Value($"*{dto.TokenSymbol.ToUpper()}*")),
+                s => s.Wildcard(w =>
+                    w.Field(f => f.SymbolOut).Value($"*{dto.TokenSymbol.ToUpper()}*")))));
+        }
+        
+        QueryContainer Filter(QueryContainerDescriptor<LimitOrderIndex> f) =>
+            f.Bool(b => b.Must(mustQuery));
+        var result = await repository.GetSortListAsync(Filter,
+            sortFunc: s => s.Descending(t => t.CommitTime),
+            skip: dto.SkipCount,
+            limit: dto.MaxResultCount);
+        var dataList = objectMapper.Map<List<LimitOrderIndex>, List<LimitOrderDto>>(result.Item2);
+        var count = await repository.CountAsync(Filter);
+        return new LimitOrderPageResultDto()
+        {
+            Data = dataList,
+            TotalCount = count.Count
+        };
+    }
+    
+    [Name("limitOrderDetails")]
+    public static async Task<LimitOrderPageResultDto> LimitOrderDetailAsync(
+        [FromServices] IAElfIndexerClientEntityRepository<LimitOrderIndex, LogEventInfo> repository,
+        [FromServices] IObjectMapper objectMapper,
+        GetLimitOrderDetailDto dto
+    )
+    {
+        var mustQuery = new List<Func<QueryContainerDescriptor<LimitOrderIndex>, QueryContainer>>();
+        
+        if (dto.OrderId > 0)
+        {
+            mustQuery.Add(q => q.Term(i
+                => i.Field(f => f.OrderId).Value(dto.OrderId)));
+        }
+
+        QueryContainer Filter(QueryContainerDescriptor<LimitOrderIndex> f) =>
+            f.Bool(b => b.Must(mustQuery));
+        var result = await repository.GetListAsync(Filter);
+        var dataList = objectMapper.Map<List<LimitOrderIndex>, List<LimitOrderDto>>(result.Item2);
+        var count = await repository.CountAsync(Filter);
+        return new LimitOrderPageResultDto()
+        {
+            Data = dataList,
+            TotalCount = count.Count
+        };
+    }
+    
+    [Name("limitOrderRemainingUnfilled")]
+    public static async Task<LimitOrderRemainingUnfilledResultDto> LimitOrderRemainingUnfilledAsync(
+        [FromServices] IAElfIndexerClientEntityRepository<LimitOrderIndex, LogEventInfo> repository,
+        [FromServices] IObjectMapper objectMapper,
+        [FromServices] IAElfDataProvider aelfDataProvider,
+        [FromServices] ILogger<LimitOrderIndex> logger,
+        GetLimitOrderRemainingUnfilledDto dto
+    )
+    {
+        logger.LogInformation($"[LimitOrderRemainingUnfilled] ChainId: {dto.ChainId} MakerAddress: {dto.MakerAddress} TokenSymbol: {dto.TokenSymbol}");
+        
+        dto.Validate();
+        
+        var mustQuery = new List<Func<QueryContainerDescriptor<LimitOrderIndex>, QueryContainer>>();
+        
+        if (!string.IsNullOrEmpty(dto.MakerAddress))
+        {
+            mustQuery.Add(q => q.Term(i
+                => i.Field(f => f.Maker).Value(dto.MakerAddress)));
+        }
+        
+        if (!string.IsNullOrEmpty(dto.TokenSymbol))
+        {
+            mustQuery.Add(q => q.Term(i
+                => i.Field(f => f.SymbolIn).Value(dto.TokenSymbol)));
+        }
+        
+        mustQuery.Add(q => q.Terms(t => t
+            .Field(f => f.LimitOrderStatus)
+            .Terms(new[] { LimitOrderStatus.Committed, LimitOrderStatus.PartiallyFilling })
+        ));
+
+        QueryContainer Filter(QueryContainerDescriptor<LimitOrderIndex> f) =>
+            f.Bool(b => b.Must(mustQuery));
+        var result = await repository.GetSortListAsync(Filter,
+            sortFunc: s => s.Descending(t => t.Deadline),
+            skip: 0,
+            limit: 10000);
+        var dataList = objectMapper.Map<List<LimitOrderIndex>, List<LimitOrderDto>>(result.Item2);
+
+        var amountIn = new BigIntValue(0);
+        var filledAmountIn = new BigIntValue(0);
+        var orderCount = 0;
+        foreach (var limitOrderDto in dataList)
+        {
+            if (limitOrderDto.LimitOrderStatus == LimitOrderStatus.Committed
+                || limitOrderDto.LimitOrderStatus == LimitOrderStatus.PartiallyFilling)
+            {
+                if (limitOrderDto.Deadline < DateTimeOffset.UtcNow.ToUnixTimeMilliseconds())
+                {
+                    continue;
+                }   
+            }
+
+            orderCount++;
+            amountIn = amountIn.Add(limitOrderDto.AmountIn);
+            filledAmountIn = filledAmountIn.Add(limitOrderDto.AmountInFilled);
+            logger.LogInformation($"[LimitOrderRemainingUnfilled] amountIn: {amountIn} filledAmountIn: {filledAmountIn}");
+        }
+
+        var remainingUnfilled = amountIn.Sub(filledAmountIn);
+        
+        logger.LogInformation($"[LimitOrderRemainingUnfilled] remainingUnfilled: {remainingUnfilled}");
+        
+        return new LimitOrderRemainingUnfilledResultDto()
+        {
+            OrderCount = orderCount,
+            Value = remainingUnfilled.Value
+        };
+    }
+    
 }

@@ -53,6 +53,17 @@ public abstract class TokenProcessorBase<TEvent> : AElfLogEventProcessorBase<TEv
         };
         _objectMapper.Map(context, index);
         index.Balance = await _aElfDataProvider.GetBalanceAsync(context.ChainId, dto.Symbol, Address.FromBase58(dto.Address));
+        if (string.IsNullOrEmpty(index.ImageUri))
+        {
+            try
+            {
+                index.ImageUri = await _aElfDataProvider.GetTokenUriAsync(context.ChainId, dto.Symbol);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, $"Get token uri faild. chain: {context.ChainId}, symbol: {dto.Symbol}");
+            }
+        }
         _logger.Info("SwapUserTokenIndex:" + index);
         await _repository.AddOrUpdateAsync(index);
     }
