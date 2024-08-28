@@ -1,5 +1,6 @@
 using AeFinder.Sdk;
 using AeFinder.Sdk.Logging;
+using AElf.Contracts.MultiToken;
 using AElf.Types;
 using Awaken.Contracts.Order;
 using SwapIndexer.Entities;
@@ -11,6 +12,7 @@ using Nethereum.Hex.HexConvertors.Extensions;
 using Shouldly;
 using Volo.Abp.ObjectMapping;
 using Xunit;
+using LogEvent = AeFinder.Sdk.Processor.LogEvent;
 
 namespace SwapIndexer.Tests.Processors;
 
@@ -86,7 +88,7 @@ public sealed class LimitOrderProcessorTests : SwapIndexerTestBase
         limitOrderIndexData.SymbolOut.ShouldBe("BTC");
         limitOrderIndexData.LimitOrderStatus.ShouldBe(LimitOrderStatus.Committed);
         limitOrderIndexData.TransactionHash.ShouldBe(logEventContext.Transaction.TransactionId);
-        limitOrderIndexData.TransactionFee.ShouldBe(2000);
+        limitOrderIndexData.TransactionFee.ShouldBe(0);
     }
     
     
@@ -419,5 +421,28 @@ public sealed class LimitOrderProcessorTests : SwapIndexerTestBase
         
         result.Value.ShouldBe("0");
         result.OrderCount.ShouldBe(0);
+    }
+    
+    
+    [Fact]
+    public async Task TransactionFeeTests()
+    {
+        var feeCharged = new TransactionFeeCharged()
+        {
+            Symbol = "ELF",
+            Amount = 123456
+        };
+        
+        var logEventContext = GenerateLogEventContext(feeCharged);
+        logEventContext.LogEvent.EventName = nameof(TransactionFeeCharged);
+        var transaction = new AeFinder.Sdk.Processor.Transaction()
+        {
+            LogEvents = new List<LogEvent>()
+            {
+                logEventContext.LogEvent
+            }
+        };
+        var txnFee = await _limitOrderCancelledProcessor.GetTransactionFeeAsync(transaction);
+        txnFee.ShouldBe(123456);
     }
 }

@@ -34,7 +34,7 @@ public abstract class LimitOrderProcessorBase<TEvent> : LogEventProcessorBase<TE
     {
         try
         {
-            var extraProperties = transaction.LogEvents.FirstOrDefault(l => l.EventName == nameof(TransactionFeeCharged))
+            var extraProperties = transaction.LogEvents?.FirstOrDefault(l => l.EventName == nameof(TransactionFeeCharged))
                 ?.ExtraProperties;
             if (extraProperties == null || !extraProperties.ContainsKey("NonIndexed"))
             {

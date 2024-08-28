@@ -33,7 +33,7 @@ namespace AElf.Contracts.MultiToken {
     }
   }
   public partial class Transferred : aelf::IEvent<Transferred>
-  {
+  { 
     public global::System.Collections.Generic.IEnumerable<Transferred> GetIndexed()
     {
       return new List<Transferred>
