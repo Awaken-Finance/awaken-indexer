@@ -10,7 +10,6 @@ public interface IAElfDataProvider
     Task<long> GetBalanceAsync(string contractAddress, string chainId, string symbol, Address owner);
     
     Task<string> GetTokenUriAsync(string contractAddress, string chainId, string symbol);
-
 }
 
 public class AElfDataProvider : IAElfDataProvider

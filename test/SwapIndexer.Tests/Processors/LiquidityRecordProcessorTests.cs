@@ -21,10 +21,14 @@ public sealed class LiquidityRecordProcessorTests : SwapIndexerTestBase
     private readonly IObjectMapper _objectMapper;
     private readonly LiquidityAddedProcessor _liquidityAddedEventProcessor;
     private readonly LiquidityRemovedProcessor _liquidityRemovedEventProcessor;
+
+    private readonly DateTime AddLiquidityTime;
+    private readonly DateTime RemoveLiquidityTime;
     
     const string AddTransactionId = "c1e625d135171c766999274a00a7003abed24cfe59a7215aabf1472ef20a2da2";
     const string RemoveTransactionId = "d1e625d135171c766999274a00a7003abed24cfe59a7215aabf1472ef20a2da2";
     const string ChainId = "AELF";
+    
 
     public LiquidityRecordProcessorTests()
     {
@@ -33,6 +37,8 @@ public sealed class LiquidityRecordProcessorTests : SwapIndexerTestBase
         _objectMapper = GetRequiredService<IObjectMapper>();
         _liquidityAddedEventProcessor = GetRequiredService<LiquidityAddedProcessor>();
         _liquidityRemovedEventProcessor = GetRequiredService<LiquidityRemovedProcessor>();
+        AddLiquidityTime = DateTime.UtcNow;
+        RemoveLiquidityTime = AddLiquidityTime.AddMinutes(1);
     }
     
     [Fact]
@@ -71,7 +77,7 @@ public sealed class LiquidityRecordProcessorTests : SwapIndexerTestBase
     [Fact]
     public async Task LiquidityAddedAsyncTests()
     {
-        const string transactionId = "c1e625d135171c766999274a00a7003abed24cfe59a7215aabf1472ef20a2da2";
+        const string transactionId = AddTransactionId;
         
         var liquidityAdd = new LiquidityAdded()
         {
@@ -87,6 +93,7 @@ public sealed class LiquidityRecordProcessorTests : SwapIndexerTestBase
         };
         var logEventContext = GenerateLogEventContext(liquidityAdd);
         logEventContext.Transaction.TransactionId = transactionId;
+        logEventContext.Block.BlockTime = AddLiquidityTime;
         
         await _liquidityAddedEventProcessor.ProcessAsync(liquidityAdd, logEventContext);
         
@@ -94,6 +101,7 @@ public sealed class LiquidityRecordProcessorTests : SwapIndexerTestBase
         userLiquidityIndexData.Address.ShouldBe(Address.FromPublicKey("BBB".HexToByteArray()).ToBase58());
         userLiquidityIndexData.Pair.ShouldBe(Address.FromPublicKey("AAA".HexToByteArray()).ToBase58());
         userLiquidityIndexData.LpTokenAmount.ShouldBe(liquidityAdd.LiquidityToken);
+        userLiquidityIndexData.Timestamp.ShouldBe(AddLiquidityTime.ToTimestamp().Seconds * 1000 + AddLiquidityTime.Millisecond);
         
         var liquidityRecordData = await SwapIndexerTestHelper.GetEntityAsync( _recordRepository, ChainId + "-" + transactionId);
         liquidityRecordData.TransactionHash.ShouldBe(transactionId);
@@ -166,7 +174,8 @@ public sealed class LiquidityRecordProcessorTests : SwapIndexerTestBase
         };
         var logEventContext = GenerateLogEventContext(liquidityRemove);
         logEventContext.Transaction.TransactionId = transactionId;
-
+        logEventContext.Block.BlockTime = RemoveLiquidityTime;
+        
         await _liquidityRemovedEventProcessor.ProcessAsync(liquidityRemove, logEventContext);
         
         var userLiquidityIndexData = await SwapIndexerTestHelper.GetEntityAsync( _userLiquidityRepository, ChainId + "-" + liquidityRemove.To.ToBase58() + "-" + liquidityRemove.Pair.ToBase58());
@@ -189,6 +198,7 @@ public sealed class LiquidityRecordProcessorTests : SwapIndexerTestBase
     public async Task QueryLiquidityRecordAsyncTests()
     {
         await LiquidityAddedAsyncTests();
+       
         var result = await Query.LiquidityRecordAsync(_recordRepository, _objectMapper, new GetLiquidityRecordDto
         {
             SkipCount = 0,
@@ -196,8 +206,8 @@ public sealed class LiquidityRecordProcessorTests : SwapIndexerTestBase
             ChainId = "AELF",
             Address = Address.FromPublicKey("BBB".HexToByteArray()).ToBase58(),
             Pair = Address.FromPublicKey("AAA".HexToByteArray()).ToBase58(),
-            TimestampMin = DateTime.UtcNow.ToTimestamp().Seconds * 1000 - 60000,
-            TimestampMax = DateTime.UtcNow.ToTimestamp().Seconds * 1000,
+            TimestampMin = AddLiquidityTime.ToTimestamp().Seconds * 1000 - 60000,
+            TimestampMax = AddLiquidityTime.ToTimestamp().Seconds * 1000 + AddLiquidityTime.Millisecond,
             Type = LiquidityRecordIndex.LiquidityType.Mint,
             Token0 = "AELF",
             Token1 = "BTC",
@@ -218,8 +228,8 @@ public sealed class LiquidityRecordProcessorTests : SwapIndexerTestBase
             ChainId = "AELF",
             Address = Address.FromPublicKey("BBB".HexToByteArray()).ToBase58(),
             Pair = Address.FromPublicKey("AAA".HexToByteArray()).ToBase58(),
-            TimestampMin = DateTime.UtcNow.ToTimestamp().Seconds * 1000 - 60000,
-            TimestampMax = DateTime.UtcNow.ToTimestamp().Seconds * 1000
+            TimestampMin = RemoveLiquidityTime.ToTimestamp().Seconds * 1000 - 60000,
+            TimestampMax = RemoveLiquidityTime.ToTimestamp().Seconds * 1000 + AddLiquidityTime.Millisecond
         };
         result = await Query.LiquidityRecordAsync(_recordRepository, _objectMapper, recordDto);
         result.TotalCount.ShouldBe(2);

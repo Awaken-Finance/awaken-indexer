@@ -1,3 +1,5 @@
+using System.Linq.Dynamic.Core;
+using System.Linq.Expressions;
 using AeFinder.Sdk;
 using AElf.CSharp.Core;
 using AElf.Types;
@@ -46,6 +48,49 @@ public class Query
         return dataList;
     }
 
+    private static IQueryable<LiquidityRecordIndex> MakeLiquidityRecordSortQuery(string sorting, IQueryable<LiquidityRecordIndex> queryable)
+    {
+        if (!string.IsNullOrWhiteSpace(sorting))
+        {
+            var sortingArray = sorting.Trim().ToLower().Split(" ", StringSplitOptions.RemoveEmptyEntries);
+        
+            switch (sortingArray.Length)
+            {
+                case 1:
+                    switch (sortingArray[0])
+                    {
+                        case TIMESTAMP:
+                            queryable = queryable.OrderBy(o => o.Timestamp);
+                            break;
+                        case TRADEPAIR:
+                            queryable = queryable.OrderBy(o => o.Token0);
+                            break;
+                    }
+                    break;
+                case 2:
+                    switch (sortingArray[0])
+                    {
+                        case TIMESTAMP:
+                            queryable = GetSortOrder(sortingArray[1]) ? 
+                                queryable.OrderBy(o => o.Timestamp) : 
+                                queryable.OrderByDescending(o => o.Timestamp);
+                            break;
+                        case TRADEPAIR:
+                            queryable = GetSortOrder(sortingArray[1]) ? 
+                                queryable.OrderBy(o => o.Token0) : 
+                                queryable.OrderByDescending(o => o.Token0);
+                            break;
+                    }
+                    break;
+            }
+        }
+        else
+        {
+            queryable = queryable.OrderByDescending(o => o.Timestamp);
+        }
+
+        return queryable;
+    }
     
     [Name("liquidityRecord")]
     public static async Task<LiquidityRecordPageResultDto> LiquidityRecordAsync(
@@ -108,15 +153,10 @@ public class Query
         {
             queryable = queryable.Where(a => a.Timestamp <= dto.TimestampMax);
         }
+
+        queryable = MakeLiquidityRecordSortQuery(dto.Sorting, queryable);
         
-        // todo
-        // var sorting = GetSorting(dto.Sorting); 
-        //
-        // var result = sorting.IsAscending
-        //     ? queryable.OrderBy(sorting.SortExpression).Skip(dto.SkipCount).Take(dto.MaxResultCount).ToList()
-        //     : queryable.OrderByDescending(sorting.SortExpression).Skip(dto.SkipCount).Take(dto.MaxResultCount).ToList();
-        
-        var result = queryable.OrderByDescending(t => t.Timestamp).Skip(dto.SkipCount).Take(dto.MaxResultCount).ToList();
+        var result = queryable.Skip(dto.SkipCount).Take(dto.MaxResultCount).ToList();
         
         var dataList = objectMapper.Map<List<LiquidityRecordIndex>, List<LiquidityRecordDto>>(result);
         return new LiquidityRecordPageResultDto()
@@ -126,58 +166,55 @@ public class Query
         };
     }
     
-    // private static bool GetSortOrder(string sort)
-    // {
-    //     var sortLower = sort.ToLower();
-    //     return  sortLower == AwakenSwapConst.Asc || sortLower == AwakenSwapConst.Ascend;
-    // }
-    //
-    //
-    // private static SortingInfo<LiquidityRecordIndex> GetSorting(string sorting)
-    // {
-    //     var result = new SortingInfo<LiquidityRecordIndex>
-    //     {
-    //         IsAscending = false,
-    //         SortExpression = o => o.Timestamp
-    //     };
-    //
-    //     if (string.IsNullOrWhiteSpace(sorting)) return result;
-    //
-    //     var sortingArray = sorting.Trim().ToLower().Split(" ", StringSplitOptions.RemoveEmptyEntries);
-    //
-    //     switch (sortingArray.Length)
-    //     {
-    //         case 1:
-    //             switch (sortingArray[0])
-    //             {
-    //                 case TIMESTAMP:
-    //                     result.IsAscending = true;
-    //                     result.SortExpression = o => o.Timestamp;
-    //                     break;
-    //                 case TRADEPAIR:
-    //                     result.IsAscending = true;
-    //                     result.SortExpression = o => o.Token0;
-    //                     break;
-    //             }
-    //             break;
-    //         case 2:
-    //             result.IsAscending = GetSortOrder(sortingArray[1]);
-    //             switch (sortingArray[0])
-    //             {
-    //                 case TIMESTAMP:
-    //                     result.SortExpression = o => o.Timestamp;
-    //                     break;
-    //                 case TRADEPAIR:
-    //                     result.SortExpression = o => o.Token0;
-    //                     break;
-    //             }
-    //             break;
-    //     }
-    //
-    //     return result;
-    // }
-    //
-    //
+    private static bool GetSortOrder(string sort)
+    {
+        var sortLower = sort.ToLower();
+        return  sortLower == AwakenSwapConst.Asc || sortLower == AwakenSwapConst.Ascend;
+    }
+    
+    private static IQueryable<UserLiquidityIndex> MakeUserLiquiditySortQuery(string sorting, IQueryable<UserLiquidityIndex> queryable)
+    {
+        if (!string.IsNullOrEmpty(sorting))
+        {
+            var sortingArray = sorting.Trim().ToLower().Split(" ", StringSplitOptions.RemoveEmptyEntries);
+            switch (sortingArray.Length)
+            {
+                case 1:
+                    switch (sortingArray[0])
+                    {
+                        case TIMESTAMP:
+                            queryable = queryable.OrderBy(o => o.Timestamp);
+                            break;
+                        case LPTOKENAMOUNT:
+                            queryable = queryable.OrderBy(o => o.LpTokenAmount);
+                            break;
+                    }
+                    break;
+                case 2:
+                    switch (sortingArray[0])
+                    {
+                        case TIMESTAMP:
+                            queryable = GetSortOrder(sortingArray[1]) ? 
+                                queryable.OrderBy(o => o.Timestamp) : 
+                                queryable.OrderByDescending(o => o.Timestamp);
+                            break;
+                        case LPTOKENAMOUNT:
+                            queryable = GetSortOrder(sortingArray[1]) ? 
+                                queryable.OrderBy(o => o.LpTokenAmount) : 
+                                queryable.OrderByDescending(o => o.LpTokenAmount);
+                            break;
+                    }
+                    break;
+            }
+        }
+        else
+        {
+            queryable = queryable.OrderBy(o => o.Timestamp);
+        }
+
+        return queryable;
+    }
+   
     [Name("userLiquidity")]
     public static async Task<UserLiquidityPageResultDto> UserLiquidityAsync(
         [FromServices] IReadOnlyRepository<UserLiquidityIndex> repository,
@@ -198,14 +235,8 @@ public class Query
         {
             queryable = queryable.Where(record => record.Address == dto.Address);
         }
-    
-    
-        //todo
-        // var sorting = GetUserLiquiditySorting(dto.Sorting);
-        //
-        // query = sorting.IsAscending
-        //     ? query.OrderBy(sorting.SortExpression)
-        //     : query.OrderByDescending(sorting.SortExpression);
+
+        queryable = MakeUserLiquiditySortQuery(dto.Sorting, queryable);
     
         var pagedQuery = queryable.Skip(dto.SkipCount).Take(dto.MaxResultCount);
     
@@ -219,51 +250,6 @@ public class Query
             TotalCount = totalCount
         };
     }
-    //
-    //
-    // // private static Tuple<SortOrder, Expression<Func<UserLiquidityIndex, object>>> GetUserLiquiditySorting(string sorting)
-    // // {
-    // //     var result = new Tuple<SortOrder, Expression<Func<UserLiquidityIndex, object>>>(SortOrder.Ascending,
-    // //         o => o.Timestamp);
-    // //     if (string.IsNullOrWhiteSpace(sorting)) return result;
-    // //     
-    // //     var sortingArray = sorting.Trim().ToLower().Split(" ", StringSplitOptions.RemoveEmptyEntries);
-    // //     switch (sortingArray.Length)
-    // //     {
-    // //         case 1:
-    // //             switch (sortingArray[0])
-    // //             {
-    // //                 case TIMESTAMP:
-    // //                     result = new Tuple<SortOrder, Expression<Func<UserLiquidityIndex, object>>>(SortOrder.Ascending,
-    // //                         o => o.Timestamp);
-    // //                     break;
-    // //                 case LPTOKENAMOUNT:
-    // //                     result = new Tuple<SortOrder, Expression<Func<UserLiquidityIndex, object>>>(SortOrder.Ascending,
-    // //                         o => o.LpTokenAmount);
-    // //                     break;
-    // //             }
-    // //             break;
-    // //         case 2:
-    // //             switch (sortingArray[0])
-    // //             {
-    // //                 case TIMESTAMP:
-    // //                     result = new Tuple<SortOrder, Expression<Func<UserLiquidityIndex, object>>>(
-    // //                         GetSortOrder(sortingArray[1]),
-    // //                         o => o.Timestamp);
-    // //                     break;
-    // //                 case LPTOKENAMOUNT:
-    // //                     result = new Tuple<SortOrder, Expression<Func<UserLiquidityIndex, object>>>(GetSortOrder(sortingArray[1]),
-    // //                         o => o.LpTokenAmount);
-    // //                     break;
-    // //             }
-    // //             break;
-    // //     }
-    // //
-    // //     return result;
-    // // }
-    //
-    //
-    //
     
     [Name("getUserTokens")]
     public static async Task<List<UserTokenDto>> GetUserTokensAsync(

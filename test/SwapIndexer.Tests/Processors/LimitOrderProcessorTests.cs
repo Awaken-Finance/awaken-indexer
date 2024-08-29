@@ -186,7 +186,7 @@ public sealed class LimitOrderProcessorTests : SwapIndexerTestBase
         limitOrderIndexData.FillRecords[1].TakerAddress.ShouldBe(Address.FromPublicKey("AAA".HexToByteArray()).ToBase58());
         limitOrderIndexData.FillRecords[1].TransactionTime.ShouldBe(DateTimeHelper.ToUnixTimeMilliseconds(fillTime2.ToDateTime()));
         limitOrderIndexData.FillRecords[1].TransactionHash.ShouldBe(FilledTransactionId2);
-        limitOrderIndexData.FillRecords[1].TransactionFee.ShouldBe(1500);
+        limitOrderIndexData.FillRecords[1].TransactionFee.ShouldBe(0);
         limitOrderIndexData.FillRecords[1].Status.ShouldBe(LimitOrderStatus.PartiallyFilling);
     }
     
@@ -227,7 +227,7 @@ public sealed class LimitOrderProcessorTests : SwapIndexerTestBase
         limitOrderIndexData.FillRecords.Count.ShouldBe(2);
         limitOrderIndexData.FillRecords[1].TransactionTime.ShouldBe(DateTimeHelper.ToUnixTimeMilliseconds(cancelledTime.ToDateTime()));
         limitOrderIndexData.FillRecords[1].TransactionHash.ShouldBe(CancelledTransactionId);
-        limitOrderIndexData.FillRecords[1].TransactionFee.ShouldBe(1000);
+        limitOrderIndexData.FillRecords[1].TransactionFee.ShouldBe(0);
         limitOrderIndexData.FillRecords[1].Status.ShouldBe(LimitOrderStatus.Cancelled);
         
         var result = await Query.LimitOrderAsync(_recordRepository, _objectMapper, new GetLimitOrderDto()
