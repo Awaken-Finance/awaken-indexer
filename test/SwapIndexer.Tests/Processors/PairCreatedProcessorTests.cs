@@ -60,8 +60,6 @@ public class PairCreatedProcessorTests : SwapIndexerTestBase
         var queryable = await _tradepairRepository.GetQueryableAsync();
         queryable = queryable.Where(a => a.Address == pairAddress.ToBase58());
         
-        // queryable = queryable.Where(a => a.Token0Symbol == "ELF");
-        // queryable = queryable.Where(a => a.Token1Symbol == "USDT");
         var indexData =  queryable.ToList()[0];
         
         indexData.Address.ShouldBe(pairAddress.ToBase58());
@@ -69,6 +67,10 @@ public class PairCreatedProcessorTests : SwapIndexerTestBase
         indexData.Metadata.ChainId.ShouldBe(AwakenSwapConst.AELF);
         indexData.Token0Symbol.ShouldBe("ELF");
         indexData.Token1Symbol.ShouldBe("USDT");
+        indexData.Metadata.ChainId.ShouldBe(ChainId);
+        indexData.Metadata.Block.BlockHeight.ShouldBe(logEventContext.Block.BlockHeight);
+        indexData.Metadata.Block.BlockTime.ToUnixTimeSeconds().ShouldBe(logEventContext.Block.BlockTime.ToUnixTimeSeconds());
+        indexData.Metadata.Block.BlockHash.ShouldBe(logEventContext.Block.BlockHash);
     }
     
 }

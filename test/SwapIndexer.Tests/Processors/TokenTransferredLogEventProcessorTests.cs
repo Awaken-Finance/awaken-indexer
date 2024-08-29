@@ -45,7 +45,15 @@ public class TokenTransferredLogEventProcessorTests : SwapIndexerTestBase
         var fromIndex = await SwapIndexerTestHelper.GetEntityAsync(_repository, chainId + "-" + transferred.From.ToBase58() + "-" + transferred.Symbol);
         var toIndex = await SwapIndexerTestHelper.GetEntityAsync(_repository, chainId + "-" + transferred.To.ToBase58() + "-" + transferred.Symbol);
         fromIndex.Balance.ShouldBe(100);
+        fromIndex.Address.ShouldBe(transferred.From.ToBase58());
+        fromIndex.Symbol.ShouldBe("USDT");
         toIndex.Balance.ShouldBe(100);
+        toIndex.Address.ShouldBe(transferred.To.ToBase58());
+        toIndex.Symbol.ShouldBe("USDT");
+        fromIndex.Metadata.ChainId.ShouldBe(ChainId);
+        fromIndex.Metadata.Block.BlockHeight.ShouldBe(logEventContext.Block.BlockHeight);
+        fromIndex.Metadata.Block.BlockTime.ToUnixTimeSeconds().ShouldBe(logEventContext.Block.BlockTime.ToUnixTimeSeconds());
+        fromIndex.Metadata.Block.BlockHash.ShouldBe(logEventContext.Block.BlockHash);
     }
     
     [Fact]

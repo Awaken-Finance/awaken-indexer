@@ -67,10 +67,15 @@ public sealed class SwapProcessorTests : SwapIndexerTestBase
         recordData.Timestamp.ShouldBe(DateTimeHelper.ToUnixTimeMilliseconds(logEventContext.Block.BlockTime));
         recordData.AmountOut.ShouldBe(1);
         recordData.AmountIn.ShouldBe(100);
+        recordData.TotalFee.ShouldBe(15);
         recordData.SymbolOut.ShouldBe("BTC");
         recordData.SymbolIn.ShouldBe("AELF");
         recordData.Channel.ShouldBe("test");
-    
+        recordData.Metadata.ChainId.ShouldBe(ChainId);
+        recordData.Metadata.Block.BlockHeight.ShouldBe(logEventContext.Block.BlockHeight);
+        recordData.Metadata.Block.BlockTime.ToUnixTimeSeconds().ShouldBe(logEventContext.Block.BlockTime.ToUnixTimeSeconds());
+        recordData.Metadata.Block.BlockHash.ShouldBe(logEventContext.Block.BlockHash);
+        
         var result = await Query.SwapRecordAsync(_recordRepository, _objectMapper, new GetSwapRecordDto
         {
             SkipCount = 0,
@@ -217,6 +222,12 @@ public sealed class SwapProcessorTests : SwapIndexerTestBase
             TotalFee = 15,
             Channel = "test"
         };
+        var hooksTransactionCreatedLogEvent = new HooksTransactionCreated()
+        {
+            Sender = Address.FromPublicKey("DDD".HexToByteArray()),
+            MethodName = "SwapTokensForExactTokens"
+        };
+        
         var logEventContext = GenerateLogEventContext(swap);
         logEventContext.Block.BlockHeight = blockHeight;
         logEventContext.ChainId= ChainId;
@@ -224,27 +235,14 @@ public sealed class SwapProcessorTests : SwapIndexerTestBase
         logEventContext.Transaction.TransactionId = transactionId;
         
         await _swapProcessor.ProcessAsync(swap, logEventContext);
-
+        
         var recordData = await SwapIndexerTestHelper.GetEntityAsync(_recordRepository, $"{ChainId}-{transactionId}-{blockHeight}");
         recordData.PairAddress.ShouldBe(Address.FromPublicKey("AAA".HexToByteArray()).ToBase58());
         recordData.Sender.ShouldBe(Address.FromPublicKey("CCC".HexToByteArray()).ToBase58());
         recordData.MethodName.ShouldBeNull();
-    
-        var hooksTransactionCreatedLogEvent = new HooksTransactionCreated()
-        {
-            Sender = Address.FromPublicKey("DDD".HexToByteArray()),
-            MethodName = "SwapTokensForExactTokens"
-        };
-        
-        logEventContext = GenerateLogEventContext(hooksTransactionCreatedLogEvent);
-        logEventContext.Block.BlockHeight = blockHeight;
-        logEventContext.ChainId= ChainId;
-        logEventContext.Block.BlockHash = blockHash;
-        logEventContext.Transaction.TransactionId = transactionId;
         
         await _hooksProcessor.ProcessAsync(hooksTransactionCreatedLogEvent, logEventContext);
         
-        //step5: check result
         recordData = await SwapIndexerTestHelper.GetEntityAsync(_recordRepository, $"{ChainId}-{transactionId}-{blockHeight}");
         recordData.PairAddress.ShouldBe(Address.FromPublicKey("AAA".HexToByteArray()).ToBase58());
         recordData.Sender.ShouldBe(Address.FromPublicKey("DDD".HexToByteArray()).ToBase58());
@@ -265,6 +263,19 @@ public sealed class SwapProcessorTests : SwapIndexerTestBase
             Sender = Address.FromPublicKey("DDD".HexToByteArray()),
             MethodName = "SwapExactTokensForTokens"
         };
+        var swap = new Awaken.Contracts.Swap.Swap()
+        {
+            Pair = Address.FromPublicKey("AAA".HexToByteArray()),
+            To = Address.FromPublicKey("BBB".HexToByteArray()),
+            Sender = Address.FromPublicKey("CCC".HexToByteArray()),
+            SymbolIn = "AELF",
+            SymbolOut = "BTC",
+            AmountIn = 100,
+            AmountOut = 1,
+            TotalFee = 15,
+            Channel = "test"
+        };
+        
         var logEventContext = GenerateLogEventContext(hooksTransactionCreatedLogEvent);
         logEventContext.Block.BlockHeight = blockHeight;
         logEventContext.ChainId= ChainId;
@@ -278,18 +289,6 @@ public sealed class SwapProcessorTests : SwapIndexerTestBase
         recordData.Sender.ShouldBe(Address.FromPublicKey("DDD".HexToByteArray()).ToBase58());
         recordData.MethodName.ShouldBe("SwapExactTokensForTokens");
         recordData.TransactionHash.ShouldBeNull();
-        var swap = new Awaken.Contracts.Swap.Swap()
-        {
-            Pair = Address.FromPublicKey("AAA".HexToByteArray()),
-            To = Address.FromPublicKey("BBB".HexToByteArray()),
-            Sender = Address.FromPublicKey("CCC".HexToByteArray()),
-            SymbolIn = "AELF",
-            SymbolOut = "BTC",
-            AmountIn = 100,
-            AmountOut = 1,
-            TotalFee = 15,
-            Channel = "test"
-        };
         
         await _swapProcessor.ProcessAsync(swap, logEventContext);
         
@@ -365,5 +364,67 @@ public sealed class SwapProcessorTests : SwapIndexerTestBase
         swapTokens[0].Path[1].ShouldBe("ELF");
     }
     
-    
+    [Fact]
+    public async Task SwapRecordsAsyncTests()
+    {
+        const string blockHash = "DefaultBlockHash";
+        const string transactionId = "DefaultTransactionId";
+        const long blockHeight = 100;
+        
+        var swap = new Awaken.Contracts.Swap.Swap()
+        {
+            Pair = Address.FromPublicKey("AAA".HexToByteArray()),
+            To = Address.FromPublicKey("BBB".HexToByteArray()),
+            Sender = Address.FromPublicKey("CCC".HexToByteArray()),
+            SymbolIn = "AELF",
+            SymbolOut = "BTC",
+            AmountIn = 100,
+            AmountOut = 1,
+            TotalFee = 15,
+            Channel = "test"
+        };
+        var swap1 = new Awaken.Contracts.Swap.Swap()
+        {
+            Pair = Address.FromPublicKey("DDD".HexToByteArray()),
+            To = Address.FromPublicKey("BBB".HexToByteArray()),
+            Sender = Address.FromPublicKey("CCC".HexToByteArray()),
+            SymbolIn = "BTC",
+            SymbolOut = "USDT",
+            AmountIn = 1,
+            AmountOut = 100,
+            TotalFee = 10,
+            Channel = "test"
+        };
+        var logEventContext = GenerateLogEventContext(swap);
+        logEventContext.Transaction.TransactionId = transactionId;
+        logEventContext.Block.BlockHeight = blockHeight;
+       
+        await _swapProcessor.ProcessAsync(swap, logEventContext);
+        await _swapProcessor.ProcessAsync(swap1, logEventContext);
+       
+        var recordData = await SwapIndexerTestHelper.GetEntityAsync(_recordRepository, $"{ChainId}-{transactionId}-{blockHeight}");
+        recordData.PairAddress.ShouldBe(Address.FromPublicKey("AAA".HexToByteArray()).ToBase58());
+        recordData.Sender.ShouldBe(Address.FromPublicKey("CCC".HexToByteArray()).ToBase58());
+        recordData.TransactionHash.ShouldBe(transactionId);
+        recordData.Timestamp.ShouldBe(DateTimeHelper.ToUnixTimeMilliseconds(logEventContext.Block.BlockTime));
+        recordData.AmountOut.ShouldBe(1);
+        recordData.AmountIn.ShouldBe(100);
+        recordData.TotalFee.ShouldBe(15);
+        recordData.SymbolOut.ShouldBe("BTC");
+        recordData.SymbolIn.ShouldBe("AELF");
+        recordData.Channel.ShouldBe("test");
+        recordData.Metadata.ChainId.ShouldBe(ChainId);
+        recordData.Metadata.Block.BlockHeight.ShouldBe(logEventContext.Block.BlockHeight);
+        recordData.Metadata.Block.BlockTime.ToUnixTimeSeconds().ShouldBe(logEventContext.Block.BlockTime.ToUnixTimeSeconds());
+        recordData.Metadata.Block.BlockHash.ShouldBe(logEventContext.Block.BlockHash);
+        recordData.SwapRecords.Count.ShouldBe(1);
+        recordData.SwapRecords[0].PairAddress.ShouldBe(Address.FromPublicKey("DDD".HexToByteArray()).ToBase58());
+        recordData.SwapRecords[0].SymbolIn.ShouldBe("BTC");
+        recordData.SwapRecords[0].SymbolOut.ShouldBe("USDT");
+        recordData.SwapRecords[0].AmountIn.ShouldBe(1);
+        recordData.SwapRecords[0].AmountOut.ShouldBe(100);
+        recordData.SwapRecords[0].IsLimitOrder.ShouldBe(false);
+        recordData.SwapRecords[0].Channel.ShouldBe("test");
+        recordData.SwapRecords[0].TotalFee.ShouldBe(10);
+    }
 }

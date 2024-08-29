@@ -86,9 +86,14 @@ public sealed class LimitOrderProcessorTests : SwapIndexerTestBase
         limitOrderIndexData.Deadline.ShouldBe(DateTimeHelper.ToUnixTimeMilliseconds(deadLine.ToDateTime()));
         limitOrderIndexData.SymbolIn.ShouldBe("ELF");
         limitOrderIndexData.SymbolOut.ShouldBe("BTC");
+        limitOrderIndexData.LastUpdateTime.ShouldBe(limitOrderIndexData.CommitTime);
         limitOrderIndexData.LimitOrderStatus.ShouldBe(LimitOrderStatus.Committed);
         limitOrderIndexData.TransactionHash.ShouldBe(logEventContext.Transaction.TransactionId);
         limitOrderIndexData.TransactionFee.ShouldBe(0);
+        limitOrderIndexData.Metadata.ChainId.ShouldBe(ChainId);
+        limitOrderIndexData.Metadata.Block.BlockHeight.ShouldBe(logEventContext.Block.BlockHeight);
+        limitOrderIndexData.Metadata.Block.BlockTime.ToUnixTimeSeconds().ShouldBe(logEventContext.Block.BlockTime.ToUnixTimeSeconds());
+        limitOrderIndexData.Metadata.Block.BlockHash.ShouldBe(logEventContext.Block.BlockHash);
     }
     
     
@@ -246,31 +251,7 @@ public sealed class LimitOrderProcessorTests : SwapIndexerTestBase
     public async Task LimitOrderRemovedAsyncTests()
     {
         await LimitOrderFilled1AsyncTests();
-        //step1: create blockStateSet
-        // const string ChainId = "AELF";
-        // const string blockHash = "dac5cd67a2783d0a3d843426c2d45f1178f4d052235a907a0d796ae4659103b1";
-        // const string previousBlockHash = "e38c4fb1cf6af05878657cb3f7b5fc8a5fcfb2eec19cd76b73abb831973fbf4e";
-        // const string transactionId = RemovedTransactionId;
-        // const long blockHeight = 100;
-        // var blockStateSet = new BlockStateSet<LogEventInfo>
-        // {
-        //     BlockHash = blockHash,
-        //     BlockHeight = blockHeight,
-        //     Confirmed = true,
-        //     PreviousBlockHash = previousBlockHash,
-        // };
-        // var blockStateSetTransaction = new BlockStateSet<TransactionInfo>
-        // {
-        //     BlockHash = blockHash,
-        //     BlockHeight = blockHeight,
-        //     Confirmed = true,
-        //     PreviousBlockHash = previousBlockHash,
-        // };
-        //
-        // var blockStateSetKey = await InitializeBlockStateSetAsync(blockStateSet, ChainId);
-        // var blockStateSetKeyTransaction = await InitializeBlockStateSetAsync(blockStateSetTransaction, ChainId);
-        
-        // step2: create logEventInfo
+       
         DateTime now = DateTime.UtcNow;
         var commitDay = new DateTime(now.Year, now.Month, now.Day, 0, 0, 0, DateTimeKind.Utc);
         var commitTime = Timestamp.FromDateTime(commitDay);
@@ -284,36 +265,9 @@ public sealed class LimitOrderProcessorTests : SwapIndexerTestBase
         };
         var logEventContext = GenerateLogEventContext(limitOrderRemoved);
         logEventContext.Transaction.TransactionId = RemovedTransactionId;
-        // logEventInfo.BlockHeight = blockHeight;
-        // logEventInfo.ChainId= ChainId;
-        // logEventInfo.BlockHash = blockHash;
-        // logEventInfo.TransactionId = transactionId;
-        // var logEventContext = new LogEventContext
-        // {
-        //     ChainId = ChainId,
-        //     BlockHeight = blockHeight,
-        //     BlockHash = blockHash,
-        //     PreviousBlockHash = previousBlockHash,
-        //     TransactionId = transactionId,
-        //     Params = "{}",
-        //     MethodName = "FillLimitOrder",
-        //     ExtraProperties = new Dictionary<string, string>
-        //     {
-        //         { "TransactionFee", "{\"ELF\":\"3\"}" },
-        //         { "ResourceFee", "{\"ELF\":\"3\"}" }
-        //     },
-        //     BlockTime = DateTime.UtcNow
-        // };
         
-        //step3: handle event and write result to blockStateSet
         await _limitOrderRemovedProcessor.ProcessAsync(limitOrderRemoved, logEventContext);
-    
-        //step4: save blockStateSet into es
-        // await BlockStateSetSaveDataAsync<LogEventInfo>(blockStateSetKey);
-        // await BlockStateSetSaveDataAsync<TransactionInfo>(blockStateSetKeyTransaction);
-        // await Task.Delay(2000);
         
-        //step5: check result
         var limitOrderIndexData = await SwapIndexerTestHelper.GetEntityAsync(_recordRepository, IdGenerateHelper.GetId(ChainId, orderId));
         limitOrderIndexData.ShouldNotBe(null);
         limitOrderIndexData.Maker.ShouldBe(Address.FromPublicKey("AAA".HexToByteArray()).ToBase58());

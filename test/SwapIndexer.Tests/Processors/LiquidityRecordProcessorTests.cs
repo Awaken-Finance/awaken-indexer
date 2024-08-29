@@ -114,6 +114,13 @@ public sealed class LiquidityRecordProcessorTests : SwapIndexerTestBase
         liquidityRecordData.Token1.ShouldBe("BTC");
         liquidityRecordData.Token0Amount.ShouldBe(100);
         liquidityRecordData.Token1Amount.ShouldBe(1);
+        liquidityRecordData.LpTokenAmount.ShouldBe(1);
+        liquidityRecordData.Timestamp.ShouldBe(AddLiquidityTime.ToTimestamp().Seconds * 1000 + AddLiquidityTime.Millisecond);
+        liquidityRecordData.Channel.ShouldBe("test");
+        liquidityRecordData.Metadata.ChainId.ShouldBe(ChainId);
+        liquidityRecordData.Metadata.Block.BlockHeight.ShouldBe(logEventContext.Block.BlockHeight);
+        liquidityRecordData.Metadata.Block.BlockTime.ToUnixTimeSeconds().ShouldBe(logEventContext.Block.BlockTime.ToUnixTimeSeconds());
+        liquidityRecordData.Metadata.Block.BlockHash.ShouldBe(logEventContext.Block.BlockHash);
     }
 
     [Fact]
