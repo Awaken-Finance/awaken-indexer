@@ -31,8 +31,7 @@ public class LabsFeeChargedProcessor : SwapProcessorBase<LabsFeeCharged>
 
     protected override async Task HandleEventAsync(LabsFeeCharged eventValue, LogEventContext context)
     {
-        
-        Logger.Info("received LabsFeeCharged:" + eventValue + ",txn id:" + context.TransactionId);
+        Logger.Info($"received LabsFeeCharged, txn id: {context.TransactionId} amount: {eventValue.Amount}, symbol: {eventValue.Symbol}");
         var id = IdGenerateHelper.GetId(context.ChainId, context.TransactionId, context.BlockHeight);
         var recordIndex = await SwapRecordIndexRepository.GetFromBlockStateSetAsync(id, context.ChainId) ?? new SwapRecordIndex
         {
@@ -40,7 +39,8 @@ public class LabsFeeChargedProcessor : SwapProcessorBase<LabsFeeCharged>
         };
 
         ObjectMapper.Map(context, recordIndex);
-        recordIndex.LabsFee += eventValue.Amount;
+        recordIndex.LabsFee = eventValue.Amount;
+        recordIndex.LabsFeeSymbol = eventValue.Symbol;
         Logger.Info($"LabsFeeCharged: txn id: {context.TransactionId}, index labs fee: {recordIndex.LabsFee}");
         await SwapRecordIndexRepository.AddOrUpdateAsync(recordIndex);
         

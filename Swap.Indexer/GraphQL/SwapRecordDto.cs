@@ -25,6 +25,7 @@ public class SwapRecordDto
     public string InputArgs { get; set; }
     public bool IsLimitOrder { get; set; }
     public long LabsFee { get; set; }
+    public string LabsFeeSymbol { get; set; }
 }
 
 public class SwapRecord
