@@ -9,7 +9,7 @@ public class SwapRecordPageResultDto
 public class SwapRecordDto
 {
     public string ChainId { get; set; }
-    public string PairAddress { get; set; }
+    public string? PairAddress { get; set; }
     public string Sender { get; set; }
     public string TransactionHash { get; set; }
     public long Timestamp { get; set; }
@@ -28,7 +28,7 @@ public class SwapRecordDto
 
 public class SwapRecord
 {
-    public string PairAddress { get; set; }
+    public string? PairAddress { get; set; }
     public long AmountOut { get; set; }
     public long AmountIn { get; set; }
     public long TotalFee { get; set; }

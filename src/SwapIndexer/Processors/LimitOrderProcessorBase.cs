@@ -34,6 +34,15 @@ public abstract class LimitOrderProcessorBase<TEvent> : LogEventProcessorBase<TE
     {
         try
         {
+            Logger.LogDebug($"Get txn fee, txn id: {transaction.TransactionId}, log event count: {transaction.LogEvents.Count()}");
+            foreach (var logEvent in transaction.LogEvents)
+            {
+                Logger.LogDebug($"Get txn fee, txn id: {transaction.TransactionId}, event: {logEvent.EventName}");
+                foreach (var extraProperty in logEvent.ExtraProperties)
+                {
+                    Logger.LogDebug($"Get txn fee, txn id: {transaction.TransactionId}, event: {logEvent.EventName}, extraProperty key: {extraProperty.Key}, extraProperty value: {extraProperty.Value}");
+                }
+            }
             var extraProperties = transaction.LogEvents?.FirstOrDefault(l => l.EventName == nameof(TransactionFeeCharged))
                 ?.ExtraProperties;
             if (extraProperties == null || !extraProperties.ContainsKey("NonIndexed"))

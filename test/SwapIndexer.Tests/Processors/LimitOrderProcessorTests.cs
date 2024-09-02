@@ -3,6 +3,7 @@ using AeFinder.Sdk.Logging;
 using AElf.Contracts.MultiToken;
 using AElf.Types;
 using Awaken.Contracts.Order;
+using Google.Protobuf;
 using SwapIndexer.Entities;
 using SwapIndexer.GraphQL;
 using SwapIndexer.Processors;
@@ -398,5 +399,10 @@ public sealed class LimitOrderProcessorTests : SwapIndexerTestBase
         };
         var txnFee = await _limitOrderCancelledProcessor.GetTransactionFeeAsync(transaction);
         txnFee.ShouldBe(123456);
+        
+        
+        var transactionFeeCharged = TransactionFeeCharged.Parser.ParseFrom(
+            ByteString.FromBase64("CgNFTEYQoO8P"));
+        transactionFeeCharged.Amount.ShouldBe(260000);
     }
 }

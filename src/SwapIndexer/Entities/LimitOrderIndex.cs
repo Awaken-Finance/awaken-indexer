@@ -29,7 +29,7 @@ public class LimitOrderIndex : AeFinderEntity, IAeFinderEntity
 
 public class FillRecord
 {
-    public string TakerAddress { get; set; }
+    public string? TakerAddress { get; set; }
     public long AmountInFilled { get; set; }
     public long AmountOutFilled { get; set; }
     public long TotalFee { get; set; }

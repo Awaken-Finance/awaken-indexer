@@ -525,7 +525,7 @@ public class Query
         var syncQueryable = await repository.GetQueryableAsync();
         syncQueryable = syncQueryable.Where(t => t.Metadata.ChainId == chainId);
         syncQueryable = syncQueryable.Where(t => t.PairAddress == pairAddress);
-        syncQueryable = syncQueryable.Where(t => t.Timestamp == timestamp);
+        syncQueryable = syncQueryable.Where(t => t.Timestamp <= timestamp);
     
         var resultList = syncQueryable
             .OrderByDescending(o => o.Timestamp).Take(1).ToList();
@@ -603,7 +603,8 @@ public class Query
                     {
                         ++count;
                         priceSum += (syncIndex.ReserveA / Math.Pow(10, baseDecimal)) / (syncIndex.ReserveB / Math.Pow(10, quoteDecimal));
-                    } else if (syncIndex.SymbolB == baseToken)
+                    } 
+                    else if (syncIndex.SymbolB == baseToken)
                     {
                         ++count;
                         priceSum += (syncIndex.ReserveB / Math.Pow(10, baseDecimal)) / (syncIndex.ReserveA / Math.Pow(10, quoteDecimal));
@@ -649,7 +650,7 @@ public class Query
                         value = 2 * syncIndex.ReserveB / Math.Pow(10, quoteDecimal) * priceAvg;
                     }
                     
-                    logger.LogInformation($"[TotalValueLockedAsync] pair: {pairAddress}, tokenA: {syncIndex.SymbolA}, tokenB: {syncIndex.SymbolB}, reserveA: {syncIndex.ReserveA}, reserveB: {syncIndex.ReserveB}, value: {value}");
+                    // logger.LogInformation($"[TotalValueLockedAsync] pair: {pairAddress}, tokenA: {syncIndex.SymbolA}, tokenB: {syncIndex.SymbolB}, reserveA: {syncIndex.ReserveA}, reserveB: {syncIndex.ReserveB}, value: {value}");
             
                     tvl += value;
                 }
