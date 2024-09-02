@@ -458,6 +458,29 @@ public sealed class SwapProcessorTests : SwapIndexerTests
         recordData.Sender.ShouldBe(Address.FromPublicKey("DDD".HexToByteArray()).ToBase58());
         recordData.MethodName.ShouldBe("SwapExactTokensForTokens");
         recordData.TransactionHash.ShouldBeNull();
+        
+        var labsFeeCharged = new LabsFeeCharged()
+        {
+            Amount = 123456
+        };
+        logEventInfo = LogEventHelper.ConvertAElfLogEventToLogEventInfo(labsFeeCharged.ToLogEvent());
+        logEventInfo.BlockHeight = blockHeight;
+        logEventInfo.ChainId= chainId;
+        logEventInfo.BlockHash = blockHash;
+        logEventInfo.TransactionId = transactionId;
+        
+        //step3: handle event and write result to blockStateSet
+        var labsFeeProcessor = GetRequiredService<LabsFeeChargedProcessor>();
+        await labsFeeProcessor.HandleEventAsync(logEventInfo, logEventContext);
+        
+        //step4: save blockStateSet into es
+        await BlockStateSetSaveDataAsync<LogEventInfo>(blockStateSetKey);
+        await BlockStateSetSaveDataAsync<TransactionInfo>(blockStateSetKeyTransaction);
+        await Task.Delay(2000);
+        
+        recordData = await _recordRepository.GetAsync($"{chainId}-{transactionId}-{blockHeight}");
+        recordData.LabsFee.ShouldBe(123456);
+        
         // step2: create logEventInfo
         var swap = new Awaken.Contracts.Swap.Swap()
         {
@@ -493,6 +516,7 @@ public sealed class SwapProcessorTests : SwapIndexerTests
         recordData.Sender.ShouldBe(Address.FromPublicKey("DDD".HexToByteArray()).ToBase58());
         recordData.TransactionHash.ShouldBe(transactionId);
         recordData.MethodName.ShouldBe("SwapExactTokensForTokens");
+        recordData.LabsFee.ShouldBe(123456);
     }
     
     [Fact]

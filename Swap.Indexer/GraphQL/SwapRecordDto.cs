@@ -24,6 +24,7 @@ public class SwapRecordDto
     public List<SwapRecord> SwapRecords { get; set; }
     public string InputArgs { get; set; }
     public bool IsLimitOrder { get; set; }
+    public long LabsFee { get; set; }
 }
 
 public class SwapRecord
