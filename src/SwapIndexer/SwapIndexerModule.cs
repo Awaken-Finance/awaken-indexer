@@ -3,6 +3,7 @@ using SwapIndexer.GraphQL;
 using SwapIndexer.Processors;
 using GraphQL.Types;
 using Microsoft.Extensions.DependencyInjection;
+using Swap.Indexer.Processors;
 using SwapIndexer.Providers;
 using Volo.Abp.AutoMapper;
 using Volo.Abp.Modularity;
@@ -55,5 +56,7 @@ public class SwapIndexerModule: AbpModule
         context.Services.AddTransient<ILogEventProcessor, LimitOrderFilledProcessor>();
         context.Services.AddTransient<ILogEventProcessor, LimitOrderRemovedProcessor>();
         context.Services.AddTransient<ILogEventProcessor, LimitOrderTotalFilledProcessor>();
+        context.Services.AddTransient<ILogEventProcessor, LabsFeeChargedProcessor>();
+
     }
 }

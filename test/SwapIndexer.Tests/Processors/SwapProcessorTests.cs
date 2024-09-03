@@ -6,6 +6,7 @@ using Awaken.Contracts.Order;
 using Google.Protobuf;
 using Nethereum.Hex.HexConvertors.Extensions;
 using Shouldly;
+using Swap.Indexer.Processors;
 using SwapIndexer.Entities;
 using SwapIndexer.GraphQL;
 using SwapIndexer.Processors;
@@ -22,6 +23,7 @@ public sealed class SwapProcessorTests : SwapIndexerTestBase
     private readonly IObjectMapper _objectMapper;
     private readonly SwapProcessor _swapProcessor;
     private readonly HooksTransactionCreatedProcessor _hooksProcessor;
+    private readonly LabsFeeChargedProcessor _labsFeeProcessor;
     private readonly LimitOrderTotalFilledProcessor _limitOrderTotalFilledProcessor;
     
     const string ChainId = "AELF";
@@ -33,6 +35,7 @@ public sealed class SwapProcessorTests : SwapIndexerTestBase
         _swapProcessor = GetRequiredService<SwapProcessor>();
         _hooksProcessor = GetRequiredService<HooksTransactionCreatedProcessor>();
         _limitOrderTotalFilledProcessor = GetRequiredService<LimitOrderTotalFilledProcessor>();
+        _labsFeeProcessor = GetRequiredService<LabsFeeChargedProcessor>();
     }
 
     [Fact]
@@ -275,6 +278,11 @@ public sealed class SwapProcessorTests : SwapIndexerTestBase
             TotalFee = 15,
             Channel = "test"
         };
+        var labsFeeCharged = new LabsFeeCharged()
+        {
+            Amount = 123456,
+            Symbol = "BTC"
+        };
         
         var logEventContext = GenerateLogEventContext(hooksTransactionCreatedLogEvent);
         logEventContext.Block.BlockHeight = blockHeight;
@@ -297,6 +305,15 @@ public sealed class SwapProcessorTests : SwapIndexerTestBase
         recordData.Sender.ShouldBe(Address.FromPublicKey("DDD".HexToByteArray()).ToBase58());
         recordData.TransactionHash.ShouldBe(transactionId);
         recordData.MethodName.ShouldBe("SwapExactTokensForTokens");
+
+        await _labsFeeProcessor.ProcessAsync(labsFeeCharged, logEventContext);
+        recordData = await SwapIndexerTestHelper.GetEntityAsync(_recordRepository, $"{ChainId}-{transactionId}-{blockHeight}");
+        recordData.PairAddress.ShouldBe(Address.FromPublicKey("AAA".HexToByteArray()).ToBase58());
+        recordData.Sender.ShouldBe(Address.FromPublicKey("DDD".HexToByteArray()).ToBase58());
+        recordData.TransactionHash.ShouldBe(transactionId);
+        recordData.MethodName.ShouldBe("SwapExactTokensForTokens");
+        recordData.LabsFee.ShouldBe(123456);
+        recordData.LabsFeeSymbol.ShouldBe("BTC");
     }
     
     [Fact]

@@ -20,6 +20,8 @@ public class SwapRecordIndex : AeFinderEntity, IAeFinderEntity
     [Keyword] public string MethodName { get; set; }
     [Keyword] public string InputArgs { get; set; }
     public bool IsLimitOrder { get; set; }
+    public long LabsFee { get; set; }
+    public string LabsFeeSymbol { get; set; }
 }
 
 public class SwapRecord

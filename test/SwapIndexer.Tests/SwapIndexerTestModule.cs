@@ -1,5 +1,6 @@
 using AeFinder.App.TestBase;
 using Microsoft.Extensions.DependencyInjection;
+using Swap.Indexer.Processors;
 using SwapIndexer.Processors;
 using SwapIndexer.Providers;
 using SwapIndexer.Tests.Provider;
@@ -54,5 +55,6 @@ public class SwapIndexerTestModule : AbpModule
         context.Services.AddSingleton<LimitOrderFilledProcessor>();
         context.Services.AddSingleton<LimitOrderRemovedProcessor>();
         context.Services.AddSingleton<LimitOrderTotalFilledProcessor>();
+        context.Services.AddSingleton<LabsFeeChargedProcessor>();
     }
 }
