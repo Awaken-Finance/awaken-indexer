@@ -4,7 +4,7 @@ namespace SwapIndexer.GraphQL;
 
 public class GetLiquidityRecordDto : PagedResultQueryDtoBase
 {
-    public string ChainId { get; set; }
+    public string? ChainId { get; set; }
     public string? Address { get; set; }
     public string? Pair { get; set; }
     public LiquidityRecordIndex.LiquidityType? Type { get; set; }

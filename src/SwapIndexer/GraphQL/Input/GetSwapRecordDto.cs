@@ -2,8 +2,8 @@ namespace SwapIndexer.GraphQL;
 
 public class GetSwapRecordDto : PagedResultQueryDtoBase
 {
-    public string ChainId { get; set; }
-    public string PairAddress { get; set; }
+    public string? ChainId { get; set; }
+    public string? PairAddress { get; set; }
     public string? Sender { get; set; }
     public string? TransactionHash { get; set; }
     public long? Timestamp { get; set; }
