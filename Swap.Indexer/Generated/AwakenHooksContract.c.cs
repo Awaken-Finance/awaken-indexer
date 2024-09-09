@@ -37,6 +37,27 @@ namespace Awaken.Contracts.Hooks {
     }
   }
 
+  public partial class LabsFeeCharged : aelf::IEvent<LabsFeeCharged>
+  {
+    public global::System.Collections.Generic.IEnumerable<LabsFeeCharged> GetIndexed()
+    {
+      return new List<LabsFeeCharged>
+      {
+      };
+    }
+
+    public LabsFeeCharged GetNonIndexed()
+    {
+      return new LabsFeeCharged
+      {
+        Address = Address,
+        Symbol = Symbol,
+        Amount = Amount,
+        FeeTo = FeeTo,
+      };
+    }
+  }
+
   #endregion
   public static partial class AwakenHooksContractContainer
   {
@@ -53,11 +74,16 @@ namespace Awaken.Contracts.Hooks {
     static readonly aelf::Marshaller<global::Awaken.Contracts.Hooks.SwapTokensForExactTokensInput> __Marshaller_SwapTokensForExactTokensInput = aelf::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Awaken.Contracts.Hooks.SwapTokensForExactTokensInput.Parser.ParseFrom);
     static readonly aelf::Marshaller<global::Awaken.Contracts.Hooks.AddSwapContractInfoInput> __Marshaller_AddSwapContractInfoInput = aelf::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Awaken.Contracts.Hooks.AddSwapContractInfoInput.Parser.ParseFrom);
     static readonly aelf::Marshaller<global::Awaken.Contracts.Hooks.RemoveSwapContractInfoInput> __Marshaller_RemoveSwapContractInfoInput = aelf::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Awaken.Contracts.Hooks.RemoveSwapContractInfoInput.Parser.ParseFrom);
+    static readonly aelf::Marshaller<global::Awaken.Contracts.Hooks.SetLimitOrderConfigInput> __Marshaller_SetLimitOrderConfigInput = aelf::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Awaken.Contracts.Hooks.SetLimitOrderConfigInput.Parser.ParseFrom);
+    static readonly aelf::Marshaller<global::Google.Protobuf.WellKnownTypes.Int64Value> __Marshaller_google_protobuf_Int64Value = aelf::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Google.Protobuf.WellKnownTypes.Int64Value.Parser.ParseFrom);
     static readonly aelf::Marshaller<global::Awaken.Contracts.Hooks.GetSwapContractListOutput> __Marshaller_GetSwapContractListOutput = aelf::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Awaken.Contracts.Hooks.GetSwapContractListOutput.Parser.ParseFrom);
     static readonly aelf::Marshaller<global::Awaken.Contracts.Hooks.GetAmountsOutInput> __Marshaller_GetAmountsOutInput = aelf::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Awaken.Contracts.Hooks.GetAmountsOutInput.Parser.ParseFrom);
     static readonly aelf::Marshaller<global::Awaken.Contracts.Hooks.GetAmountsOutOutput> __Marshaller_GetAmountsOutOutput = aelf::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Awaken.Contracts.Hooks.GetAmountsOutOutput.Parser.ParseFrom);
     static readonly aelf::Marshaller<global::Awaken.Contracts.Hooks.GetAmountsInInput> __Marshaller_GetAmountsInInput = aelf::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Awaken.Contracts.Hooks.GetAmountsInInput.Parser.ParseFrom);
     static readonly aelf::Marshaller<global::Awaken.Contracts.Hooks.GetAmountsInOutput> __Marshaller_GetAmountsInOutput = aelf::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Awaken.Contracts.Hooks.GetAmountsInOutput.Parser.ParseFrom);
+    static readonly aelf::Marshaller<global::Awaken.Contracts.Hooks.GetAllReverseInput> __Marshaller_GetAllReverseInput = aelf::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Awaken.Contracts.Hooks.GetAllReverseInput.Parser.ParseFrom);
+    static readonly aelf::Marshaller<global::Awaken.Contracts.Hooks.GetAllReverseOutput> __Marshaller_GetAllReverseOutput = aelf::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Awaken.Contracts.Hooks.GetAllReverseOutput.Parser.ParseFrom);
+    static readonly aelf::Marshaller<global::Awaken.Contracts.Hooks.GetLimitOrderConfigOutput> __Marshaller_GetLimitOrderConfigOutput = aelf::Marshallers.Create((arg) => global::Google.Protobuf.MessageExtensions.ToByteArray(arg), global::Awaken.Contracts.Hooks.GetLimitOrderConfigOutput.Parser.ParseFrom);
     #endregion
 
     #region Methods
@@ -124,6 +150,34 @@ namespace Awaken.Contracts.Hooks {
         __Marshaller_RemoveSwapContractInfoInput,
         __Marshaller_google_protobuf_Empty);
 
+    static readonly aelf::Method<global::Awaken.Contracts.Hooks.SetLimitOrderConfigInput, global::Google.Protobuf.WellKnownTypes.Empty> __Method_SetLimitOrderConfig = new aelf::Method<global::Awaken.Contracts.Hooks.SetLimitOrderConfigInput, global::Google.Protobuf.WellKnownTypes.Empty>(
+        aelf::MethodType.Action,
+        __ServiceName,
+        "SetLimitOrderConfig",
+        __Marshaller_SetLimitOrderConfigInput,
+        __Marshaller_google_protobuf_Empty);
+
+    static readonly aelf::Method<global::AElf.Types.Address, global::Google.Protobuf.WellKnownTypes.Empty> __Method_SetOrderContract = new aelf::Method<global::AElf.Types.Address, global::Google.Protobuf.WellKnownTypes.Empty>(
+        aelf::MethodType.Action,
+        __ServiceName,
+        "SetOrderContract",
+        __Marshaller_aelf_Address,
+        __Marshaller_google_protobuf_Empty);
+
+    static readonly aelf::Method<global::Google.Protobuf.WellKnownTypes.Int64Value, global::Google.Protobuf.WellKnownTypes.Empty> __Method_SetLabsFeeRate = new aelf::Method<global::Google.Protobuf.WellKnownTypes.Int64Value, global::Google.Protobuf.WellKnownTypes.Empty>(
+        aelf::MethodType.Action,
+        __ServiceName,
+        "SetLabsFeeRate",
+        __Marshaller_google_protobuf_Int64Value,
+        __Marshaller_google_protobuf_Empty);
+
+    static readonly aelf::Method<global::AElf.Types.Address, global::Google.Protobuf.WellKnownTypes.Empty> __Method_SetLabsFeeTo = new aelf::Method<global::AElf.Types.Address, global::Google.Protobuf.WellKnownTypes.Empty>(
+        aelf::MethodType.Action,
+        __ServiceName,
+        "SetLabsFeeTo",
+        __Marshaller_aelf_Address,
+        __Marshaller_google_protobuf_Empty);
+
     static readonly aelf::Method<global::Google.Protobuf.WellKnownTypes.Empty, global::Awaken.Contracts.Hooks.GetSwapContractListOutput> __Method_GetSwapContractList = new aelf::Method<global::Google.Protobuf.WellKnownTypes.Empty, global::Awaken.Contracts.Hooks.GetSwapContractListOutput>(
         aelf::MethodType.View,
         __ServiceName,
@@ -152,6 +206,41 @@ namespace Awaken.Contracts.Hooks {
         __Marshaller_GetAmountsInInput,
         __Marshaller_GetAmountsInOutput);
 
+    static readonly aelf::Method<global::Awaken.Contracts.Hooks.GetAllReverseInput, global::Awaken.Contracts.Hooks.GetAllReverseOutput> __Method_GetAllReverse = new aelf::Method<global::Awaken.Contracts.Hooks.GetAllReverseInput, global::Awaken.Contracts.Hooks.GetAllReverseOutput>(
+        aelf::MethodType.View,
+        __ServiceName,
+        "GetAllReverse",
+        __Marshaller_GetAllReverseInput,
+        __Marshaller_GetAllReverseOutput);
+
+    static readonly aelf::Method<global::Google.Protobuf.WellKnownTypes.Empty, global::Awaken.Contracts.Hooks.GetLimitOrderConfigOutput> __Method_GetLimitOrderConfig = new aelf::Method<global::Google.Protobuf.WellKnownTypes.Empty, global::Awaken.Contracts.Hooks.GetLimitOrderConfigOutput>(
+        aelf::MethodType.View,
+        __ServiceName,
+        "GetLimitOrderConfig",
+        __Marshaller_google_protobuf_Empty,
+        __Marshaller_GetLimitOrderConfigOutput);
+
+    static readonly aelf::Method<global::Google.Protobuf.WellKnownTypes.Empty, global::AElf.Types.Address> __Method_GetOrderContract = new aelf::Method<global::Google.Protobuf.WellKnownTypes.Empty, global::AElf.Types.Address>(
+        aelf::MethodType.Action,
+        __ServiceName,
+        "GetOrderContract",
+        __Marshaller_google_protobuf_Empty,
+        __Marshaller_aelf_Address);
+
+    static readonly aelf::Method<global::Google.Protobuf.WellKnownTypes.Empty, global::AElf.Types.Address> __Method_GetLabsFeeTo = new aelf::Method<global::Google.Protobuf.WellKnownTypes.Empty, global::AElf.Types.Address>(
+        aelf::MethodType.View,
+        __ServiceName,
+        "GetLabsFeeTo",
+        __Marshaller_google_protobuf_Empty,
+        __Marshaller_aelf_Address);
+
+    static readonly aelf::Method<global::Google.Protobuf.WellKnownTypes.Empty, global::Google.Protobuf.WellKnownTypes.Int64Value> __Method_GetLabsFeeRate = new aelf::Method<global::Google.Protobuf.WellKnownTypes.Empty, global::Google.Protobuf.WellKnownTypes.Int64Value>(
+        aelf::MethodType.View,
+        __ServiceName,
+        "GetLabsFeeRate",
+        __Marshaller_google_protobuf_Empty,
+        __Marshaller_google_protobuf_Int64Value);
+
     #endregion
 
     #region Descriptors
@@ -172,6 +261,149 @@ namespace Awaken.Contracts.Hooks {
       }
     }
     #endregion
+
+    /// <summary>Base class for the contract of AwakenHooksContract</summary>
+    // public abstract partial class AwakenHooksContractBase : AElf.Sdk.CSharp.CSharpSmartContract<Awaken.Contracts.Hooks.AwakenHooksContractState>
+    // {
+    //   public virtual global::Google.Protobuf.WellKnownTypes.Empty Initialize(global::Awaken.Contracts.Hooks.InitializeInput input)
+    //   {
+    //     throw new global::System.NotImplementedException();
+    //   }
+    //
+    //   public virtual global::Google.Protobuf.WellKnownTypes.Empty SetAdmin(global::AElf.Types.Address input)
+    //   {
+    //     throw new global::System.NotImplementedException();
+    //   }
+    //
+    //   public virtual global::Google.Protobuf.WellKnownTypes.Empty CreatePair(global::Awaken.Contracts.Hooks.CreatePairInput input)
+    //   {
+    //     throw new global::System.NotImplementedException();
+    //   }
+    //
+    //   public virtual global::Google.Protobuf.WellKnownTypes.Empty AddLiquidity(global::Awaken.Contracts.Hooks.AddLiquidityInput input)
+    //   {
+    //     throw new global::System.NotImplementedException();
+    //   }
+    //
+    //   public virtual global::Google.Protobuf.WellKnownTypes.Empty RemoveLiquidity(global::Awaken.Contracts.Hooks.RemoveLiquidityInput input)
+    //   {
+    //     throw new global::System.NotImplementedException();
+    //   }
+    //
+    //   public virtual global::Google.Protobuf.WellKnownTypes.Empty SwapExactTokensForTokens(global::Awaken.Contracts.Hooks.SwapExactTokensForTokensInput input)
+    //   {
+    //     throw new global::System.NotImplementedException();
+    //   }
+    //
+    //   public virtual global::Google.Protobuf.WellKnownTypes.Empty SwapTokensForExactTokens(global::Awaken.Contracts.Hooks.SwapTokensForExactTokensInput input)
+    //   {
+    //     throw new global::System.NotImplementedException();
+    //   }
+    //
+    //   public virtual global::Google.Protobuf.WellKnownTypes.Empty AddSwapContractInfo(global::Awaken.Contracts.Hooks.AddSwapContractInfoInput input)
+    //   {
+    //     throw new global::System.NotImplementedException();
+    //   }
+    //
+    //   public virtual global::Google.Protobuf.WellKnownTypes.Empty RemoveSwapContractInfo(global::Awaken.Contracts.Hooks.RemoveSwapContractInfoInput input)
+    //   {
+    //     throw new global::System.NotImplementedException();
+    //   }
+    //
+    //   public virtual global::Google.Protobuf.WellKnownTypes.Empty SetLimitOrderConfig(global::Awaken.Contracts.Hooks.SetLimitOrderConfigInput input)
+    //   {
+    //     throw new global::System.NotImplementedException();
+    //   }
+    //
+    //   public virtual global::Google.Protobuf.WellKnownTypes.Empty SetOrderContract(global::AElf.Types.Address input)
+    //   {
+    //     throw new global::System.NotImplementedException();
+    //   }
+    //
+    //   public virtual global::Google.Protobuf.WellKnownTypes.Empty SetLabsFeeRate(global::Google.Protobuf.WellKnownTypes.Int64Value input)
+    //   {
+    //     throw new global::System.NotImplementedException();
+    //   }
+    //
+    //   public virtual global::Google.Protobuf.WellKnownTypes.Empty SetLabsFeeTo(global::AElf.Types.Address input)
+    //   {
+    //     throw new global::System.NotImplementedException();
+    //   }
+    //
+    //   public virtual global::Awaken.Contracts.Hooks.GetSwapContractListOutput GetSwapContractList(global::Google.Protobuf.WellKnownTypes.Empty input)
+    //   {
+    //     throw new global::System.NotImplementedException();
+    //   }
+    //
+    //   public virtual global::AElf.Types.Address GetAdmin(global::Google.Protobuf.WellKnownTypes.Empty input)
+    //   {
+    //     throw new global::System.NotImplementedException();
+    //   }
+    //
+    //   public virtual global::Awaken.Contracts.Hooks.GetAmountsOutOutput GetAmountsOut(global::Awaken.Contracts.Hooks.GetAmountsOutInput input)
+    //   {
+    //     throw new global::System.NotImplementedException();
+    //   }
+    //
+    //   public virtual global::Awaken.Contracts.Hooks.GetAmountsInOutput GetAmountsIn(global::Awaken.Contracts.Hooks.GetAmountsInInput input)
+    //   {
+    //     throw new global::System.NotImplementedException();
+    //   }
+    //
+    //   public virtual global::Awaken.Contracts.Hooks.GetAllReverseOutput GetAllReverse(global::Awaken.Contracts.Hooks.GetAllReverseInput input)
+    //   {
+    //     throw new global::System.NotImplementedException();
+    //   }
+    //
+    //   public virtual global::Awaken.Contracts.Hooks.GetLimitOrderConfigOutput GetLimitOrderConfig(global::Google.Protobuf.WellKnownTypes.Empty input)
+    //   {
+    //     throw new global::System.NotImplementedException();
+    //   }
+    //
+    //   public virtual global::AElf.Types.Address GetOrderContract(global::Google.Protobuf.WellKnownTypes.Empty input)
+    //   {
+    //     throw new global::System.NotImplementedException();
+    //   }
+    //
+    //   public virtual global::AElf.Types.Address GetLabsFeeTo(global::Google.Protobuf.WellKnownTypes.Empty input)
+    //   {
+    //     throw new global::System.NotImplementedException();
+    //   }
+    //
+    //   public virtual global::Google.Protobuf.WellKnownTypes.Int64Value GetLabsFeeRate(global::Google.Protobuf.WellKnownTypes.Empty input)
+    //   {
+    //     throw new global::System.NotImplementedException();
+    //   }
+    //
+    // }
+    //
+    // public static aelf::ServerServiceDefinition BindService(AwakenHooksContractBase serviceImpl)
+    // {
+    //   return aelf::ServerServiceDefinition.CreateBuilder()
+    //       .AddDescriptors(Descriptors)
+    //       .AddMethod(__Method_Initialize, serviceImpl.Initialize)
+    //       .AddMethod(__Method_SetAdmin, serviceImpl.SetAdmin)
+    //       .AddMethod(__Method_CreatePair, serviceImpl.CreatePair)
+    //       .AddMethod(__Method_AddLiquidity, serviceImpl.AddLiquidity)
+    //       .AddMethod(__Method_RemoveLiquidity, serviceImpl.RemoveLiquidity)
+    //       .AddMethod(__Method_SwapExactTokensForTokens, serviceImpl.SwapExactTokensForTokens)
+    //       .AddMethod(__Method_SwapTokensForExactTokens, serviceImpl.SwapTokensForExactTokens)
+    //       .AddMethod(__Method_AddSwapContractInfo, serviceImpl.AddSwapContractInfo)
+    //       .AddMethod(__Method_RemoveSwapContractInfo, serviceImpl.RemoveSwapContractInfo)
+    //       .AddMethod(__Method_SetLimitOrderConfig, serviceImpl.SetLimitOrderConfig)
+    //       .AddMethod(__Method_SetOrderContract, serviceImpl.SetOrderContract)
+    //       .AddMethod(__Method_SetLabsFeeRate, serviceImpl.SetLabsFeeRate)
+    //       .AddMethod(__Method_SetLabsFeeTo, serviceImpl.SetLabsFeeTo)
+    //       .AddMethod(__Method_GetSwapContractList, serviceImpl.GetSwapContractList)
+    //       .AddMethod(__Method_GetAdmin, serviceImpl.GetAdmin)
+    //       .AddMethod(__Method_GetAmountsOut, serviceImpl.GetAmountsOut)
+    //       .AddMethod(__Method_GetAmountsIn, serviceImpl.GetAmountsIn)
+    //       .AddMethod(__Method_GetAllReverse, serviceImpl.GetAllReverse)
+    //       .AddMethod(__Method_GetLimitOrderConfig, serviceImpl.GetLimitOrderConfig)
+    //       .AddMethod(__Method_GetOrderContract, serviceImpl.GetOrderContract)
+    //       .AddMethod(__Method_GetLabsFeeTo, serviceImpl.GetLabsFeeTo)
+    //       .AddMethod(__Method_GetLabsFeeRate, serviceImpl.GetLabsFeeRate).Build();
+    // }
 
   }
 }

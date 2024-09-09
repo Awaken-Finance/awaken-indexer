@@ -60,6 +60,7 @@ public class SwapIndexerModule : AElfIndexerClientPluginBaseModule<SwapIndexerMo
         serviceCollection.AddSingleton<IAElfLogEventProcessor<LogEventInfo>, LimitOrderFilledProcessor>();
         serviceCollection.AddSingleton<IAElfLogEventProcessor<LogEventInfo>, LimitOrderRemovedProcessor>();
         serviceCollection.AddSingleton<IAElfLogEventProcessor<LogEventInfo>, LimitOrderTotalFilledProcessor>();
+        serviceCollection.AddSingleton<IAElfLogEventProcessor<LogEventInfo>, LabsFeeChargedProcessor>();
         Configure<ContractInfoOptions>(configuration.GetSection("ContractInfo"));
         Configure<NodeOptions>(configuration.GetSection("Node"));
         Configure<TradePairTokenOrderOptions>(configuration.GetSection("TradePairTokenOrderOptions"));
@@ -68,5 +69,5 @@ public class SwapIndexerModule : AElfIndexerClientPluginBaseModule<SwapIndexerMo
 
 
     protected override string ClientId => "AElfIndexer_Swap";
-    protected override string Version => "7084a134581b43c5a2d9bf2a02bafbd1";
+    protected override string Version => "0437075393ec45fa81c9304415bc3f24";
 }
