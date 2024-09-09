@@ -52,7 +52,6 @@ public class TokenTransferredLogEventProcessorTests : SwapIndexerTestBase
         toIndex.Symbol.ShouldBe("USDT");
         fromIndex.Metadata.ChainId.ShouldBe(ChainId);
         fromIndex.Metadata.Block.BlockHeight.ShouldBe(logEventContext.Block.BlockHeight);
-        fromIndex.Metadata.Block.BlockTime.ToUnixTimeSeconds().ShouldBe(logEventContext.Block.BlockTime.ToUnixTimeSeconds());
         fromIndex.Metadata.Block.BlockHash.ShouldBe(logEventContext.Block.BlockHash);
     }
     

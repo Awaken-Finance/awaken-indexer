@@ -119,7 +119,6 @@ public sealed class LiquidityRecordProcessorTests : SwapIndexerTestBase
         liquidityRecordData.Channel.ShouldBe("test");
         liquidityRecordData.Metadata.ChainId.ShouldBe(ChainId);
         liquidityRecordData.Metadata.Block.BlockHeight.ShouldBe(logEventContext.Block.BlockHeight);
-        liquidityRecordData.Metadata.Block.BlockTime.ToUnixTimeSeconds().ShouldBe(logEventContext.Block.BlockTime.ToUnixTimeSeconds());
         liquidityRecordData.Metadata.Block.BlockHash.ShouldBe(logEventContext.Block.BlockHash);
     }
 

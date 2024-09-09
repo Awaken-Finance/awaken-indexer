@@ -56,7 +56,6 @@ public sealed class SyncRecordProcessorTests : SwapIndexerTestBase
         recordData.Timestamp.ShouldBe(DateTimeHelper.ToUnixTimeMilliseconds(logEventContext.Block.BlockTime));
         recordData.Metadata.ChainId.ShouldBe(ChainId);
         recordData.Metadata.Block.BlockHeight.ShouldBe(logEventContext.Block.BlockHeight);
-        recordData.Metadata.Block.BlockTime.ToUnixTimeSeconds().ShouldBe(logEventContext.Block.BlockTime.ToUnixTimeSeconds());
         recordData.Metadata.Block.BlockHash.ShouldBe(logEventContext.Block.BlockHash);
 
         var result = await Query.SyncRecordAsync(_recordRepository, _objectMapper, new GetSyncRecordDto

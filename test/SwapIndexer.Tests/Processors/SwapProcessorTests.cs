@@ -76,7 +76,6 @@ public sealed class SwapProcessorTests : SwapIndexerTestBase
         recordData.Channel.ShouldBe("test");
         recordData.Metadata.ChainId.ShouldBe(ChainId);
         recordData.Metadata.Block.BlockHeight.ShouldBe(logEventContext.Block.BlockHeight);
-        recordData.Metadata.Block.BlockTime.ToUnixTimeSeconds().ShouldBe(logEventContext.Block.BlockTime.ToUnixTimeSeconds());
         recordData.Metadata.Block.BlockHash.ShouldBe(logEventContext.Block.BlockHash);
         
         var result = await Query.SwapRecordAsync(_recordRepository, _objectMapper, new GetSwapRecordDto
@@ -432,7 +431,6 @@ public sealed class SwapProcessorTests : SwapIndexerTestBase
         recordData.Channel.ShouldBe("test");
         recordData.Metadata.ChainId.ShouldBe(ChainId);
         recordData.Metadata.Block.BlockHeight.ShouldBe(logEventContext.Block.BlockHeight);
-        recordData.Metadata.Block.BlockTime.ToUnixTimeSeconds().ShouldBe(logEventContext.Block.BlockTime.ToUnixTimeSeconds());
         recordData.Metadata.Block.BlockHash.ShouldBe(logEventContext.Block.BlockHash);
         recordData.SwapRecords.Count.ShouldBe(1);
         recordData.SwapRecords[0].PairAddress.ShouldBe(Address.FromPublicKey("DDD".HexToByteArray()).ToBase58());

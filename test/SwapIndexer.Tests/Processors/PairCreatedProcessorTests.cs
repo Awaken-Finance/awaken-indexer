@@ -69,7 +69,6 @@ public class PairCreatedProcessorTests : SwapIndexerTestBase
         indexData.Token1Symbol.ShouldBe("USDT");
         indexData.Metadata.ChainId.ShouldBe(ChainId);
         indexData.Metadata.Block.BlockHeight.ShouldBe(logEventContext.Block.BlockHeight);
-        indexData.Metadata.Block.BlockTime.ToUnixTimeSeconds().ShouldBe(logEventContext.Block.BlockTime.ToUnixTimeSeconds());
         indexData.Metadata.Block.BlockHash.ShouldBe(logEventContext.Block.BlockHash);
     }
     

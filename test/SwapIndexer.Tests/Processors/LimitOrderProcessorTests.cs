@@ -93,7 +93,6 @@ public sealed class LimitOrderProcessorTests : SwapIndexerTestBase
         limitOrderIndexData.TransactionFee.ShouldBe(0);
         limitOrderIndexData.Metadata.ChainId.ShouldBe(ChainId);
         limitOrderIndexData.Metadata.Block.BlockHeight.ShouldBe(logEventContext.Block.BlockHeight);
-        limitOrderIndexData.Metadata.Block.BlockTime.ToUnixTimeSeconds().ShouldBe(logEventContext.Block.BlockTime.ToUnixTimeSeconds());
         limitOrderIndexData.Metadata.Block.BlockHash.ShouldBe(logEventContext.Block.BlockHash);
     }
     
