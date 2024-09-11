@@ -94,6 +94,17 @@ public sealed class LimitOrderProcessorTests : SwapIndexerTestBase
         limitOrderIndexData.Metadata.ChainId.ShouldBe(ChainId);
         limitOrderIndexData.Metadata.Block.BlockHeight.ShouldBe(logEventContext.Block.BlockHeight);
         limitOrderIndexData.Metadata.Block.BlockHash.ShouldBe(logEventContext.Block.BlockHash);
+
+        var limitOrders =
+            await Query.GetLimitOrdersAsync(_recordRepository, _objectMapper, new GetChainBlockHeightDto()
+            {
+                StartBlockHeight = 0,
+                EndBlockHeight = 100,
+                SkipCount = 0,
+                MaxResultCount = 100
+            });
+        limitOrders.Count.ShouldBe(1);
+        limitOrders[0].OrderId.ShouldBe(1);
     }
     
     
@@ -140,6 +151,17 @@ public sealed class LimitOrderProcessorTests : SwapIndexerTestBase
         limitOrderIndexData.FillRecords[0].TransactionTime.ShouldBe(DateTimeHelper.ToUnixTimeMilliseconds(fillTime.ToDateTime()));
         limitOrderIndexData.FillRecords[0].TransactionHash.ShouldBe(FilledTransactionId1);
         limitOrderIndexData.FillRecords[0].TransactionFee.ShouldBe(0);
+        
+        var limitOrders =
+            await Query.GetLimitOrdersAsync(_recordRepository, _objectMapper, new GetChainBlockHeightDto()
+            {
+                StartBlockHeight = 0,
+                EndBlockHeight = 100,
+                SkipCount = 0,
+                MaxResultCount = 100
+            });
+        limitOrders.Count.ShouldBe(1);
+        limitOrders[0].OrderId.ShouldBe(1);
     }
     
     [Fact]
