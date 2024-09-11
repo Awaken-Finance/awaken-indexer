@@ -1,7 +1,9 @@
 using AeFinder.Sdk;
 using AeFinder.Sdk.Logging;
 using AElf.Contracts.MultiToken;
+using AElf.CSharp.Core.Extension;
 using AElf.Types;
+using Awaken.Contracts.Hooks;
 using Awaken.Contracts.Order;
 using Google.Protobuf;
 using SwapIndexer.Entities;
@@ -11,6 +13,7 @@ using SwapIndexer.Providers;
 using Google.Protobuf.WellKnownTypes;
 using Nethereum.Hex.HexConvertors.Extensions;
 using Shouldly;
+using Swap.Indexer.Processors;
 using Volo.Abp.ObjectMapping;
 using Xunit;
 using LogEvent = AeFinder.Sdk.Processor.LogEvent;
@@ -21,6 +24,7 @@ namespace SwapIndexer.Tests.Processors;
 public sealed class LimitOrderProcessorTests : SwapIndexerTestBase
 {
     private readonly IReadOnlyRepository<LimitOrderIndex> _recordRepository;
+    private readonly IReadOnlyRepository<SwapRecordIndex> _swapRecordRepository;
     private readonly IObjectMapper _objectMapper;
     private readonly IAElfDataProvider _aelfDataProvider;
     private readonly IAeFinderLogger _logger;
@@ -35,10 +39,14 @@ public sealed class LimitOrderProcessorTests : SwapIndexerTestBase
     const string RemovedTransactionId = "h1e625d135171c766999274a00a7003abed24cfe59a7215aabf1472ef20a2da2";
     const string FilledTransactionId2 = "i1e625d135171c766999274a00a7003abed24cfe59a7215aabf1472ef20a2da2";
     const string ChainId = "AELF";
-    
+
+    public readonly DateTime CommitDay;
+    public readonly Timestamp CommitTime;
+    public readonly Timestamp FillTime;
     public LimitOrderProcessorTests()
     {
         _recordRepository = GetRequiredService<IReadOnlyRepository<LimitOrderIndex>>();
+        _swapRecordRepository = GetRequiredService<IReadOnlyRepository<SwapRecordIndex>>();
         _objectMapper = GetRequiredService<IObjectMapper>();
         _aelfDataProvider = GetRequiredService<IAElfDataProvider>();
         _logger = GetRequiredService<IAeFinderLogger>();
@@ -46,7 +54,10 @@ public sealed class LimitOrderProcessorTests : SwapIndexerTestBase
         _limitOrderFilledProcessor = GetRequiredService<LimitOrderFilledProcessor>();
         _limitOrderCancelledProcessor = GetRequiredService<LimitOrderCancelledProcessor>();
         _limitOrderRemovedProcessor = GetRequiredService<LimitOrderRemovedProcessor>();
-
+        DateTime now = DateTime.UtcNow;
+        CommitDay = new DateTime(now.Year, now.Month, now.Day, 0, 0, 0, DateTimeKind.Utc);
+        CommitTime = Timestamp.FromDateTime(CommitDay);
+        FillTime = Timestamp.FromDateTime(CommitDay.AddHours(1));
     }
     
     
@@ -102,18 +113,15 @@ public sealed class LimitOrderProcessorTests : SwapIndexerTestBase
     {
         await LimitOrderCreatedAsyncTests();
         
-        DateTime now = DateTime.UtcNow;
-        var commitDay = new DateTime(now.Year, now.Month, now.Day, 0, 0, 0, DateTimeKind.Utc);
-        var commitTime = Timestamp.FromDateTime(commitDay);
-        var fillTime = Timestamp.FromDateTime(commitDay.AddHours(1));
         var orderId = 1;
         var limitOrderFilled = new LimitOrderFilled()
         {
             OrderId = orderId,
-            FillTime = fillTime,
+            FillTime = FillTime,
             AmountInFilled = 100,
             AmountOutFilled = 10,
-            Taker = Address.FromPublicKey("BBB".HexToByteArray())
+            Taker = Address.FromPublicKey("BBB".HexToByteArray()),
+            TotalFee = 1234
         };
         var logEventContext = GenerateLogEventContext(limitOrderFilled);
         logEventContext.Transaction.TransactionId = FilledTransactionId1;
@@ -126,8 +134,8 @@ public sealed class LimitOrderProcessorTests : SwapIndexerTestBase
         limitOrderIndexData.OrderId.ShouldBe(1);
         limitOrderIndexData.AmountIn.ShouldBe(1000);
         limitOrderIndexData.AmountOut.ShouldBe(100);
-        limitOrderIndexData.CommitTime.ShouldBe(DateTimeHelper.ToUnixTimeMilliseconds(commitTime.ToDateTime()));
-        limitOrderIndexData.FillTime.ShouldBe(DateTimeHelper.ToUnixTimeMilliseconds(fillTime.ToDateTime()));
+        limitOrderIndexData.CommitTime.ShouldBe(DateTimeHelper.ToUnixTimeMilliseconds(CommitTime.ToDateTime()));
+        limitOrderIndexData.FillTime.ShouldBe(DateTimeHelper.ToUnixTimeMilliseconds(FillTime.ToDateTime()));
         limitOrderIndexData.SymbolIn.ShouldBe("ELF");
         limitOrderIndexData.SymbolOut.ShouldBe("BTC");
         limitOrderIndexData.LimitOrderStatus.ShouldBe(LimitOrderStatus.PartiallyFilling);
@@ -137,7 +145,7 @@ public sealed class LimitOrderProcessorTests : SwapIndexerTestBase
         limitOrderIndexData.FillRecords[0].AmountInFilled.ShouldBe(100);
         limitOrderIndexData.FillRecords[0].AmountOutFilled.ShouldBe(10);
         limitOrderIndexData.FillRecords[0].TakerAddress.ShouldBe(Address.FromPublicKey("BBB".HexToByteArray()).ToBase58());
-        limitOrderIndexData.FillRecords[0].TransactionTime.ShouldBe(DateTimeHelper.ToUnixTimeMilliseconds(fillTime.ToDateTime()));
+        limitOrderIndexData.FillRecords[0].TransactionTime.ShouldBe(DateTimeHelper.ToUnixTimeMilliseconds(FillTime.ToDateTime()));
         limitOrderIndexData.FillRecords[0].TransactionHash.ShouldBe(FilledTransactionId1);
         limitOrderIndexData.FillRecords[0].TransactionFee.ShouldBe(0);
     }
@@ -322,7 +330,7 @@ public sealed class LimitOrderProcessorTests : SwapIndexerTestBase
         result.Data[0].AmountInFilled.ShouldBe(1000);
         result.Data[0].AmountOutFilled.ShouldBe(100);
         result.Data[0].FillRecords.Count.ShouldBe(2);
-        result.Data[0].FillRecords[0].TotalFee.ShouldBe(0);
+        result.Data[0].FillRecords[0].TotalFee.ShouldBe(1234);
         
         // by maker address and status
         result = await Query.LimitOrderAsync(_recordRepository, _objectMapper, new GetLimitOrderDto()
@@ -342,7 +350,6 @@ public sealed class LimitOrderProcessorTests : SwapIndexerTestBase
         });
         result.Data.Count.ShouldBe(1);
         result.Data[0].OrderId.ShouldBe(1);
-    
     }
     
     [Fact]
@@ -403,5 +410,51 @@ public sealed class LimitOrderProcessorTests : SwapIndexerTestBase
         var transactionFeeCharged = TransactionFeeCharged.Parser.ParseFrom(
             ByteString.FromBase64("CgNFTEYQoO8P"));
         transactionFeeCharged.Amount.ShouldBe(260000);
+    }
+    
+    
+    [Fact]
+    public async Task GetLabsFeeAsyncTests()
+    {
+        await LimitOrderFilled1AsyncTests();
+        
+        var swap = new Awaken.Contracts.Swap.Swap()
+        {
+            Pair = Address.FromPublicKey("AAA".HexToByteArray()),
+            To = Address.FromPublicKey("BBB".HexToByteArray()),
+            Sender = Address.FromPublicKey("CCC".HexToByteArray()),
+            SymbolIn = "BTC",
+            SymbolOut = "AELF",
+            AmountIn = 100,
+            AmountOut = 1,
+            TotalFee = 15,
+            Channel = "test"
+        };
+        var labsFeeCharged = new LabsFeeCharged()
+        {
+            Amount = 123456,
+            Symbol = "AELF"
+        };
+        
+        var logEventContext = GenerateLogEventContext(swap);
+        logEventContext.Block.BlockTime = FillTime.ToDateTime();
+
+        var swapProcessor = GetRequiredService<SwapProcessor>();
+        await swapProcessor.ProcessAsync(swap, logEventContext);
+        
+        var labsFeeProcessor = GetRequiredService<LabsFeeChargedProcessor>();
+        await labsFeeProcessor.ProcessAsync(labsFeeCharged, logEventContext);
+
+        var labsFee = await Query.LabsFeeAsync(_recordRepository, _swapRecordRepository, _objectMapper, new GetLabsFeeDto()
+        {
+            TimestampMin = FillTime.AddMinutes(-1).ToDateTime().ToUnixTimeMilliseconds(),
+            TimestampMax = FillTime.AddMinutes(1).ToDateTime().ToUnixTimeMilliseconds()
+        });
+        labsFee.tokens.Count.ShouldBe(2);
+        labsFee.tokens[0].tokenSymbol.ShouldBe("BTC");
+        labsFee.tokens[0].labsFee.ShouldBe(1234);
+        labsFee.tokens[1].tokenSymbol.ShouldBe("AELF");
+        labsFee.tokens[1].labsFee.ShouldBe(123456);
+        
     }
 }

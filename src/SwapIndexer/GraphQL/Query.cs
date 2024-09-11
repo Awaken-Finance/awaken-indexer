@@ -7,6 +7,7 @@ using GraphQL;
 using SwapIndexer.Entities;
 using Volo.Abp.ObjectMapping;
 using AeFinder.Sdk.Logging;
+using SwapIndexer.GraphQL.Dto;
 
 namespace SwapIndexer.GraphQL;
 
@@ -880,4 +881,87 @@ public class Query
         };
     }
     
+    
+    
+    [Name("labsFee")]
+    public static async Task<LabsFeeResultDto> LabsFeeAsync(
+        [FromServices] IReadOnlyRepository<LimitOrderIndex> repository,
+        [FromServices] IReadOnlyRepository<SwapRecordIndex> swapRepository,
+        [FromServices] IObjectMapper objectMapper,
+        GetLabsFeeDto dto
+    )
+    {
+        var queryable = await repository.GetQueryableAsync();
+        var limitOrderIndices = new List<LimitOrderIndex>(); 
+        int pageSize = 10000; 
+        int pageNumber = 1; 
+        var currentPageResults = new List<LimitOrderIndex>();
+        do
+        {
+            currentPageResults = queryable.OrderBy(t => t.CommitTime)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+            limitOrderIndices.AddRange(currentPageResults);
+            pageNumber++;
+
+        } while (currentPageResults.Count == pageSize); 
+        
+        var tokenFeeMap = new Dictionary<string, long>();
+        
+        foreach (var limitOrderIndex in limitOrderIndices)
+        {
+            foreach (var fillRecord in limitOrderIndex.FillRecords)
+            {
+                if (dto.TimestampMin > 0 && fillRecord.TransactionTime <= dto.TimestampMin)
+                {
+                    continue;
+                }
+                if (dto.TimestampMax > 0 && fillRecord.TransactionTime > dto.TimestampMax)
+                {
+                    continue;
+                }
+                
+                if (!tokenFeeMap.ContainsKey(limitOrderIndex.SymbolOut))
+                {
+                    tokenFeeMap.Add(limitOrderIndex.SymbolOut, 0);
+                }
+                tokenFeeMap[limitOrderIndex.SymbolOut] += fillRecord.TotalFee;
+            }
+        }
+        
+        var swapRecordQueryable = await swapRepository.GetQueryableAsync();
+        if (dto.TimestampMin > 0)
+        {
+            swapRecordQueryable = swapRecordQueryable.Where(a => a.Timestamp > dto.TimestampMin);
+        }
+        if (dto.TimestampMax > 0)
+        {
+            swapRecordQueryable = swapRecordQueryable.Where(a => a.Timestamp <= dto.TimestampMax);
+        }
+        var swapRecordIndices = swapRecordQueryable.ToList();
+        foreach (var swapRecordIndex in swapRecordIndices)
+        {
+            if (swapRecordIndex.LabsFee > 0)
+            {
+                if (!tokenFeeMap.ContainsKey(swapRecordIndex.LabsFeeSymbol))
+                {
+                    tokenFeeMap.Add(swapRecordIndex.LabsFeeSymbol, 0);
+                }
+                tokenFeeMap[swapRecordIndex.LabsFeeSymbol] += swapRecordIndex.LabsFee;
+            }
+        }
+
+        var result = new LabsFeeResultDto();
+        foreach (var kv in tokenFeeMap)
+        {
+            result.tokens.Add(new TokenLabsFeeDto()
+            {
+                tokenSymbol = kv.Key,
+                labsFee = kv.Value
+            });
+        }
+
+        return result;
+    }
 }
