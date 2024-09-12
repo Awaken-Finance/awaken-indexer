@@ -880,6 +880,46 @@ public class Query
             Value = remainingUnfilled.Value
         };
     }
+
+    private static async Task<List<SwapRecordIndex>> GetAllSwapRecords(IQueryable<SwapRecordIndex> queryable)
+    { 
+        var swapRecordIndices = new List<SwapRecordIndex>(); 
+        var pageNumber = 1; 
+        var pageSize = 10000; 
+        var currentPageSwapRecordIndices = new List<SwapRecordIndex>();
+        do
+        {
+            currentPageSwapRecordIndices = queryable.OrderByDescending(t => t.Timestamp)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+            swapRecordIndices.AddRange(currentPageSwapRecordIndices);
+            pageNumber++;
+
+        } while (currentPageSwapRecordIndices.Count == pageSize);
+
+        return swapRecordIndices;
+    }
+    
+    private static async Task<List<LimitOrderIndex>> GetAllLimitRecords(IQueryable<LimitOrderIndex> queryable)
+    { 
+        var limitOrderIndices = new List<LimitOrderIndex>(); 
+        int pageSize = 10000; 
+        int pageNumber = 1; 
+        var currentPageResults = new List<LimitOrderIndex>();
+        do
+        {
+            currentPageResults = queryable.OrderByDescending(t => t.CommitTime)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+            limitOrderIndices.AddRange(currentPageResults);
+            pageNumber++;
+
+        } while (currentPageResults.Count == pageSize);
+
+        return limitOrderIndices;
+    }
     
     [Name("labsFee")]
     public static async Task<LabsFeeResultDto> LabsFeeAsync(
@@ -890,27 +930,20 @@ public class Query
     )
     {
         var queryable = await repository.GetQueryableAsync();
-        var limitOrderIndices = new List<LimitOrderIndex>(); 
-        int pageSize = 10000; 
-        int pageNumber = 1; 
-        var currentPageResults = new List<LimitOrderIndex>();
-        do
-        {
-            currentPageResults = queryable.OrderBy(t => t.CommitTime)
-                .Skip((pageNumber - 1) * pageSize)
-                .Take(pageSize)
-                .ToList();
-            limitOrderIndices.AddRange(currentPageResults);
-            pageNumber++;
+        queryable = queryable.Where(a => a.LimitOrderStatus != LimitOrderStatus.Committed);
 
-        } while (currentPageResults.Count == pageSize); 
+        var limitOrderIndices = await GetAllLimitRecords(queryable);
         
-        var tokenFeeMap = new Dictionary<string, long>();
+        var tokenFeeMap = new Dictionary<string, double>();
         
         foreach (var limitOrderIndex in limitOrderIndices)
         {
             foreach (var fillRecord in limitOrderIndex.FillRecords)
             {
+                if (fillRecord.TotalFee == 0)
+                {
+                    continue;
+                }
                 if (dto.TimestampMin > 0 && fillRecord.TransactionTime <= dto.TimestampMin)
                 {
                     continue;
@@ -929,6 +962,7 @@ public class Query
         }
         
         var swapRecordQueryable = await swapRepository.GetQueryableAsync();
+        
         if (dto.TimestampMin > 0)
         {
             swapRecordQueryable = swapRecordQueryable.Where(a => a.Timestamp > dto.TimestampMin);
@@ -937,7 +971,12 @@ public class Query
         {
             swapRecordQueryable = swapRecordQueryable.Where(a => a.Timestamp <= dto.TimestampMax);
         }
-        var swapRecordIndices = swapRecordQueryable.ToList();
+
+        swapRecordQueryable = swapRecordQueryable.Where(a => a.LabsFee > 0);
+        swapRecordQueryable = swapRecordQueryable.Where(a => a.LabsFeeSymbol != null);
+
+        var swapRecordIndices = await GetAllSwapRecords(swapRecordQueryable);
+        
         foreach (var swapRecordIndex in swapRecordIndices)
         {
             if (swapRecordIndex.LabsFee > 0)

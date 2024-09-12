@@ -8,5 +8,5 @@ public class LabsFeeResultDto
 public class TokenLabsFeeDto
 {
     public string tokenSymbol { get; set; }
-    public long labsFee { get; set; }
+    public double labsFee { get; set; }
 }
