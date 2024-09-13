@@ -366,6 +366,11 @@ public class Query
         {
             queryable = queryable.Where(a => a.PairAddress == getSwapRecordDto.PairAddress);
         }
+        
+        if (!string.IsNullOrEmpty(getSwapRecordDto.Sender))
+        {
+            queryable = queryable.Where(a => a.Sender == getSwapRecordDto.Sender);
+        }
     
         queryable = queryable.OrderBy(o => o.Timestamp);
     
@@ -926,7 +931,7 @@ public class Query
         [FromServices] IReadOnlyRepository<LimitOrderIndex> repository,
         [FromServices] IReadOnlyRepository<SwapRecordIndex> swapRepository,
         [FromServices] IObjectMapper objectMapper,
-        GetLabsFeeDto dto
+        GetTimeRangeDto dto
     )
     {
         var queryable = await repository.GetQueryableAsync();
@@ -992,10 +997,10 @@ public class Query
         var result = new LabsFeeResultDto();
         foreach (var kv in tokenFeeMap)
         {
-            result.tokens.Add(new TokenLabsFeeDto()
+            result.Tokens.Add(new TokenLabsFeeDto()
             {
-                tokenSymbol = kv.Key,
-                labsFee = kv.Value
+                TokenSymbol = kv.Key,
+                LabsFee = kv.Value
             });
         }
 
@@ -1038,4 +1043,150 @@ public class Query
     }
     
 
+    [Name("activeAddress")]
+    public static async Task<ActiveAddressDto> ActiveAddressAsync(
+        [FromServices] IReadOnlyRepository<LiquidityRecordIndex> liquidityRepository,
+        [FromServices] IReadOnlyRepository<SwapRecordIndex> swapRepository,
+        [FromServices] IReadOnlyRepository<LimitOrderIndex> limitOrderRepository,
+        [FromServices] IObjectMapper objectMapper,
+        GetTimeRangeDto dto
+    )
+    {
+        var beforeAddresses = new HashSet<string>();
+        var activeAddresses = new HashSet<string>();
+        
+        var liquidityBeforeQueryable = await liquidityRepository.GetQueryableAsync();
+        liquidityBeforeQueryable = liquidityBeforeQueryable.Where(t => t.Timestamp <= dto.TimestampMin);
+        var beforeLiquidityAddress = liquidityBeforeQueryable.AsEnumerable().GroupBy(item => item.Address)
+            .Select(group => group.Key)
+            .ToList();
+        beforeLiquidityAddress.ForEach(str => beforeAddresses.Add(str));
+        
+        var liquidityQueryable = await liquidityRepository.GetQueryableAsync();
+        liquidityQueryable = liquidityQueryable.Where(t => t.Timestamp > dto.TimestampMin);
+        liquidityQueryable = liquidityQueryable.Where(t => t.Timestamp <= dto.TimestampMax);
+        var liquidityAddress = liquidityQueryable.AsEnumerable().GroupBy(item => item.Address)
+            .Select(group => group.Key)
+            .ToList();
+        liquidityAddress.ForEach(str => activeAddresses.Add(str));
+        
+        var swapBeforeQueryable = await swapRepository.GetQueryableAsync();
+        swapBeforeQueryable = swapBeforeQueryable.Where(t => t.Timestamp <= dto.TimestampMin);
+        var beforeSwapAddress = swapBeforeQueryable.AsEnumerable().GroupBy(item => item.Sender)
+            .Select(group => group.Key)
+            .ToList();
+        beforeSwapAddress.ForEach(str => beforeAddresses.Add(str));
+        
+        var swapQueryable = await swapRepository.GetQueryableAsync();
+        swapQueryable = swapQueryable.Where(t => t.Timestamp > dto.TimestampMin);
+        swapQueryable = swapQueryable.Where(t => t.Timestamp <= dto.TimestampMax);
+        var swapAddress = swapQueryable.AsEnumerable().GroupBy(item => item.Sender)
+            .Select(group => group.Key)
+            .ToList();
+        swapAddress.ForEach(str => activeAddresses.Add(str));
+
+        var limitOrderBeforeQueryable = await limitOrderRepository.GetQueryableAsync();
+        limitOrderBeforeQueryable = limitOrderBeforeQueryable.Where(t => t.CommitTime <= dto.TimestampMin);
+        var beforeLimitOrderAddress = limitOrderBeforeQueryable.AsEnumerable().GroupBy(item => item.Maker)
+            .Select(group => group.Key)
+            .ToList();
+        beforeLimitOrderAddress.ForEach(str => beforeAddresses.Add(str));
+        
+        var limitOrderQueryable = await limitOrderRepository.GetQueryableAsync();
+        limitOrderQueryable = limitOrderQueryable.Where(t => t.CommitTime > dto.TimestampMin);
+        limitOrderQueryable = limitOrderQueryable.Where(t => t.CommitTime <= dto.TimestampMax);
+        var limitOrderAddress = limitOrderQueryable.AsEnumerable().GroupBy(item => item.Maker)
+            .Select(group => group.Key)
+            .ToList();
+        limitOrderAddress.ForEach(str => activeAddresses.Add(str));
+
+        var newActiveAddress = new HashSet<string>();
+        foreach (var activeAddress in activeAddresses)
+        {
+            if (!beforeAddresses.Contains(activeAddress))
+            {
+                newActiveAddress.Add(activeAddress);
+            }
+        }
+
+        return new ActiveAddressDto()
+        {
+            ActiveAddresses = activeAddresses.ToList(),
+            NewActiveAddresses = newActiveAddress.ToList(),
+            ActiveAddressCount = activeAddresses.Count,
+            NewActiveAddressCount = newActiveAddress.Count
+        };
+    }
+    
+    
+    [Name("transactionVolume")]
+    public static async Task<TransactionVolumeDto> TransactionVolumeAsync(
+        [FromServices] IReadOnlyRepository<LiquidityRecordIndex> liquidityRepository,
+        [FromServices] IReadOnlyRepository<SwapRecordIndex> swapRepository,
+        [FromServices] IObjectMapper objectMapper,
+        GetTimeRangeDto dto
+    )
+    {
+        var result = new TransactionVolumeDto();
+        var tokenFeeMap = new Dictionary<string, double>();
+        
+        var swapRecordQueryable = await swapRepository.GetQueryableAsync();
+        swapRecordQueryable = swapRecordQueryable.Where(a => a.Timestamp > dto.TimestampMin);
+        swapRecordQueryable = swapRecordQueryable.Where(a => a.Timestamp <= dto.TimestampMax);
+        
+        var swapRecordIndices = await GetAllSwapRecords(swapRecordQueryable);
+        
+        // include swap with pool & swap with limit order
+        foreach (var swapRecordIndex in swapRecordIndices)
+        {
+            result.TransactionCount++;
+            if (!tokenFeeMap.ContainsKey(swapRecordIndex.SymbolOut))
+            {
+                tokenFeeMap.Add(swapRecordIndex.SymbolOut, 0);
+            }
+            tokenFeeMap[swapRecordIndex.SymbolOut] += swapRecordIndex.AmountOut;
+            
+            foreach (var swapRecord in swapRecordIndex.SwapRecords)
+            {
+                result.TransactionCount++;
+                if (!tokenFeeMap.ContainsKey(swapRecord.SymbolOut))
+                {
+                    tokenFeeMap.Add(swapRecord.SymbolOut, 0);
+                }
+                tokenFeeMap[swapRecord.SymbolOut] += swapRecord.AmountOut;
+            }
+        }
+
+        var liquidityRecordQueryable = await liquidityRepository.GetQueryableAsync();
+        liquidityRecordQueryable = liquidityRecordQueryable.Where(a => a.Timestamp > dto.TimestampMin);
+        liquidityRecordQueryable = liquidityRecordQueryable.Where(a => a.Timestamp <= dto.TimestampMax);
+
+        var liquidityRecordIndices = liquidityRecordQueryable.Skip(0).Take(10000).ToList();
+        
+        foreach (var liquidityRecordIndex in liquidityRecordIndices)
+        {
+            result.TransactionCount++;
+            if (!tokenFeeMap.ContainsKey(liquidityRecordIndex.Token0))
+            {
+                tokenFeeMap.Add(liquidityRecordIndex.Token0, 0);
+            }
+            tokenFeeMap[liquidityRecordIndex.Token0] += liquidityRecordIndex.Token0Amount;
+            if (!tokenFeeMap.ContainsKey(liquidityRecordIndex.Token1))
+            {
+                tokenFeeMap.Add(liquidityRecordIndex.Token1, 0);
+            }
+            tokenFeeMap[liquidityRecordIndex.Token1] += liquidityRecordIndex.Token1Amount;
+        }
+        
+        foreach (var kv in tokenFeeMap)
+        {
+            result.TransactionVolumes.Add(new TokenAmountDto()
+            {
+                TokenSymbol = kv.Key,
+                Amount = kv.Value
+            });
+        }
+
+        return result;
+    }
 }
