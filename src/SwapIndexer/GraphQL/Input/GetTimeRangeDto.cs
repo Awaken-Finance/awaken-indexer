@@ -1,6 +1,6 @@
 namespace SwapIndexer.GraphQL;
 
-public class GetLabsFeeDto
+public class GetTimeRangeDto
 {
     public long TimestampMin { get; set; }
     public long TimestampMax { get; set; }

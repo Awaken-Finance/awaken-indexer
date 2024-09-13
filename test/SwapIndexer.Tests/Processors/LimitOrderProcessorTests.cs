@@ -5,6 +5,7 @@ using AElf.CSharp.Core.Extension;
 using AElf.Types;
 using Awaken.Contracts.Hooks;
 using Awaken.Contracts.Order;
+using Awaken.Contracts.Swap;
 using Google.Protobuf;
 using SwapIndexer.Entities;
 using SwapIndexer.GraphQL;
@@ -25,6 +26,7 @@ public sealed class LimitOrderProcessorTests : SwapIndexerTestBase
 {
     private readonly IReadOnlyRepository<LimitOrderIndex> _recordRepository;
     private readonly IReadOnlyRepository<SwapRecordIndex> _swapRecordRepository;
+    private readonly IReadOnlyRepository<LiquidityRecordIndex> _liquidityRepository;
     private readonly IObjectMapper _objectMapper;
     private readonly IAElfDataProvider _aelfDataProvider;
     private readonly IAeFinderLogger _logger;
@@ -47,6 +49,7 @@ public sealed class LimitOrderProcessorTests : SwapIndexerTestBase
     {
         _recordRepository = GetRequiredService<IReadOnlyRepository<LimitOrderIndex>>();
         _swapRecordRepository = GetRequiredService<IReadOnlyRepository<SwapRecordIndex>>();
+        _liquidityRepository = GetRequiredService<IReadOnlyRepository<LiquidityRecordIndex>>();
         _objectMapper = GetRequiredService<IObjectMapper>();
         _aelfDataProvider = GetRequiredService<IAElfDataProvider>();
         _logger = GetRequiredService<IAeFinderLogger>();
@@ -467,16 +470,90 @@ public sealed class LimitOrderProcessorTests : SwapIndexerTestBase
         var labsFeeProcessor = GetRequiredService<LabsFeeChargedProcessor>();
         await labsFeeProcessor.ProcessAsync(labsFeeCharged, logEventContext);
 
-        var labsFee = await Query.LabsFeeAsync(_recordRepository, _swapRecordRepository, _objectMapper, new GetLabsFeeDto()
+        var labsFee = await Query.LabsFeeAsync(_recordRepository, _swapRecordRepository, _objectMapper, new GetTimeRangeDto()
         {
             TimestampMin = FillTime.AddMinutes(-1).ToDateTime().ToUnixTimeMilliseconds(),
             TimestampMax = FillTime.AddMinutes(1).ToDateTime().ToUnixTimeMilliseconds()
         });
-        labsFee.tokens.Count.ShouldBe(2);
-        labsFee.tokens[0].tokenSymbol.ShouldBe("BTC");
-        labsFee.tokens[0].labsFee.ShouldBe(1234);
-        labsFee.tokens[1].tokenSymbol.ShouldBe("AELF");
-        labsFee.tokens[1].labsFee.ShouldBe(123456);
+        labsFee.Tokens.Count.ShouldBe(2);
+        labsFee.Tokens[0].TokenSymbol.ShouldBe("BTC");
+        labsFee.Tokens[0].LabsFee.ShouldBe(1234);
+        labsFee.Tokens[1].TokenSymbol.ShouldBe("AELF");
+        labsFee.Tokens[1].LabsFee.ShouldBe(123456);
+
+        var activeResult = await Query.ActiveAddressAsync(_liquidityRepository, _swapRecordRepository, _recordRepository, _objectMapper, new GetTimeRangeDto()
+        {
+            TimestampMin = CommitTime.AddMinutes(-1).ToDateTime().ToUnixTimeMilliseconds(),
+            TimestampMax = FillTime.AddMinutes(1).ToDateTime().ToUnixTimeMilliseconds()
+        });
         
+        activeResult.ActiveAddressCount.ShouldBe(2);
+        activeResult.NewActiveAddressCount.ShouldBe(2);
+        activeResult.ActiveAddresses[0].ShouldBe("2gbvSJdUxUQTBarhfhAC7QyXwz4dKJjUNuaBD1FYRcM6iGv2nK");
+        activeResult.ActiveAddresses[1].ShouldBe("2YcGvyn7QPmhvrZ7aaymmb2MDYWhmAks356nV3kUwL8FkGSYeZ");
+    }
+    
+    
+    [Fact]
+    public async Task TransactionVolumeAsyncTests()
+    {
+        var swap = new Awaken.Contracts.Swap.Swap()
+        {
+            Pair = Address.FromPublicKey("AAA".HexToByteArray()),
+            To = Address.FromPublicKey("BBB".HexToByteArray()),
+            Sender = Address.FromPublicKey("CCC".HexToByteArray()),
+            SymbolIn = "BTC",
+            SymbolOut = "AELF",
+            AmountIn = 100,
+            AmountOut = 1,
+            TotalFee = 15,
+            Channel = "test"
+        };
+
+        var limitTotalFill = new LimitOrderTotalFilled()
+        {
+            SymbolIn = "AELF",
+            SymbolOut = "BTC",
+            AmountInFilled = 1,
+            AmountOutFilled = 100,
+        };
+
+        var liquidityAdd = new LiquidityAdded()
+        {
+            SymbolA = "ELF",
+            SymbolB = "USDT",
+            AmountA = 1,
+            AmountB = 10,
+            Sender = Address.FromPublicKey("AAA".HexToByteArray()),
+            To = Address.FromPublicKey("BBB".HexToByteArray()),
+            Pair = Address.FromPublicKey("CCC".HexToByteArray())
+        };
+        
+        var logEventContext = GenerateLogEventContext(swap);
+        logEventContext.Block.BlockTime = FillTime.ToDateTime();
+
+        var swapProcessor = GetRequiredService<SwapProcessor>();
+        await swapProcessor.ProcessAsync(swap, logEventContext);
+        
+        var limitTotalFilledProcessor = GetRequiredService<LimitOrderTotalFilledProcessor>();
+        await limitTotalFilledProcessor.ProcessAsync(limitTotalFill, logEventContext);
+        
+        var liquidityAddedProcessor = GetRequiredService<LiquidityAddedProcessor>();
+        await liquidityAddedProcessor.ProcessAsync(liquidityAdd, logEventContext);
+        
+        var transactionVolume = await Query.TransactionVolumeAsync(_liquidityRepository, _swapRecordRepository,
+            _objectMapper, new GetTimeRangeDto()
+            {
+                TimestampMin = FillTime.AddMinutes(-1).ToDateTime().ToUnixTimeMilliseconds(),
+                TimestampMax = FillTime.AddMinutes(1).ToDateTime().ToUnixTimeMilliseconds()
+            });
+        transactionVolume.TransactionVolumes.Count.ShouldBe(3);
+        transactionVolume.TransactionVolumes[0].TokenSymbol.ShouldBe("AELF");
+        transactionVolume.TransactionVolumes[0].Amount.ShouldBe(2);
+        transactionVolume.TransactionVolumes[1].TokenSymbol.ShouldBe("ELF");
+        transactionVolume.TransactionVolumes[1].Amount.ShouldBe(1);
+        transactionVolume.TransactionVolumes[2].TokenSymbol.ShouldBe("USDT");
+        transactionVolume.TransactionVolumes[2].Amount.ShouldBe(10);
+        transactionVolume.TransactionCount.ShouldBe(3);
     }
 }
