@@ -872,7 +872,6 @@ public class Query
             orderCount++;
             amountIn = amountIn.Add(limitOrderDto.AmountIn);
             filledAmountIn = filledAmountIn.Add(limitOrderDto.AmountInFilled);
-            logger.LogInformation($"[LimitOrderRemainingUnfilled] amountIn: {amountIn} filledAmountIn: {filledAmountIn}");
         }
     
         var remainingUnfilled = amountIn.Sub(filledAmountIn);
