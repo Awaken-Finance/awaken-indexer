@@ -557,15 +557,15 @@ public class Query
         long quoteDecimal = AwakenSwapConst.QuoteTokenDecimal;
         long baseDecimal = AwakenSwapConst.BaseTokenDecimal;
         
-        logger.LogInformation($"[TotalValueLockedAsync] input: {dto.ChainId} {dto.Timestamp}");
-        logger.LogInformation($"[TotalValueLockedAsync] token decimal usdt: {baseDecimal}, elf: {quoteDecimal}");
+        // logger.LogDebug($"[TotalValueLockedAsync] input: {dto.ChainId} {dto.Timestamp}");
+        // logger.LogDebug($"[TotalValueLockedAsync] token decimal usdt: {baseDecimal}, elf: {quoteDecimal}");
         
         var queryable = await tradePairRepository.GetQueryableAsync();
         
         queryable = queryable.Where(t => t.Metadata.ChainId == dto.ChainId);
         
         var tradePairResult = queryable.Skip(0).Take(10000).ToList();
-        logger.LogInformation($"[TotalValueLockedAsync] all trade pair count: {queryable.Count()}");
+        // logger.LogDebug($"[TotalValueLockedAsync] all trade pair count: {queryable.Count()}");
         
         var tradePairAddresses = new List<string>();
         var standTradePairAddresses = new List<string>();
@@ -592,8 +592,8 @@ public class Query
             logger.LogInformation($"[TotalValueLockedAsync] Exception: {e}");
         }
         
-        logger.LogInformation($"[TotalValueLockedAsync] standTradePairAddresses count: {standTradePairAddresses.Count}");
-        logger.LogInformation($"[TotalValueLockedAsync] quoteTradePairAddresses count: {tradePairAddresses.Count}");
+        // logger.LogDebug($"[TotalValueLockedAsync] standTradePairAddresses count: {standTradePairAddresses.Count}");
+        // logger.LogDebug($"[TotalValueLockedAsync] quoteTradePairAddresses count: {tradePairAddresses.Count}");
         
         double priceSum = 0.0;
         long count = 0;
@@ -616,7 +616,7 @@ public class Query
                         priceSum += (syncIndex.ReserveB / Math.Pow(10, baseDecimal)) / (syncIndex.ReserveA / Math.Pow(10, quoteDecimal));
                     }
                 }
-                logger.LogInformation($"[TotalValueLockedAsync] cal elf price count: {count}, price sum: {priceSum}");
+                // logger.LogDebug($"[TotalValueLockedAsync] cal elf price count: {count}, price sum: {priceSum}");
             }
             catch (Exception e)
             {
@@ -630,7 +630,7 @@ public class Query
             priceAvg = priceSum / count;
         }
          
-        logger.LogInformation($"[TotalValueLockedAsync] cal elf price avg: {priceAvg}");
+        // logger.LogDebug($"[TotalValueLockedAsync] cal elf price avg: {priceAvg}");
     
         double tvl = 0.0;
         foreach (var pairAddress in tradePairAddresses)
@@ -656,8 +656,6 @@ public class Query
                         value = 2 * syncIndex.ReserveB / Math.Pow(10, quoteDecimal) * priceAvg;
                     }
                     
-                    // logger.LogInformation($"[TotalValueLockedAsync] pair: {pairAddress}, tokenA: {syncIndex.SymbolA}, tokenB: {syncIndex.SymbolB}, reserveA: {syncIndex.ReserveA}, reserveB: {syncIndex.ReserveB}, value: {value}");
-            
                     tvl += value;
                 }
             }
@@ -667,7 +665,7 @@ public class Query
             }
         }
         
-        logger.LogInformation($"[TotalValueLockedAsync] chain: {dto.ChainId}, time: {dto.Timestamp} result: {tvl}");
+        // logger.LogDebug($"[TotalValueLockedAsync] chain: {dto.ChainId}, time: {dto.Timestamp} result: {tvl}");
     
         if (Double.IsNaN(tvl))
         {
@@ -833,7 +831,7 @@ public class Query
         GetLimitOrderRemainingUnfilledDto dto
     )
     {
-        logger.LogInformation($"[LimitOrderRemainingUnfilled] ChainId: {dto.ChainId} MakerAddress: {dto.MakerAddress} TokenSymbol: {dto.TokenSymbol}");
+        // logger.LogDebug($"[LimitOrderRemainingUnfilled] ChainId: {dto.ChainId} MakerAddress: {dto.MakerAddress} TokenSymbol: {dto.TokenSymbol}");
         
         var queryable = await repository.GetQueryableAsync();
         
@@ -876,7 +874,7 @@ public class Query
     
         var remainingUnfilled = amountIn.Sub(filledAmountIn);
         
-        logger.LogInformation($"[LimitOrderRemainingUnfilled] remainingUnfilled: {remainingUnfilled}");
+        // logger.LogDebug($"[LimitOrderRemainingUnfilled] remainingUnfilled: {remainingUnfilled}");
         
         return new LimitOrderRemainingUnfilledResultDto()
         {
