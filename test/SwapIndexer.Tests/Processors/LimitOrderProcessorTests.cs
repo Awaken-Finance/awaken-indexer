@@ -524,9 +524,9 @@ public sealed class LimitOrderProcessorTests : SwapIndexerTestBase
             SymbolB = "USDT",
             AmountA = 1,
             AmountB = 10,
-            Sender = Address.FromPublicKey("AAA".HexToByteArray()),
+            Pair = Address.FromPublicKey("AAA".HexToByteArray()),
             To = Address.FromPublicKey("BBB".HexToByteArray()),
-            Pair = Address.FromPublicKey("CCC".HexToByteArray())
+            Sender = Address.FromPublicKey("AAA".HexToByteArray())
         };
         
         var logEventContext = GenerateLogEventContext(swap);
@@ -542,7 +542,7 @@ public sealed class LimitOrderProcessorTests : SwapIndexerTestBase
         await liquidityAddedProcessor.ProcessAsync(liquidityAdd, logEventContext);
         
         var transactionVolume = await Query.TransactionVolumeAsync(_liquidityRepository, _swapRecordRepository,
-            _objectMapper, new GetTimeRangeDto()
+            _objectMapper, new GetTransactionVolumeDto()
             {
                 TimestampMin = FillTime.AddMinutes(-1).ToDateTime().ToUnixTimeMilliseconds(),
                 TimestampMax = FillTime.AddMinutes(1).ToDateTime().ToUnixTimeMilliseconds()
@@ -555,5 +555,38 @@ public sealed class LimitOrderProcessorTests : SwapIndexerTestBase
         transactionVolume.TransactionVolumes[2].TokenSymbol.ShouldBe("USDT");
         transactionVolume.TransactionVolumes[2].Amount.ShouldBe(10);
         transactionVolume.TransactionCount.ShouldBe(3);
+        
+        
+        transactionVolume = await Query.TransactionVolumeAsync(_liquidityRepository, _swapRecordRepository,
+            _objectMapper, new GetTransactionVolumeDto()
+            {
+                TimestampMin = FillTime.AddMinutes(-1).ToDateTime().ToUnixTimeMilliseconds(),
+                TimestampMax = FillTime.AddMinutes(1).ToDateTime().ToUnixTimeMilliseconds(),
+                TransactionType = (int)TransactionType.Liquidity
+            });
+        transactionVolume.TransactionVolumes.Count.ShouldBe(2);
+        transactionVolume.TransactionVolumes[0].TokenSymbol.ShouldBe("ELF");
+        transactionVolume.TransactionVolumes[0].Amount.ShouldBe(1);
+        transactionVolume.TransactionVolumes[1].TokenSymbol.ShouldBe("USDT");
+        transactionVolume.TransactionVolumes[1].Amount.ShouldBe(10);
+        transactionVolume.TransactionCount.ShouldBe(1);
+        
+        var pairTransactionVolume = await Query.PairTransactionVolumeAsync(_liquidityRepository, _swapRecordRepository,
+            _objectMapper, new GetTransactionVolumeDto()
+            {
+                TimestampMin = FillTime.AddMinutes(-1).ToDateTime().ToUnixTimeMilliseconds(),
+                TimestampMax = FillTime.AddMinutes(1).ToDateTime().ToUnixTimeMilliseconds()
+            });
+        pairTransactionVolume.PairTransactionVolumes.Count.ShouldBe(1);
+        pairTransactionVolume.PairTransactionVolumes[0].PairAddress.ShouldBe(Address.FromPublicKey("AAA".HexToByteArray()).ToBase58());
+        var tokenMap = pairTransactionVolume.PairTransactionVolumes[0].TokenTransactionVolume;
+        tokenMap.TransactionVolumes.Count.ShouldBe(3);
+        tokenMap.TransactionVolumes[0].TokenSymbol.ShouldBe("AELF");
+        tokenMap.TransactionVolumes[0].Amount.ShouldBe(1);
+        tokenMap.TransactionVolumes[1].TokenSymbol.ShouldBe("ELF");
+        tokenMap.TransactionVolumes[1].Amount.ShouldBe(1);
+        tokenMap.TransactionVolumes[2].TokenSymbol.ShouldBe("USDT");
+        tokenMap.TransactionVolumes[2].Amount.ShouldBe(10);
+        tokenMap.TransactionCount.ShouldBe(2);
     }
 }
