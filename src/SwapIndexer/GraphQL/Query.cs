@@ -1116,6 +1116,82 @@ public class Query
     }
     
     
+    [Name("tradeActiveAddress")]
+    public static async Task<ActiveAddressDto> TradeActiveAddressAsync(
+        [FromServices] IReadOnlyRepository<LiquidityRecordIndex> liquidityRepository,
+        [FromServices] IReadOnlyRepository<SwapRecordIndex> swapRepository,
+        [FromServices] IReadOnlyRepository<LimitOrderIndex> limitOrderRepository,
+        [FromServices] IObjectMapper objectMapper,
+        GetActiveAddressDto dto
+    )
+    {
+        
+        switch (dto.TransactionType)
+        {
+            case (int)ActiveAddressTransactionType.AddLiquidity:
+            {
+                var addLiquidityQueryable = await liquidityRepository.GetQueryableAsync();
+                addLiquidityQueryable = addLiquidityQueryable.Where(t => t.Timestamp > dto.TimestampMin);
+                addLiquidityQueryable = addLiquidityQueryable.Where(t => t.Timestamp <= dto.TimestampMax);
+                addLiquidityQueryable = addLiquidityQueryable.Where(t => t.Type == LiquidityRecordIndex.LiquidityType.Mint);
+                var addLiquidityAddress = addLiquidityQueryable.AsEnumerable().GroupBy(item => item.Address)
+                    .Select(group => group.Key)
+                    .ToList();
+                return new ActiveAddressDto()
+                {
+                    ActiveAddresses = addLiquidityAddress,
+                    ActiveAddressCount = addLiquidityAddress.Count,
+                };
+            }
+            case (int)ActiveAddressTransactionType.RemoveLiquidity:
+            {
+                var removeLiquidityQueryable = await liquidityRepository.GetQueryableAsync();
+                removeLiquidityQueryable = removeLiquidityQueryable.Where(t => t.Timestamp > dto.TimestampMin);
+                removeLiquidityQueryable = removeLiquidityQueryable.Where(t => t.Timestamp <= dto.TimestampMax);
+                removeLiquidityQueryable = removeLiquidityQueryable.Where(t => t.Type == LiquidityRecordIndex.LiquidityType.Burn);
+                var removeLiquidityAddress = removeLiquidityQueryable.AsEnumerable().GroupBy(item => item.Address)
+                    .Select(group => group.Key)
+                    .ToList();
+                return new ActiveAddressDto()
+                {
+                    ActiveAddresses = removeLiquidityAddress,
+                    ActiveAddressCount = removeLiquidityAddress.Count,
+                };
+            }
+            case (int)ActiveAddressTransactionType.Limit:
+            {
+                var limitOrderQueryable = await limitOrderRepository.GetQueryableAsync();
+                limitOrderQueryable = limitOrderQueryable.Where(t => t.CommitTime > dto.TimestampMin);
+                limitOrderQueryable = limitOrderQueryable.Where(t => t.CommitTime <= dto.TimestampMax);
+                var limitOrderAddress = limitOrderQueryable.AsEnumerable().GroupBy(item => item.Maker)
+                    .Select(group => group.Key)
+                    .ToList();
+                return new ActiveAddressDto()
+                {
+                    ActiveAddresses = limitOrderAddress,
+                    ActiveAddressCount = limitOrderAddress.Count,
+                };
+            }
+            case (int)ActiveAddressTransactionType.Swap:
+            {
+                var swapQueryable = await swapRepository.GetQueryableAsync();
+                swapQueryable = swapQueryable.Where(t => t.Timestamp > dto.TimestampMin);
+                swapQueryable = swapQueryable.Where(t => t.Timestamp <= dto.TimestampMax);
+                var swapAddress = swapQueryable.AsEnumerable().GroupBy(item => item.Sender)
+                    .Select(group => group.Key)
+                    .ToList();
+                return new ActiveAddressDto()
+                {
+                    ActiveAddresses = swapAddress,
+                    ActiveAddressCount = swapAddress.Count,
+                };
+            }
+        }
+       
+        return new ActiveAddressDto();
+    }
+    
+    
     [Name("transactionVolume")]
     public static async Task<TransactionVolumeDto> TransactionVolumeAsync(
         [FromServices] IReadOnlyRepository<LiquidityRecordIndex> liquidityRepository,

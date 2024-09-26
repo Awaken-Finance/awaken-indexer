@@ -491,6 +491,28 @@ public sealed class LimitOrderProcessorTests : SwapIndexerTestBase
         activeResult.NewActiveAddressCount.ShouldBe(2);
         activeResult.ActiveAddresses[0].ShouldBe("2gbvSJdUxUQTBarhfhAC7QyXwz4dKJjUNuaBD1FYRcM6iGv2nK");
         activeResult.ActiveAddresses[1].ShouldBe("2YcGvyn7QPmhvrZ7aaymmb2MDYWhmAks356nV3kUwL8FkGSYeZ");
+        
+        
+        var tradeActiveResult = await Query.TradeActiveAddressAsync(_liquidityRepository, _swapRecordRepository, _recordRepository, _objectMapper, new GetActiveAddressDto()
+        {
+            TimestampMin = CommitTime.AddMinutes(-1).ToDateTime().ToUnixTimeMilliseconds(),
+            TimestampMax = FillTime.AddMinutes(1).ToDateTime().ToUnixTimeMilliseconds(),
+            TransactionType = (int)ActiveAddressTransactionType.Swap
+        });
+        
+        tradeActiveResult.ActiveAddressCount.ShouldBe(1);
+        tradeActiveResult.ActiveAddresses[0].ShouldBe(Address.FromPublicKey("CCC".HexToByteArray()).ToBase58());
+        
+        
+        tradeActiveResult = await Query.TradeActiveAddressAsync(_liquidityRepository, _swapRecordRepository, _recordRepository, _objectMapper, new GetActiveAddressDto()
+        {
+            TimestampMin = CommitTime.AddMinutes(-1).ToDateTime().ToUnixTimeMilliseconds(),
+            TimestampMax = FillTime.AddMinutes(1).ToDateTime().ToUnixTimeMilliseconds(),
+            TransactionType = (int)ActiveAddressTransactionType.Limit
+        });
+        
+        tradeActiveResult.ActiveAddressCount.ShouldBe(1);
+        tradeActiveResult.ActiveAddresses[0].ShouldBe(Address.FromPublicKey("AAA".HexToByteArray()).ToBase58());
     }
     
     
