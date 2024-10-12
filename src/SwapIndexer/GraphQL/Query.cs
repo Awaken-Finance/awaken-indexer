@@ -1039,6 +1039,42 @@ public class Query
         return objectMapper.Map<List<LimitOrderIndex>, List<LimitOrderDto>>(result);
     }
     
+    
+    [Name("getLimitOrderFillRecords")]
+    public static async Task<List<LimitOrderFillRecordDto>> GetLimitOrderFillRecordsAsync(
+        [FromServices] IReadOnlyRepository<LimitOrderFillRecordIndex> repository,
+        [FromServices] IObjectMapper objectMapper,
+        GetChainBlockHeightDto dto
+    )
+    {
+        dto.Validate();
+    
+        var queryable = await repository.GetQueryableAsync();
+    
+        if (!string.IsNullOrEmpty(dto.ChainId))
+        {
+            queryable = queryable.Where(t => t.Metadata.ChainId == dto.ChainId);
+        }
+    
+        if (dto.StartBlockHeight > 0)
+        {
+            queryable = queryable.Where(a => a.Metadata.Block.BlockHeight >= dto.StartBlockHeight);
+        }
+    
+        if (dto.EndBlockHeight > 0)
+        {
+            queryable = queryable.Where(a => a.Metadata.Block.BlockHeight <= dto.EndBlockHeight);
+        }
+        
+        var result = queryable
+            .OrderBy(record => record.Metadata.Block.BlockHeight)
+            .Skip(dto.SkipCount)
+            .Take(dto.MaxResultCount)
+            .ToList();
+    
+        return objectMapper.Map<List<LimitOrderFillRecordIndex>, List<LimitOrderFillRecordDto>>(result);
+    }
+    
 
     [Name("activeAddress")]
     public static async Task<ActiveAddressDto> ActiveAddressAsync(
