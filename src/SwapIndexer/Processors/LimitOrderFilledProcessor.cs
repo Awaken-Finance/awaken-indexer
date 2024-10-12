@@ -55,5 +55,23 @@ public class LimitOrderFilledProcessor : LimitOrderProcessorBase<LimitOrderFille
             recordIndex.LimitOrderStatus = LimitOrderStatus.FullFilled;
         }
         await SaveEntityAsync(recordIndex);
+        
+        var fillRecordId = IdGenerateHelper.GetId(context.ChainId, eventValue.OrderId, context.Transaction.TransactionId);
+        var fillRecordIndex = await GetEntityAsync<LimitOrderFillRecordIndex>(id) ?? new LimitOrderFillRecordIndex()
+        {
+            Id = fillRecordId,
+            OrderId = eventValue.OrderId,
+            MakerAddress = recordIndex.Maker,
+            SymbolIn = recordIndex.SymbolIn,
+            SymbolOut = recordIndex.SymbolOut,
+            AmountInFilled = eventValue.AmountInFilled,
+            AmountOutFilled = eventValue.AmountOutFilled,
+            TransactionTime = DateTimeHelper.ToUnixTimeMilliseconds(eventValue.FillTime.ToDateTime()),
+            TakerAddress = takerAddress,
+            TransactionHash = context.Transaction.TransactionId,
+            TotalFee = eventValue.TotalFee,
+            TransactionFee = transactionFee
+        };
+        await SaveEntityAsync(fillRecordIndex);
     }
 }

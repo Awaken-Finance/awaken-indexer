@@ -7,6 +7,7 @@ using SwapIndexer.Entities;
 using SwapIndexer.Entities.Token;
 using SwapIndexer.GraphQL;
 using SwapIndexer.Entities;
+using SwapIndexer.GraphQL.Dto;
 using Volo.Abp.AutoMapper;
 
 namespace SwapIndexer;
@@ -60,6 +61,8 @@ public class SwapIndexerProfile : Profile
             .ForMember(res => res.BlockHeight, opt => opt.MapFrom(res => res.Metadata.Block.BlockHeight));
         CreateMap<TokenRecordIndex, TokenRecordIndexDto>();
         CreateMap<LimitOrderIndex, LimitOrderDto>()
+            .ForMember(res => res.ChainId, opt => opt.MapFrom(res => res.Metadata.ChainId));
+        CreateMap<LimitOrderFillRecordIndex, LimitOrderFillRecordDto>()
             .ForMember(res => res.ChainId, opt => opt.MapFrom(res => res.Metadata.ChainId));
     }
 }

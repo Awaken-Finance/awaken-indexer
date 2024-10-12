@@ -25,6 +25,7 @@ namespace SwapIndexer.Tests.Processors;
 public sealed class LimitOrderProcessorTests : SwapIndexerTestBase
 {
     private readonly IReadOnlyRepository<LimitOrderIndex> _recordRepository;
+    private readonly IReadOnlyRepository<LimitOrderFillRecordIndex> _fillRecordRepository;
     private readonly IReadOnlyRepository<SwapRecordIndex> _swapRecordRepository;
     private readonly IReadOnlyRepository<LiquidityRecordIndex> _liquidityRepository;
     private readonly IObjectMapper _objectMapper;
@@ -48,6 +49,7 @@ public sealed class LimitOrderProcessorTests : SwapIndexerTestBase
     public LimitOrderProcessorTests()
     {
         _recordRepository = GetRequiredService<IReadOnlyRepository<LimitOrderIndex>>();
+        _fillRecordRepository = GetRequiredService<IReadOnlyRepository<LimitOrderFillRecordIndex>>();
         _swapRecordRepository = GetRequiredService<IReadOnlyRepository<SwapRecordIndex>>();
         _liquidityRepository = GetRequiredService<IReadOnlyRepository<LiquidityRecordIndex>>();
         _objectMapper = GetRequiredService<IObjectMapper>();
@@ -173,6 +175,42 @@ public sealed class LimitOrderProcessorTests : SwapIndexerTestBase
             });
         limitOrders.Count.ShouldBe(1);
         limitOrders[0].OrderId.ShouldBe(1);
+        
+        var limitOrderFillRecordIndex = await SwapIndexerTestHelper.GetEntityAsync(_fillRecordRepository, IdGenerateHelper.GetId(ChainId, orderId, FilledTransactionId1));
+        limitOrderFillRecordIndex.ShouldNotBe(null);
+        limitOrderFillRecordIndex.MakerAddress.ShouldBe(Address.FromPublicKey("AAA".HexToByteArray()).ToBase58());
+        limitOrderFillRecordIndex.OrderId.ShouldBe(1);
+        limitOrderFillRecordIndex.SymbolIn.ShouldBe("ELF");
+        limitOrderFillRecordIndex.SymbolOut.ShouldBe("BTC");
+        limitOrderFillRecordIndex.AmountInFilled.ShouldBe(100);
+        limitOrderFillRecordIndex.AmountOutFilled.ShouldBe(10);
+        limitOrderFillRecordIndex.TakerAddress.ShouldBe(Address.FromPublicKey("BBB".HexToByteArray()).ToBase58());
+        limitOrderFillRecordIndex.TransactionTime.ShouldBe(DateTimeHelper.ToUnixTimeMilliseconds(FillTime.ToDateTime()));
+        limitOrderFillRecordIndex.TransactionHash.ShouldBe(FilledTransactionId1);
+        limitOrderFillRecordIndex.TransactionFee.ShouldBe(0);
+        limitOrderFillRecordIndex.TotalFee.ShouldBe(1234);
+        limitOrderFillRecordIndex.Metadata.Block.BlockHeight.ShouldBe(100);
+        
+        var limitOrderFillRecords =
+            await Query.GetLimitOrderFillRecordsAsync(_fillRecordRepository, _objectMapper, new GetChainBlockHeightDto()
+            {
+                StartBlockHeight = 100,
+                EndBlockHeight = 0,
+                SkipCount = 0,
+                MaxResultCount = 100
+            });
+        limitOrderFillRecords.Count.ShouldBe(1);
+        limitOrderFillRecords[0].ChainId.ShouldBe("AELF");
+        limitOrderFillRecords[0].OrderId.ShouldBe(1);
+        limitOrderFillRecords[0].SymbolIn.ShouldBe("ELF");
+        limitOrderFillRecords[0].SymbolOut.ShouldBe("BTC");
+        limitOrderFillRecords[0].AmountInFilled.ShouldBe(100);
+        limitOrderFillRecords[0].AmountOutFilled.ShouldBe(10);
+        limitOrderFillRecords[0].TakerAddress.ShouldBe(Address.FromPublicKey("BBB".HexToByteArray()).ToBase58());
+        limitOrderFillRecords[0].TransactionTime.ShouldBe(DateTimeHelper.ToUnixTimeMilliseconds(FillTime.ToDateTime()));
+        limitOrderFillRecords[0].TransactionHash.ShouldBe(FilledTransactionId1);
+        limitOrderFillRecords[0].TransactionFee.ShouldBe(0);
+        limitOrderFillRecords[0].TotalFee.ShouldBe(1234);
     }
     
     [Fact]
