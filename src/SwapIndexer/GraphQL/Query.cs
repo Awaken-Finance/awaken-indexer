@@ -1318,11 +1318,11 @@ public class Query
                 {
                     if (!string.IsNullOrEmpty(swapRecord.PairAddress))
                     {
-                        if (!pairCountMap.ContainsKey(recordIndex.PairAddress))
+                        if (!pairCountMap.ContainsKey(swapRecord.PairAddress))
                         {
-                            pairCountMap.Add(recordIndex.PairAddress, 0);
+                            pairCountMap.Add(swapRecord.PairAddress, 0);
                         }
-                        pairCountMap[recordIndex.PairAddress]++;
+                        pairCountMap[swapRecord.PairAddress]++;
                         
                         if (!pairMap.ContainsKey(swapRecord.PairAddress))
                         {
