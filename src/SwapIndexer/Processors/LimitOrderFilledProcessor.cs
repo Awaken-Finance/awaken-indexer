@@ -57,21 +57,31 @@ public class LimitOrderFilledProcessor : LimitOrderProcessorBase<LimitOrderFille
         await SaveEntityAsync(recordIndex);
         
         var fillRecordId = IdGenerateHelper.GetId(context.ChainId, eventValue.OrderId, context.Transaction.TransactionId);
-        var fillRecordIndex = await GetEntityAsync<LimitOrderFillRecordIndex>(id) ?? new LimitOrderFillRecordIndex()
+        
+        var fillRecordIndex = await GetEntityAsync<LimitOrderFillRecordIndex>(id);
+        if (fillRecordIndex == null)
         {
-            Id = fillRecordId,
-            OrderId = eventValue.OrderId,
-            MakerAddress = recordIndex.Maker,
-            SymbolIn = recordIndex.SymbolIn,
-            SymbolOut = recordIndex.SymbolOut,
-            AmountInFilled = eventValue.AmountInFilled,
-            AmountOutFilled = eventValue.AmountOutFilled,
-            TransactionTime = DateTimeHelper.ToUnixTimeMilliseconds(eventValue.FillTime.ToDateTime()),
-            TakerAddress = takerAddress,
-            TransactionHash = context.Transaction.TransactionId,
-            TotalFee = eventValue.TotalFee,
-            TransactionFee = transactionFee
-        };
+            fillRecordIndex = new LimitOrderFillRecordIndex()
+            {
+                Id = fillRecordId,
+                OrderId = eventValue.OrderId,
+                MakerAddress = recordIndex.Maker,
+                SymbolIn = recordIndex.SymbolIn,
+                SymbolOut = recordIndex.SymbolOut,
+                AmountInFilled = eventValue.AmountInFilled,
+                AmountOutFilled = eventValue.AmountOutFilled,
+                TransactionTime = DateTimeHelper.ToUnixTimeMilliseconds(eventValue.FillTime.ToDateTime()),
+                TakerAddress = takerAddress,
+                TransactionHash = context.Transaction.TransactionId,
+                TotalFee = eventValue.TotalFee,
+                TransactionFee = transactionFee
+            };
+        }
+        else
+        {
+            fillRecordIndex.TotalFee += eventValue.TotalFee;
+        }
+        
         await SaveEntityAsync(fillRecordIndex);
     }
 }
