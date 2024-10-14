@@ -121,6 +121,16 @@ public sealed class LimitOrderProcessorTests : SwapIndexerTestBase
             });
         limitOrders.Count.ShouldBe(1);
         limitOrders[0].OrderId.ShouldBe(1);
+        
+        var pairLimitOrders =
+            await Query.GetPairLimitOrdersRemainingUnfilledAsync(_recordRepository, _objectMapper, _logger, new GetPairLimitOrdersRemainingUnfilledDto()
+           );
+        pairLimitOrders.Count.ShouldBe(1);
+        pairLimitOrders[0].OrderCount.ShouldBe(1);
+        pairLimitOrders[0].SymbolIn.ShouldBe("ELF");
+        pairLimitOrders[0].SymbolOut.ShouldBe("BTC");
+        pairLimitOrders[0].PriceCount.ShouldBe(1);
+        pairLimitOrders[0].PriceList.Count.ShouldBe(1);
     }
     
     
