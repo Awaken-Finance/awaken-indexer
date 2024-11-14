@@ -659,4 +659,66 @@ public sealed class LimitOrderProcessorTests : SwapIndexerTestBase
         tokenMap.TransactionVolumes[2].Amount.ShouldBe(10);
         tokenMap.TransactionCount.ShouldBe(2);
     }
+    
+    
+    [Fact]
+    public async Task PairTradeValueByLabsFeeTest()
+    {
+        var swap = new Awaken.Contracts.Swap.Swap()
+        {
+            Pair = Address.FromPublicKey("AAA".HexToByteArray()),
+            To = Address.FromPublicKey("BBB".HexToByteArray()),
+            Sender = Address.FromPublicKey("CCC".HexToByteArray()),
+            SymbolIn = "BTC",
+            SymbolOut = "ELF",
+            AmountIn = 100,
+            AmountOut = 1,
+            TotalFee = 15,
+            Channel = "test"
+        };
+
+        var limitTotalFill = new LimitOrderTotalFilled()
+        {
+            Sender = Address.FromPublicKey("CCC".HexToByteArray()),
+            SymbolIn = "ELF",
+            SymbolOut = "BTC",
+            AmountInFilled = 1,
+            AmountOutFilled = 100,
+        };
+
+        var labsFeeCharged = new LabsFeeCharged()
+        {
+            Symbol = "ELF",
+            Amount = 15
+        };
+        
+        var logEventContext = GenerateLogEventContext(swap);
+        logEventContext.Block.BlockTime = FillTime.ToDateTime();
+
+        var limitTotalFilledProcessor = GetRequiredService<LimitOrderTotalFilledProcessor>();
+        await limitTotalFilledProcessor.ProcessAsync(limitTotalFill, logEventContext);
+        
+        var swapProcessor = GetRequiredService<SwapProcessor>();
+        await swapProcessor.ProcessAsync(swap, logEventContext);
+        
+        var labsFeeChargedProcessor = GetRequiredService<LabsFeeChargedProcessor>();
+        await labsFeeChargedProcessor.ProcessAsync(labsFeeCharged, logEventContext);
+        
+        var transactionVolume = await Query.PairTradeValueByLabsFeeAsync(_swapRecordRepository,
+            new GetPairTradeValueDto()
+            {
+                TradePairs = new List<string>()
+                {
+                    "BTC_ELF"
+                },
+                TimestampMin = FillTime.AddMinutes(-1).ToDateTime().ToUnixTimeMilliseconds(),
+                TimestampMax = FillTime.AddMinutes(1).ToDateTime().ToUnixTimeMilliseconds()
+            });
+        transactionVolume.PairTransactionVolumes.Count.ShouldBe(1);
+        transactionVolume.PairTransactionVolumes[0].PairAddress.ShouldBe(swap.Pair.ToBase58());
+        var tokens = transactionVolume.PairTransactionVolumes[0].TokenTransactionVolume;
+        tokens.TransactionVolumes.Count.ShouldBe(1);
+        tokens.TransactionVolumes[0].TokenSymbol.ShouldBe("ELF");
+        tokens.TransactionVolumes[0].Amount.ShouldBe(10000);
+    }
 }
