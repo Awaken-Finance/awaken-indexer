@@ -410,4 +410,48 @@ public sealed class LiquidityRecordProcessorTests : SwapIndexerTestBase
         var exception = await Assert.ThrowsAsync<ArgumentOutOfRangeException>(action);
         Assert.Contains("Max allowed value", exception.Message);
     }
+    
+    [Fact]
+    public async Task GetAllSwapRecordsTests()
+    {
+        var time = DateTime.UtcNow;
+        var dataCount = 10;
+        for (int i = 0; i < dataCount; i++)
+        {
+            var liquidityAdd = new LiquidityAdded()
+            {
+                Pair = Address.FromPublicKey("AAA".HexToByteArray()),
+                To = Address.FromPublicKey("BBB".HexToByteArray()),
+                Sender = Address.FromPublicKey("CCC".HexToByteArray()),
+                SymbolA = "AELF",
+                SymbolB = "BTC",
+                AmountA = i+100,
+                AmountB = 1,
+                LiquidityToken = 1,
+                Channel = "test"
+            };
+            var logEventContext = GenerateLogEventContext(liquidityAdd);
+            logEventContext.Transaction.TransactionId = $"0x{i}";
+            logEventContext.Block.BlockHeight = i+100;
+            logEventContext.Block.BlockTime = time.AddHours(-1);
+            
+            await _liquidityAddedEventProcessor.ProcessAsync(liquidityAdd, logEventContext);
+        }
+        
+        var emptyLiquidityRecordQueryable = await _recordRepository.GetQueryableAsync();
+        emptyLiquidityRecordQueryable = emptyLiquidityRecordQueryable.Where(a => a.Timestamp > DateTimeHelper.ToUnixTimeMilliseconds(time));
+        var emptyResult = await Query.GetAllLiquidityRecords(emptyLiquidityRecordQueryable, 1);
+        emptyResult.Count.ShouldBe(0);
+        
+        var liquidityRecordQueryable = await _recordRepository.GetQueryableAsync();
+        liquidityRecordQueryable = liquidityRecordQueryable.Where(a => a.Timestamp <= DateTimeHelper.ToUnixTimeMilliseconds(time));
+        var result = await Query.GetAllLiquidityRecords(liquidityRecordQueryable, 1);
+        
+        result.Count.ShouldBe(dataCount);
+        for (int i = 0; i < dataCount; i++)
+        {
+            result[i].TransactionHash.ShouldBe($"0x{i}");
+            result[i].Token0Amount.ShouldBe(i+100);
+        }
+    }
 }

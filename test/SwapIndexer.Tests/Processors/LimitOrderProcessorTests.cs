@@ -711,4 +711,48 @@ public sealed class LimitOrderProcessorTests : SwapIndexerTestBase
         tokens.TransactionVolumes[0].TokenSymbol.ShouldBe("ELF");
         tokens.TransactionVolumes[0].Amount.ShouldBe(10000);
     }
+    
+    [Fact]
+    public async Task GetAllLimitRecordsTests()
+    {
+        var now = DateTime.UtcNow;
+        
+        var dataCount = 10;
+        for (int i = 0; i < dataCount; i++)
+        {
+            var limitOrderCreated = new LimitOrderCreated()
+            {
+                OrderId = i,
+                AmountIn = i+100,
+                AmountOut = 100,
+                CommitTime = Timestamp.FromDateTime(now.AddHours(-1)),
+                Deadline = Timestamp.FromDateTime(now.AddHours(1)),
+                Maker = Address.FromPublicKey("AAA".HexToByteArray()),
+                SymbolIn = "ELF",
+                SymbolOut = "BTC"
+            };
+            var logEventContext = GenerateLogEventContext(limitOrderCreated);
+            logEventContext.Transaction.TransactionId = $"0x{i}";
+            logEventContext.Block.BlockHeight = i+100;
+            logEventContext.Block.BlockTime = now.AddHours(-1);
+        
+            await _limitOrderCreatedProcessor.ProcessAsync(limitOrderCreated, logEventContext);
+        }
+        
+        var emptyLimitRecordQueryable = await _recordRepository.GetQueryableAsync();
+        emptyLimitRecordQueryable = emptyLimitRecordQueryable.Where(a => a.CommitTime > DateTimeHelper.ToUnixTimeMilliseconds(now));
+        var emptyResult = await Query.GetAllLimitRecords(emptyLimitRecordQueryable, 1);
+        emptyResult.Count.ShouldBe(0);
+        
+        var LimitRecordQueryable = await _recordRepository.GetQueryableAsync();
+        LimitRecordQueryable = LimitRecordQueryable.Where(a => a.CommitTime <= DateTimeHelper.ToUnixTimeMilliseconds(now));
+        var result = await Query.GetAllLimitRecords(LimitRecordQueryable, 1);
+        
+        result.Count.ShouldBe(dataCount);
+        for (int i = 0; i < dataCount; i++)
+        {
+            result[i].TransactionHash.ShouldBe($"0x{i}");
+            result[i].AmountIn.ShouldBe(i+100);
+        }
+    }
 }

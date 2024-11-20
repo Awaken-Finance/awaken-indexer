@@ -848,8 +848,8 @@ public class Query
         queryable = queryable.Where(a =>
             a.LimitOrderStatus == LimitOrderStatus.Committed
             || a.LimitOrderStatus == LimitOrderStatus.PartiallyFilling);
-        
-        var result = queryable.OrderBy(t=>t.CommitTime).Skip(0).Take(10000).ToList();
+
+        var result = await GetAllLimitRecords(queryable);
         
         var dataList = objectMapper.Map<List<LimitOrderIndex>, List<LimitOrderDto>>(result);
     
@@ -883,42 +883,95 @@ public class Query
         };
     }
 
-    private static async Task<List<SwapRecordIndex>> GetAllSwapRecords(IQueryable<SwapRecordIndex> queryable)
-    { 
-        var swapRecordIndices = new List<SwapRecordIndex>(); 
-        var pageNumber = 1; 
-        var pageSize = 10000; 
-        var currentPageSwapRecordIndices = new List<SwapRecordIndex>();
+    public static async Task<List<SwapRecordIndex>> GetAllSwapRecords(IQueryable<SwapRecordIndex> queryable, int pageSize = 10000)
+    {
+        var swapRecordIndices = new List<SwapRecordIndex>();
+        object[]? searchAfter = null;
+
         do
         {
-            currentPageSwapRecordIndices = queryable.OrderByDescending(t => t.Timestamp)
-                .Skip((pageNumber - 1) * pageSize)
-                .Take(pageSize)
-                .ToList();
-            swapRecordIndices.AddRange(currentPageSwapRecordIndices);
-            pageNumber++;
+            var currentPageSwapRecordIndices = searchAfter == null
+                ? queryable.OrderBy(t => t.Metadata.Block.BlockHeight).OrderBy(t => t.Id).Take(pageSize).ToList()
+                : queryable.OrderBy(t => t.Metadata.Block.BlockHeight).OrderBy(t => t.Id)
+                    .After(searchAfter)
+                    .Take(pageSize)
+                    .ToList();
 
-        } while (currentPageSwapRecordIndices.Count == pageSize);
+            swapRecordIndices.AddRange(currentPageSwapRecordIndices);
+
+            if (currentPageSwapRecordIndices.Count > 0)
+            {
+                var lastRecord = currentPageSwapRecordIndices.Last();
+                searchAfter = new object[] { lastRecord.Metadata.Block.BlockHeight, lastRecord.Id };
+            }
+            else
+            {
+                searchAfter = null;
+            }
+
+        } while (searchAfter != null);
 
         return swapRecordIndices;
     }
     
-    private static async Task<List<LimitOrderIndex>> GetAllLimitRecords(IQueryable<LimitOrderIndex> queryable)
-    { 
-        var limitOrderIndices = new List<LimitOrderIndex>(); 
-        int pageSize = 10000; 
-        int pageNumber = 1; 
-        var currentPageResults = new List<LimitOrderIndex>();
+    public static async Task<List<LiquidityRecordIndex>> GetAllLiquidityRecords(IQueryable<LiquidityRecordIndex> queryable, int pageSize = 10000)
+    {
+        var liquidityRecordIndices = new List<LiquidityRecordIndex>();
+        object[]? searchAfter = null;
+
         do
         {
-            currentPageResults = queryable.OrderByDescending(t => t.CommitTime)
-                .Skip((pageNumber - 1) * pageSize)
-                .Take(pageSize)
-                .ToList();
-            limitOrderIndices.AddRange(currentPageResults);
-            pageNumber++;
+            var currentPageLiquidityRecordIndices = searchAfter == null
+                ? queryable.OrderBy(t => t.Metadata.Block.BlockHeight).OrderBy(t => t.Id).Take(pageSize).ToList()
+                : queryable.OrderBy(t => t.Metadata.Block.BlockHeight).OrderBy(t => t.Id)
+                    .After(searchAfter)
+                    .Take(pageSize)
+                    .ToList();
 
-        } while (currentPageResults.Count == pageSize);
+            liquidityRecordIndices.AddRange(currentPageLiquidityRecordIndices);
+
+            if (currentPageLiquidityRecordIndices.Count > 0)
+            {
+                var lastRecord = currentPageLiquidityRecordIndices.Last();
+                searchAfter = new object[] { lastRecord.Metadata.Block.BlockHeight, lastRecord.Id };
+            }
+            else
+            {
+                searchAfter = null;
+            }
+
+        } while (searchAfter != null);
+
+        return liquidityRecordIndices;
+    }
+    
+    public static async Task<List<LimitOrderIndex>> GetAllLimitRecords(IQueryable<LimitOrderIndex> queryable, int pageSize = 10000)
+    { 
+        var limitOrderIndices = new List<LimitOrderIndex>();
+        object[]? searchAfter = null;
+
+        do
+        {
+            var currentPagelimitOrderIndices = searchAfter == null
+                ? queryable.OrderBy(t => t.Metadata.Block.BlockHeight).OrderBy(t => t.Id).Take(pageSize).ToList()
+                : queryable.OrderBy(t => t.Metadata.Block.BlockHeight).OrderBy(t => t.Id)
+                    .After(searchAfter)
+                    .Take(pageSize)
+                    .ToList();
+
+            limitOrderIndices.AddRange(currentPagelimitOrderIndices);
+
+            if (currentPagelimitOrderIndices.Count > 0)
+            {
+                var lastRecord = currentPagelimitOrderIndices.Last();
+                searchAfter = new object[] { lastRecord.Metadata.Block.BlockHeight, lastRecord.Id };
+            }
+            else
+            {
+                searchAfter = null;
+            }
+
+        } while (searchAfter != null);
 
         return limitOrderIndices;
     }
@@ -1275,7 +1328,7 @@ public class Query
             liquidityRecordQueryable = liquidityRecordQueryable.Where(a => a.Timestamp > dto.TimestampMin);
             liquidityRecordQueryable = liquidityRecordQueryable.Where(a => a.Timestamp <= dto.TimestampMax);
 
-            var liquidityRecordIndices = liquidityRecordQueryable.Skip(0).Take(10000).ToList();
+            var liquidityRecordIndices = await GetAllLiquidityRecords(liquidityRecordQueryable);
         
             foreach (var liquidityRecordIndex in liquidityRecordIndices)
             {
