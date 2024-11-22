@@ -37,6 +37,34 @@ public sealed class SwapProcessorTests : SwapIndexerTestBase
         _limitOrderTotalFilledProcessor = GetRequiredService<LimitOrderTotalFilledProcessor>();
         _labsFeeProcessor = GetRequiredService<LabsFeeChargedProcessor>();
     }
+    
+    [Fact]
+    public async Task SwapProcessorContractAddressAsyncTests()
+    {
+        _swapProcessor.GetContractAddress(AwakenSwapConst.tDVW).ShouldBe("2YnkipJ9mty5r6tpTWQAwnomeeKUT7qCWLHKaSeV1fejYEyCdX");
+        _swapProcessor.GetContractAddress(AwakenSwapConst.tDVV).ShouldBe("hyiwdsbDnyoG1uZiw2JabQ4tLiWT6yAuDfNBFbHhCZwAqU1os");
+        _swapProcessor.GetContractAddress("notexist").ShouldBe(string.Empty);
+        
+        var swapProcessor2 = GetRequiredService<SwapProcessor2>();
+        swapProcessor2.GetContractAddress(AwakenSwapConst.tDVW).ShouldBe("fGa81UPViGsVvTM13zuAAwk1QHovL3oSqTrCznitS4hAawPpk");
+        swapProcessor2.GetContractAddress(AwakenSwapConst.tDVV).ShouldBe("JvDB3rguLJtpFsovre8udJeXJLhsV1EPScGz2u1FFneahjBQm");
+        swapProcessor2.GetContractAddress("notexist").ShouldBe(string.Empty);
+        
+        var swapProcessor3 = GetRequiredService<SwapProcessor3>();
+        swapProcessor3.GetContractAddress(AwakenSwapConst.tDVW).ShouldBe("LzkrbEK2zweeuE4P8Y23BMiFY2oiKMWyHuy5hBBbF1pAPD2hh");
+        swapProcessor3.GetContractAddress(AwakenSwapConst.tDVV).ShouldBe("83ju3fGGnvQzCmtjApUTwvBpuLQLQvt5biNMv4FXCvWKdZgJf");
+        swapProcessor3.GetContractAddress("notexist").ShouldBe(string.Empty);
+        
+        var swapProcessor4 = GetRequiredService<SwapProcessor4>();
+        swapProcessor4.GetContractAddress(AwakenSwapConst.tDVW).ShouldBe("EG73zzQqC8JencoFEgCtrEUvMBS2zT22xoRse72XkyhuuhyTC");
+        swapProcessor4.GetContractAddress(AwakenSwapConst.tDVV).ShouldBe("2q7NLAr6eqF4CTsnNeXnBZ9k4XcmiUeM61CLWYaym6WsUmbg1k");
+        swapProcessor4.GetContractAddress("notexist").ShouldBe(string.Empty);
+        
+        var swapProcessor5 = GetRequiredService<SwapProcessor5>();
+        swapProcessor5.GetContractAddress(AwakenSwapConst.tDVW).ShouldBe("23dh2s1mXnswi4yNW7eWNKWy7iac8KrXJYitECgUctgfwjeZwP");
+        swapProcessor5.GetContractAddress(AwakenSwapConst.tDVV).ShouldBe("UYdd84gLMsVdHrgkr3ogqe1ukhKwen8oj32Ks4J1dg6KH9PYC");
+        swapProcessor5.GetContractAddress("notexist").ShouldBe(string.Empty);
+    }
 
     [Fact]
     public async Task SwapAsyncTests()
