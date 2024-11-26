@@ -1,3 +1,4 @@
+using System.Reflection;
 using AElf.Types;
 using AeFinder.Sdk;
 using AElf.Contracts.MultiToken;
@@ -501,12 +502,17 @@ public sealed class SwapProcessorTests : SwapIndexerTestBase
         
         var emptySwapRecordQueryable = await _recordRepository.GetQueryableAsync();
         emptySwapRecordQueryable = emptySwapRecordQueryable.Where(a => a.Timestamp > DateTimeHelper.ToUnixTimeMilliseconds(time));
-        var emptyResult = await Query.GetAllSwapRecords(emptySwapRecordQueryable, 1);
+        var emptyResult = await (Task<List<SwapRecordIndex>>)typeof(Query)
+            .GetMethod("GetAllSwapRecords", BindingFlags.NonPublic | BindingFlags.Static)
+            .Invoke(null, new object[] { emptySwapRecordQueryable, 1 });
         emptyResult.Count.ShouldBe(0);
         
         var swapRecordQueryable = await _recordRepository.GetQueryableAsync();
         swapRecordQueryable = swapRecordQueryable.Where(a => a.Timestamp <= DateTimeHelper.ToUnixTimeMilliseconds(time));
-        var result = await Query.GetAllSwapRecords(swapRecordQueryable, 1);
+        var result = await (Task<List<SwapRecordIndex>>)typeof(Query)
+            .GetMethod("GetAllSwapRecords", BindingFlags.NonPublic | BindingFlags.Static)
+            .Invoke(null, new object[] { swapRecordQueryable, 1 });
+        emptyResult.Count.ShouldBe(0);
         
         result.Count.ShouldBe(dataCount);
         for (int i = 0; i < dataCount; i++)

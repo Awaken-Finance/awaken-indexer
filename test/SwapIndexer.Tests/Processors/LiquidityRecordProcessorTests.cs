@@ -1,3 +1,4 @@
+using System.Reflection;
 using AeFinder.Sdk;
 using AElf.Types;
 using Awaken.Contracts.Swap;
@@ -418,7 +419,8 @@ public sealed class LiquidityRecordProcessorTests : SwapIndexerTestBase
             ChainId = "AELF",
             StartBlockHeight = 100,
             EndBlockHeight = 100,
-            SkipCount = 1
+            SkipCount = 1,
+            MaxResultCount = 1000
         });
         result.Count.ShouldBe(1);
         result.First().TransactionHash.ShouldBe(RemoveTransactionId);
@@ -429,7 +431,8 @@ public sealed class LiquidityRecordProcessorTests : SwapIndexerTestBase
             ChainId = "AELF",
             StartBlockHeight = 100,
             EndBlockHeight = 100,
-            SkipCount = 2
+            SkipCount = 2,
+            MaxResultCount = 1000
         });
         result.Count.ShouldBe(0);
         
@@ -485,12 +488,18 @@ public sealed class LiquidityRecordProcessorTests : SwapIndexerTestBase
         
         var emptyLiquidityRecordQueryable = await _recordRepository.GetQueryableAsync();
         emptyLiquidityRecordQueryable = emptyLiquidityRecordQueryable.Where(a => a.Timestamp > DateTimeHelper.ToUnixTimeMilliseconds(time));
-        var emptyResult = await Query.GetAllLiquidityRecords(emptyLiquidityRecordQueryable, 1);
+        
+        var emptyResult = await (Task<List<LiquidityRecordIndex>>)typeof(Query)
+            .GetMethod("GetAllLiquidityRecords", BindingFlags.NonPublic | BindingFlags.Static)
+            .Invoke(null, new object[] { emptyLiquidityRecordQueryable, 1 });
         emptyResult.Count.ShouldBe(0);
         
         var liquidityRecordQueryable = await _recordRepository.GetQueryableAsync();
         liquidityRecordQueryable = liquidityRecordQueryable.Where(a => a.Timestamp <= DateTimeHelper.ToUnixTimeMilliseconds(time));
-        var result = await Query.GetAllLiquidityRecords(liquidityRecordQueryable, 1);
+        
+        var result = await (Task<List<LiquidityRecordIndex>>)typeof(Query)
+            .GetMethod("GetAllLiquidityRecords", BindingFlags.NonPublic | BindingFlags.Static)
+            .Invoke(null, new object[] { liquidityRecordQueryable, 1 });
         
         result.Count.ShouldBe(dataCount);
         for (int i = 0; i < dataCount; i++)

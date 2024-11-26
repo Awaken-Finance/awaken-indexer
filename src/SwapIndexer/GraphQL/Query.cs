@@ -884,7 +884,7 @@ public class Query
         };
     }
 
-    public static async Task<List<SwapRecordIndex>> GetAllSwapRecords(IQueryable<SwapRecordIndex> queryable, int pageSize = 10000)
+    private static async Task<List<SwapRecordIndex>> GetAllSwapRecords(IQueryable<SwapRecordIndex> queryable, int pageSize = 10000)
     {
         var swapRecordIndices = new List<SwapRecordIndex>();
         object[]? searchAfter = null;
@@ -915,7 +915,7 @@ public class Query
         return swapRecordIndices;
     }
     
-    public static async Task<List<LiquidityRecordIndex>> GetAllLiquidityRecords(IQueryable<LiquidityRecordIndex> queryable, int pageSize = 10000)
+    private static async Task<List<LiquidityRecordIndex>> GetAllLiquidityRecords(IQueryable<LiquidityRecordIndex> queryable, int pageSize = 10000)
     {
         var liquidityRecordIndices = new List<LiquidityRecordIndex>();
         object[]? searchAfter = null;
@@ -946,7 +946,7 @@ public class Query
         return liquidityRecordIndices;
     }
     
-    public static async Task<List<LimitOrderIndex>> GetAllLimitRecords(IQueryable<LimitOrderIndex> queryable, int pageSize = 10000)
+    private static async Task<List<LimitOrderIndex>> GetAllLimitRecords(IQueryable<LimitOrderIndex> queryable, int pageSize = 10000)
     { 
         var limitOrderIndices = new List<LimitOrderIndex>();
         object[]? searchAfter = null;
@@ -1171,7 +1171,7 @@ public class Query
                     continue;
                 }   
             }
-
+    
             var pairKey = limitOrder.SymbolIn + "_" + limitOrder.SymbolOut;
             resultMap.TryGetValue(pairKey, out var pairDto);
             if (pairDto == null)
@@ -1188,7 +1188,7 @@ public class Query
             var priceStr = amountOutBigIntValue.Mul(100000000).Div(limitOrder.AmountIn);
             if (!long.TryParse(priceStr.Value, out var price))
             {
-                throw new AssertionException($"Failed to parse {priceStr.Value}");
+                continue;
             }
             if (!pairDto.PriceList.Contains(price))
             {

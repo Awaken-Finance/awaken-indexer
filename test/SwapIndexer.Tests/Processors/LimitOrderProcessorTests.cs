@@ -1,3 +1,4 @@
+using System.Reflection;
 using System.Runtime.InteropServices.JavaScript;
 using AeFinder.Sdk;
 using AeFinder.Sdk.Logging;
@@ -832,12 +833,16 @@ public sealed class LimitOrderProcessorTests : SwapIndexerTestBase
         
         var emptyLimitRecordQueryable = await _recordRepository.GetQueryableAsync();
         emptyLimitRecordQueryable = emptyLimitRecordQueryable.Where(a => a.CommitTime > DateTimeHelper.ToUnixTimeMilliseconds(now));
-        var emptyResult = await Query.GetAllLimitRecords(emptyLimitRecordQueryable, 1);
+        var emptyResult = await (Task<List<LimitOrderIndex>>)typeof(Query)
+            .GetMethod("GetAllLimitRecords", BindingFlags.NonPublic | BindingFlags.Static)
+            .Invoke(null, new object[] { emptyLimitRecordQueryable, 1 });
         emptyResult.Count.ShouldBe(0);
         
         var LimitRecordQueryable = await _recordRepository.GetQueryableAsync();
         LimitRecordQueryable = LimitRecordQueryable.Where(a => a.CommitTime <= DateTimeHelper.ToUnixTimeMilliseconds(now));
-        var result = await Query.GetAllLimitRecords(LimitRecordQueryable, 1);
+        var result = await (Task<List<LimitOrderIndex>>)typeof(Query)
+            .GetMethod("GetAllLimitRecords", BindingFlags.NonPublic | BindingFlags.Static)
+            .Invoke(null, new object[] { LimitRecordQueryable, 1 });
         
         result.Count.ShouldBe(dataCount);
         for (int i = 0; i < dataCount; i++)
