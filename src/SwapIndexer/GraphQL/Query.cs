@@ -1,5 +1,3 @@
-using System.Linq.Dynamic.Core;
-using System.Linq.Expressions;
 using AeFinder.Sdk;
 using AElf.CSharp.Core;
 using AElf.Types;
@@ -7,7 +5,6 @@ using GraphQL;
 using SwapIndexer.Entities;
 using Volo.Abp.ObjectMapping;
 using AeFinder.Sdk.Logging;
-using AElf.Sdk.CSharp;
 using SwapIndexer.GraphQL.Dto;
 
 namespace SwapIndexer.GraphQL;
@@ -1135,7 +1132,7 @@ public class Query
             var priceStr = amountOutBigIntValue.Mul(100000000).Div(limitOrder.AmountIn);
             if (!long.TryParse(priceStr.Value, out var price))
             {
-                throw new AssertionException($"Failed to parse {priceStr.Value}");
+                continue;
             }
             if (!pairDto.PriceList.Contains(price))
             {
