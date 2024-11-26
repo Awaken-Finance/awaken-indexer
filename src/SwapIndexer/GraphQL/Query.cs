@@ -1374,6 +1374,123 @@ public class Query
         return result;
     }
     
+    private static async Task<string> GetPairName(SwapRecordIndex swapRecordIndex, List<string> tradePairs)
+    {
+        foreach (var tradePair in tradePairs)
+        {
+            bool containPool = false;
+            var activityPool = tradePair.Split('_').ToList();
+            if (activityPool.Count != 2)
+            {
+                continue;
+            }
+            
+            if (swapRecordIndex.SymbolIn == activityPool[0] && swapRecordIndex.SymbolOut == activityPool[1]
+                || swapRecordIndex.SymbolIn == activityPool[1] && swapRecordIndex.SymbolOut == activityPool[0])
+            {
+                if (!string.IsNullOrEmpty(swapRecordIndex.PairAddress))
+                {
+                    return swapRecordIndex.PairAddress;
+                }
+
+                containPool = true;
+            }
+            
+            foreach (var swapRecord in swapRecordIndex.SwapRecords)
+            {
+                if (swapRecord.SymbolIn == activityPool[0] && swapRecord.SymbolOut == activityPool[1]
+                    || swapRecord.SymbolIn == activityPool[1] && swapRecord.SymbolOut == activityPool[0])
+                {
+                    if (!string.IsNullOrEmpty(swapRecord.PairAddress))
+                    {
+                        return swapRecord.PairAddress;
+                    }
+
+                    containPool = true;
+                }
+            }
+
+            if (containPool)
+            {
+                return tradePair + "_limit";
+            }
+        }
+
+        return null;
+    }
+    
+    [Name("pairTradeValueByLabsFee")]
+    public static async Task<PairTransactionVolumeDto> PairTradeValueByLabsFeeAsync(
+        [FromServices] IReadOnlyRepository<SwapRecordIndex> swapRepository,
+        GetPairTradeValueDto dto
+    )
+    {
+        double labsFeeRate = 0.0015;
+        var result = new PairTransactionVolumeDto();
+        var pairMap = new Dictionary<string, Dictionary<string, double>>();
+        var pairCountMap = new Dictionary<string, long>();
+        
+        var swapRecordQueryable = await swapRepository.GetQueryableAsync();
+        swapRecordQueryable = swapRecordQueryable.Where(a => a.Timestamp > dto.TimestampMin);
+        swapRecordQueryable = swapRecordQueryable.Where(a => a.Timestamp <= dto.TimestampMax);
+
+        var swapRecordIndexes = await GetAllSwapRecords(swapRecordQueryable);
+        
+        // include swap with pool & swap with limit order
+        foreach (var recordIndex in swapRecordIndexes)
+        {
+            var pairName = await GetPairName(recordIndex, dto.TradePairs);
+            if (string.IsNullOrEmpty(pairName))
+            {
+                continue;
+            }
+
+            if (recordIndex.LabsFee <= 0)
+            {
+                continue;
+            }
+            
+            if (!pairCountMap.ContainsKey(pairName))
+            {
+                pairCountMap.Add(pairName, 0);
+            }
+            pairCountMap[pairName]++;
+            
+            if (!pairMap.ContainsKey(pairName))
+            {
+                pairMap.Add(pairName, new Dictionary<string, double>());
+            }
+            var pairTokenMap = pairMap[pairName];
+            if (!pairTokenMap.ContainsKey(recordIndex.LabsFeeSymbol))
+            {
+                pairTokenMap.Add(recordIndex.LabsFeeSymbol, 0);
+            }
+            pairTokenMap[recordIndex.LabsFeeSymbol] += (recordIndex.LabsFee / labsFeeRate);
+        }
+        
+        
+        foreach (var pairTokens in pairMap)
+        {
+            var transactionVolume = new TransactionVolumeDto();
+            transactionVolume.TransactionCount = pairCountMap[pairTokens.Key];
+            foreach (var kv in pairTokens.Value)
+            {
+                transactionVolume.TransactionVolumes.Add(new TokenAmountDto()
+                {
+                    TokenSymbol = kv.Key,
+                    Amount = kv.Value
+                });
+            }
+
+            result.PairTransactionVolumes.Add(new PairTransactionVolume()
+            {
+                PairAddress = pairTokens.Key,
+                TokenTransactionVolume = transactionVolume
+            });
+        }
+        
+        return result;
+    }
     
     [Name("pairTransactionVolume")]
     public static async Task<PairTransactionVolumeDto> PairTransactionVolumeAsync(
