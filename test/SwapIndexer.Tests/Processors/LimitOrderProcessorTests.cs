@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices.JavaScript;
 using AeFinder.Sdk;
 using AeFinder.Sdk.Logging;
 using AElf.Contracts.MultiToken;
@@ -411,7 +412,8 @@ public sealed class LimitOrderProcessorTests : SwapIndexerTestBase
             SkipCount = 0,
             MaxResultCount = 100,
             MakerAddress = Address.FromPublicKey("AAA".HexToByteArray()).ToBase58(),
-            LimitOrderStatus = (int)LimitOrderStatus.FullFilled
+            LimitOrderStatus = (int)LimitOrderStatus.FullFilled,
+            TokenSymbol = "elf"
         });
         result.Data.Count.ShouldBe(1);
         result.Data[0].OrderId.ShouldBe(1);
@@ -423,12 +425,35 @@ public sealed class LimitOrderProcessorTests : SwapIndexerTestBase
         });
         result.Data.Count.ShouldBe(1);
         result.Data[0].OrderId.ShouldBe(1);
+        
+        result = await Query.LimitOrderDetailAsync(_recordRepository, _objectMapper, new GetLimitOrderDetailDto()
+        {
+            OrderId = 0
+        });
+        result.TotalCount.ShouldBe(0);
+        result.Data.ShouldBeNull();
     }
     
     [Fact]
     public async Task LimitOrderRemainingUnfilledAsyncTests1()
     {
         await LimitOrderFilled1AsyncTests();
+        
+        var limitOrderCreated = new LimitOrderCreated()
+        {
+            OrderId = 99,
+            AmountIn = 1000,
+            AmountOut = 100,
+            CommitTime = Timestamp.FromDateTime(DateTime.UtcNow.AddDays(-4)),
+            Deadline = Timestamp.FromDateTime(DateTime.UtcNow.AddDays(-3)),
+            Maker = Address.FromPublicKey("AAA".HexToByteArray()),
+            SymbolIn = "ELF",
+            SymbolOut = "BTC"
+        };
+        var logEventContext = GenerateLogEventContext(limitOrderCreated);
+        logEventContext.Transaction.TransactionId = "0x1";
+        
+        await _limitOrderCreatedProcessor.ProcessAsync(limitOrderCreated, logEventContext);
         
         var result = await Query.LimitOrderRemainingUnfilledAsync(_recordRepository, _objectMapper, _logger, new GetLimitOrderRemainingUnfilledDto()
         {
@@ -658,6 +683,62 @@ public sealed class LimitOrderProcessorTests : SwapIndexerTestBase
         tokenMap.TransactionVolumes[2].TokenSymbol.ShouldBe("USDT");
         tokenMap.TransactionVolumes[2].Amount.ShouldBe(10);
         tokenMap.TransactionCount.ShouldBe(2);
+    }
+    
+    [Fact]
+    public async Task TransactionVolumeMultiSwapAsyncTests()
+    {
+        var swap = new Awaken.Contracts.Swap.Swap()
+        {
+            Pair = Address.FromPublicKey("AAA".HexToByteArray()),
+            To = Address.FromPublicKey("BBB".HexToByteArray()),
+            Sender = Address.FromPublicKey("CCC".HexToByteArray()),
+            SymbolIn = "BTC",
+            SymbolOut = "AELF",
+            AmountIn = 100,
+            AmountOut = 1,
+            TotalFee = 15,
+            Channel = "test"
+        };
+        
+        var logEventContext = GenerateLogEventContext(swap);
+        logEventContext.Block.BlockTime = FillTime.ToDateTime();
+
+        var swapProcessor = GetRequiredService<SwapProcessor>();
+        await swapProcessor.ProcessAsync(swap, logEventContext);
+        await swapProcessor.ProcessAsync(new Awaken.Contracts.Swap.Swap()
+        {
+            Pair = Address.FromPublicKey("DDD".HexToByteArray()),
+            To = Address.FromPublicKey("BBB".HexToByteArray()),
+            Sender = Address.FromPublicKey("CCC".HexToByteArray()),
+            SymbolIn = "AELF",
+            SymbolOut = "ETH",
+            AmountIn = 100,
+            AmountOut = 1,
+            TotalFee = 15,
+            Channel = "test"
+        }, logEventContext);
+        
+        var pairTransactionVolume = await Query.PairTransactionVolumeAsync(_liquidityRepository, _swapRecordRepository,
+            _objectMapper, new GetTransactionVolumeDto()
+            {
+                TimestampMin = FillTime.AddMinutes(-1).ToDateTime().ToUnixTimeMilliseconds(),
+                TimestampMax = FillTime.AddMinutes(1).ToDateTime().ToUnixTimeMilliseconds()
+            });
+        pairTransactionVolume.PairTransactionVolumes.Count.ShouldBe(2);
+        
+        pairTransactionVolume.PairTransactionVolumes[0].PairAddress.ShouldBe(Address.FromPublicKey("AAA".HexToByteArray()).ToBase58());
+        var tokenMap1 = pairTransactionVolume.PairTransactionVolumes[0].TokenTransactionVolume;
+        tokenMap1.TransactionVolumes.Count.ShouldBe(1);
+        tokenMap1.TransactionVolumes[0].TokenSymbol.ShouldBe("AELF");
+        tokenMap1.TransactionVolumes[0].Amount.ShouldBe(1);
+        tokenMap1.TransactionCount.ShouldBe(1);
+        
+        pairTransactionVolume.PairTransactionVolumes[1].PairAddress.ShouldBe(Address.FromPublicKey("DDD".HexToByteArray()).ToBase58());
+        var tokenMap2 = pairTransactionVolume.PairTransactionVolumes[1].TokenTransactionVolume;
+        tokenMap2.TransactionVolumes[0].TokenSymbol.ShouldBe("ETH");
+        tokenMap2.TransactionVolumes[0].Amount.ShouldBe(1);
+        tokenMap2.TransactionCount.ShouldBe(1);
     }
     
     
