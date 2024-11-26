@@ -45,33 +45,52 @@ public sealed class LiquidityRecordProcessorTests : SwapIndexerTestBase
     public async Task LiquidityGetContractAddressAsyncTests()
     {
         _liquidityAddedEventProcessor.GetContractAddress(AwakenSwapConst.tDVW).ShouldBe("2YnkipJ9mty5r6tpTWQAwnomeeKUT7qCWLHKaSeV1fejYEyCdX");
+        _liquidityAddedEventProcessor.GetContractAddress(AwakenSwapConst.tDVV).ShouldBe("hyiwdsbDnyoG1uZiw2JabQ4tLiWT6yAuDfNBFbHhCZwAqU1os");
+        _liquidityAddedEventProcessor.GetContractAddress("notexist").ShouldBe(string.Empty);
         
         var liquidityAddedEventProcessor2 = GetRequiredService<LiquidityAddedProcessor2>();
         liquidityAddedEventProcessor2.GetContractAddress(AwakenSwapConst.tDVW).ShouldBe("fGa81UPViGsVvTM13zuAAwk1QHovL3oSqTrCznitS4hAawPpk");
+        liquidityAddedEventProcessor2.GetContractAddress(AwakenSwapConst.tDVV).ShouldBe("JvDB3rguLJtpFsovre8udJeXJLhsV1EPScGz2u1FFneahjBQm");
+        liquidityAddedEventProcessor2.GetContractAddress("notexist").ShouldBe(string.Empty);
         
         var liquidityAddedEventProcessor3 = GetRequiredService<LiquidityAddedProcessor3>();
         liquidityAddedEventProcessor3.GetContractAddress(AwakenSwapConst.tDVW).ShouldBe("LzkrbEK2zweeuE4P8Y23BMiFY2oiKMWyHuy5hBBbF1pAPD2hh");
+        liquidityAddedEventProcessor3.GetContractAddress(AwakenSwapConst.tDVV).ShouldBe("83ju3fGGnvQzCmtjApUTwvBpuLQLQvt5biNMv4FXCvWKdZgJf");
+        liquidityAddedEventProcessor3.GetContractAddress("notexist").ShouldBe(string.Empty);
         
         var liquidityAddedEventProcessor4 = GetRequiredService<LiquidityAddedProcessor4>();
         liquidityAddedEventProcessor4.GetContractAddress(AwakenSwapConst.tDVW).ShouldBe("EG73zzQqC8JencoFEgCtrEUvMBS2zT22xoRse72XkyhuuhyTC");
+        liquidityAddedEventProcessor4.GetContractAddress(AwakenSwapConst.tDVV).ShouldBe("2q7NLAr6eqF4CTsnNeXnBZ9k4XcmiUeM61CLWYaym6WsUmbg1k");
+        liquidityAddedEventProcessor4.GetContractAddress("notexist").ShouldBe(string.Empty);
         
         var liquidityAddedEventProcessor5 = GetRequiredService<LiquidityAddedProcessor5>();
         liquidityAddedEventProcessor5.GetContractAddress(AwakenSwapConst.tDVW).ShouldBe("23dh2s1mXnswi4yNW7eWNKWy7iac8KrXJYitECgUctgfwjeZwP");
-        
+        liquidityAddedEventProcessor5.GetContractAddress(AwakenSwapConst.tDVV).ShouldBe("UYdd84gLMsVdHrgkr3ogqe1ukhKwen8oj32Ks4J1dg6KH9PYC");
+        liquidityAddedEventProcessor5.GetContractAddress("notexist").ShouldBe(string.Empty);
         
         _liquidityRemovedEventProcessor.GetContractAddress(AwakenSwapConst.tDVW).ShouldBe("2YnkipJ9mty5r6tpTWQAwnomeeKUT7qCWLHKaSeV1fejYEyCdX");
+        _liquidityRemovedEventProcessor.GetContractAddress(AwakenSwapConst.tDVV).ShouldBe("hyiwdsbDnyoG1uZiw2JabQ4tLiWT6yAuDfNBFbHhCZwAqU1os");
+        _liquidityRemovedEventProcessor.GetContractAddress("notexist").ShouldBe(string.Empty);
         
         var liquidityRemovedEventProcessor2 = GetRequiredService<LiquidityRemovedProcessor2>();
         liquidityRemovedEventProcessor2.GetContractAddress(AwakenSwapConst.tDVW).ShouldBe("fGa81UPViGsVvTM13zuAAwk1QHovL3oSqTrCznitS4hAawPpk");
+        liquidityRemovedEventProcessor2.GetContractAddress(AwakenSwapConst.tDVV).ShouldBe("JvDB3rguLJtpFsovre8udJeXJLhsV1EPScGz2u1FFneahjBQm");
+        liquidityRemovedEventProcessor2.GetContractAddress("notexist").ShouldBe(string.Empty);
         
         var liquidityRemovedEventProcessor3 = GetRequiredService<LiquidityRemovedProcessor3>();
         liquidityRemovedEventProcessor3.GetContractAddress(AwakenSwapConst.tDVW).ShouldBe("LzkrbEK2zweeuE4P8Y23BMiFY2oiKMWyHuy5hBBbF1pAPD2hh");
+        liquidityRemovedEventProcessor3.GetContractAddress(AwakenSwapConst.tDVV).ShouldBe("83ju3fGGnvQzCmtjApUTwvBpuLQLQvt5biNMv4FXCvWKdZgJf");
+        liquidityRemovedEventProcessor3.GetContractAddress("notexist").ShouldBe(string.Empty);
         
         var liquidityRemovedEventProcessor4 = GetRequiredService<LiquidityRemovedProcessor4>();
         liquidityRemovedEventProcessor4.GetContractAddress(AwakenSwapConst.tDVW).ShouldBe("EG73zzQqC8JencoFEgCtrEUvMBS2zT22xoRse72XkyhuuhyTC");
+        liquidityRemovedEventProcessor4.GetContractAddress(AwakenSwapConst.tDVV).ShouldBe("2q7NLAr6eqF4CTsnNeXnBZ9k4XcmiUeM61CLWYaym6WsUmbg1k");
+        liquidityRemovedEventProcessor4.GetContractAddress("notexist").ShouldBe(string.Empty);
         
         var liquidityRemovedEventProcessor5 = GetRequiredService<LiquidityRemovedProcessor5>();
         liquidityRemovedEventProcessor5.GetContractAddress(AwakenSwapConst.tDVW).ShouldBe("23dh2s1mXnswi4yNW7eWNKWy7iac8KrXJYitECgUctgfwjeZwP");
+        liquidityRemovedEventProcessor5.GetContractAddress(AwakenSwapConst.tDVV).ShouldBe("UYdd84gLMsVdHrgkr3ogqe1ukhKwen8oj32Ks4J1dg6KH9PYC");
+        liquidityRemovedEventProcessor5.GetContractAddress("notexist").ShouldBe(string.Empty);
     }
 
     [Fact]
@@ -120,6 +139,19 @@ public sealed class LiquidityRecordProcessorTests : SwapIndexerTestBase
         liquidityRecordData.Metadata.ChainId.ShouldBe(ChainId);
         liquidityRecordData.Metadata.Block.BlockHeight.ShouldBe(logEventContext.Block.BlockHeight);
         liquidityRecordData.Metadata.Block.BlockHash.ShouldBe(logEventContext.Block.BlockHash);
+        
+        var swapRecordRepository = GetRequiredService<IReadOnlyRepository<SwapRecordIndex>>();
+        var limitRecordRepository = GetRequiredService<IReadOnlyRepository<LimitOrderIndex>>();
+        
+        var tradeActiveResult = await Query.TradeActiveAddressAsync(_recordRepository, swapRecordRepository, limitRecordRepository, _objectMapper, new GetActiveAddressDto()
+        {
+            TimestampMin = AddLiquidityTime.AddMinutes(-1).ToUnixTimeMilliseconds(),
+            TimestampMax = AddLiquidityTime.AddMinutes(1).ToUnixTimeMilliseconds(),
+            TransactionType = (int)ActiveAddressTransactionType.AddLiquidity
+        });
+        
+        tradeActiveResult.ActiveAddressCount.ShouldBe(1);
+        tradeActiveResult.ActiveAddresses[0].ShouldBe(Address.FromPublicKey("BBB".HexToByteArray()).ToBase58());
     }
 
     [Fact]
@@ -198,6 +230,19 @@ public sealed class LiquidityRecordProcessorTests : SwapIndexerTestBase
         liquidityRecordData.Token1.ShouldBe("BTC");
         liquidityRecordData.Token0Amount.ShouldBe(100);
         liquidityRecordData.Token1Amount.ShouldBe(1);
+        
+        var swapRecordRepository = GetRequiredService<IReadOnlyRepository<SwapRecordIndex>>();
+        var limitRecordRepository = GetRequiredService<IReadOnlyRepository<LimitOrderIndex>>();
+        
+        var tradeActiveResult = await Query.TradeActiveAddressAsync(_recordRepository, swapRecordRepository, limitRecordRepository, _objectMapper, new GetActiveAddressDto()
+        {
+            TimestampMin = RemoveLiquidityTime.AddMinutes(-1).ToUnixTimeMilliseconds(),
+            TimestampMax = RemoveLiquidityTime.AddMinutes(1).ToUnixTimeMilliseconds(),
+            TransactionType = (int)ActiveAddressTransactionType.RemoveLiquidity
+        });
+        
+        tradeActiveResult.ActiveAddressCount.ShouldBe(1);
+        tradeActiveResult.ActiveAddresses[0].ShouldBe(Address.FromPublicKey("BBB".HexToByteArray()).ToBase58());
     }
     
     [Fact]
@@ -454,4 +499,5 @@ public sealed class LiquidityRecordProcessorTests : SwapIndexerTestBase
             result[i].Token0Amount.ShouldBe(i+100);
         }
     }
+
 }

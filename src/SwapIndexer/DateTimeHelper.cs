@@ -6,9 +6,4 @@ public static class DateTimeHelper
     {
         return new DateTimeOffset(dateTime).ToUnixTimeMilliseconds();
     }
-    
-    public static long ToUnixTimeSeconds(this DateTime dateTime)
-    {
-        return new DateTimeOffset(dateTime).ToUnixTimeSeconds();
-    }
 }

@@ -7,6 +7,7 @@ using GraphQL;
 using SwapIndexer.Entities;
 using Volo.Abp.ObjectMapping;
 using AeFinder.Sdk.Logging;
+using AElf.Sdk.CSharp;
 using SwapIndexer.GraphQL.Dto;
 
 namespace SwapIndexer.GraphQL;
@@ -1126,6 +1127,76 @@ public class Query
             .ToList();
     
         return objectMapper.Map<List<LimitOrderFillRecordIndex>, List<LimitOrderFillRecordDto>>(result);
+    }
+    
+    [Name("getPairLimitOrdersRemainingUnfilled")]
+     public static async Task<List<PairLimitOrdersRemainingUnfilledResultDto>> GetPairLimitOrdersRemainingUnfilledAsync(
+        [FromServices] IReadOnlyRepository<LimitOrderIndex> repository,
+        [FromServices] IObjectMapper objectMapper,
+        [FromServices] IAeFinderLogger logger,
+        GetPairLimitOrdersRemainingUnfilledDto dto
+    )
+    {
+        logger.LogInformation($"[PairLimitOrdersRemainingUnfilled] ChainId: {dto.ChainId} MakerAddress: {dto.MakerAddress} SymbolIn: {dto.SymbolIn} SymbolOut: {dto.SymbolOut}");
+        
+        var queryable = await repository.GetQueryableAsync();
+        
+        if (!string.IsNullOrEmpty(dto.MakerAddress))
+        {
+            queryable = queryable.Where(a => a.Maker == dto.MakerAddress);
+        }
+        
+        if (!string.IsNullOrEmpty(dto.SymbolIn))
+        {
+            queryable = queryable.Where(a => a.SymbolIn == dto.SymbolIn);
+        }
+        if (!string.IsNullOrEmpty(dto.SymbolOut))
+        {
+            queryable = queryable.Where(a => a.SymbolOut == dto.SymbolOut);
+        }
+    
+        queryable = queryable.Where(a =>
+            a.LimitOrderStatus == LimitOrderStatus.Committed
+            || a.LimitOrderStatus == LimitOrderStatus.PartiallyFilling);
+        
+        var result = queryable.OrderBy(t=>t.CommitTime).Skip(0).Take(10000).ToList();
+        var resultMap = new Dictionary<string, PairLimitOrdersRemainingUnfilledResultDto>();
+        foreach (var limitOrder in result)
+        {
+            if (limitOrder.LimitOrderStatus == LimitOrderStatus.Committed
+                || limitOrder.LimitOrderStatus == LimitOrderStatus.PartiallyFilling)
+            {
+                if (limitOrder.Deadline < DateTimeOffset.UtcNow.ToUnixTimeMilliseconds())
+                {
+                    continue;
+                }   
+            }
+
+            var pairKey = limitOrder.SymbolIn + "_" + limitOrder.SymbolOut;
+            resultMap.TryGetValue(pairKey, out var pairDto);
+            if (pairDto == null)
+            {
+                pairDto = new PairLimitOrdersRemainingUnfilledResultDto
+                {
+                    SymbolIn = limitOrder.SymbolIn,
+                    SymbolOut = limitOrder.SymbolOut
+                };
+                resultMap[pairKey] = pairDto;
+            }
+            pairDto.OrderCount++;
+            var amountOutBigIntValue = new BigIntValue(limitOrder.AmountOut);
+            var priceStr = amountOutBigIntValue.Mul(100000000).Div(limitOrder.AmountIn);
+            if (!long.TryParse(priceStr.Value, out var price))
+            {
+                throw new AssertionException($"Failed to parse {priceStr.Value}");
+            }
+            if (!pairDto.PriceList.Contains(price))
+            {
+                pairDto.PriceList.Add(price);
+                pairDto.PriceCount++;
+            }
+        }
+        return resultMap.Values.ToList();
     }
     
 
