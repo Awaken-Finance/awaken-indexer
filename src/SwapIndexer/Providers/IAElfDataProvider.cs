@@ -14,7 +14,6 @@ public interface IAElfDataProvider
 
 public class AElfDataProvider : IAElfDataProvider
 {
-    private const string PrivateKey = "09da44778f8db2e602fb484334f37df19e221c84c4582ce5b7770ccfbc3ddbef";
     private const string FTImageUriKey = "__ft_image_uri";
     private const string NFTImageUriKey = "__nft_image_uri";
     private const string NFTImageUrlKey = "__nft_image_url";
