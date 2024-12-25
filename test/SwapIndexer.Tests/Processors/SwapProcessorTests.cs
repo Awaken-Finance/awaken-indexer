@@ -1,3 +1,4 @@
+using System.Reflection;
 using AElf.Types;
 using AeFinder.Sdk;
 using AElf.Contracts.MultiToken;
@@ -469,5 +470,55 @@ public sealed class SwapProcessorTests : SwapIndexerTestBase
         recordData.SwapRecords[0].IsLimitOrder.ShouldBe(false);
         recordData.SwapRecords[0].Channel.ShouldBe("test");
         recordData.SwapRecords[0].TotalFee.ShouldBe(10);
+    }
+    
+    
+    [Fact]
+    public async Task GetAllSwapRecordsTests()
+    {
+        var time = DateTime.UtcNow;
+        var dataCount = 10;
+        for (int i = 0; i < dataCount; i++)
+        {
+            var swap = new Awaken.Contracts.Swap.Swap()
+            {
+                Pair = Address.FromPublicKey("AAA".HexToByteArray()),
+                To = Address.FromPublicKey("BBB".HexToByteArray()),
+                Sender = Address.FromPublicKey("CCC".HexToByteArray()),
+                SymbolIn = "AELF",
+                SymbolOut = "BTC",
+                AmountIn = i+100,
+                AmountOut = 1,
+                TotalFee = 15,
+                Channel = "test"
+            };
+            var logEventContext = GenerateLogEventContext(swap);
+            logEventContext.Transaction.TransactionId = $"0x{i}";
+            logEventContext.Block.BlockHeight = i+100;
+            logEventContext.Block.BlockTime = time.AddHours(-1);
+            
+            await _swapProcessor.ProcessAsync(swap, logEventContext);
+        }
+        
+        var emptySwapRecordQueryable = await _recordRepository.GetQueryableAsync();
+        emptySwapRecordQueryable = emptySwapRecordQueryable.Where(a => a.Timestamp > DateTimeHelper.ToUnixTimeMilliseconds(time));
+        var emptyResult = await (Task<List<SwapRecordIndex>>)typeof(Query)
+            .GetMethod("GetAllSwapRecords", BindingFlags.NonPublic | BindingFlags.Static)
+            .Invoke(null, new object[] { emptySwapRecordQueryable, 1 });
+        emptyResult.Count.ShouldBe(0);
+        
+        var swapRecordQueryable = await _recordRepository.GetQueryableAsync();
+        swapRecordQueryable = swapRecordQueryable.Where(a => a.Timestamp <= DateTimeHelper.ToUnixTimeMilliseconds(time));
+        var result = await (Task<List<SwapRecordIndex>>)typeof(Query)
+            .GetMethod("GetAllSwapRecords", BindingFlags.NonPublic | BindingFlags.Static)
+            .Invoke(null, new object[] { swapRecordQueryable, 1 });
+        emptyResult.Count.ShouldBe(0);
+        
+        result.Count.ShouldBe(dataCount);
+        for (int i = 0; i < dataCount; i++)
+        {
+            result[i].TransactionHash.ShouldBe($"0x{i}");
+            result[i].AmountIn.ShouldBe(i+100);
+        }
     }
 }

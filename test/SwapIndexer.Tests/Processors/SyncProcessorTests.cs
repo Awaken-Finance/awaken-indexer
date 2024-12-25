@@ -174,7 +174,8 @@ public sealed class SyncRecordProcessorTests : SwapIndexerTestBase
             ChainId = "AELF",
             StartBlockHeight = 1,
             EndBlockHeight = 101,
-            SkipCount = 1
+            SkipCount = 1,
+            MaxResultCount = 1000
         });
         ret.Count.ShouldBe(0);
 
